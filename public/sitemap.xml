@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<url>
+  <loc>https://feldux.com/</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://feldux.com/about</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://feldux.com/guestbook</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog/funding-open-source</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog/backend</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog/react-frameworks</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog/javascript</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog/nextjs-conf-2022-recap</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog/dx</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog/developer-experience-examples</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog/heroku</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog/devrel-at-vercel</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog/image-gallery-supabase-tailwind-nextjs</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog/fundamentals-of-video</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog/hypergrowth</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog/rust</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog/mysql-planetscale</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog/career</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog/head-of-devrel</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog/serverless-redis-nextjs</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog/react-state-management</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog/fonts</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog/tailwind</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog/css-with-react</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog/spotify-api-nextjs</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog/teach-online</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog/mdx</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog/nextjs-sitemap-robots</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog/mailchimp-next-js</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog/real-time-post-views</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog/style-guides-component-libraries-design-systems</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog/nextjs-firebase-serverless</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog/how-to-print-in-react-using-iframes</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog/turborepo-design-system-monorepo</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog/technical-recruiting-is-broken</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog/things-ive-learned-building-nextjs-apps</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog/why-i-create-open-source-software</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog/content-marketing-personal-brand</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog/how-stripe-designs-beautiful-websites</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog/loading-placeholder-with-sass</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog/beginners-guide-to-the-programming-portfolio</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://feldux.com/blog/space-invaders-with-python</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://feldux.com/uses</loc>
+  <lastmod>2023-02-30T23:59:14+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+
+</urlset>
