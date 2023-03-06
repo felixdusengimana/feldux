@@ -3,7 +3,6 @@ import './globals.css'
 import clsx from 'clsx'
 import Sidebar from '@/components/sidebar'
 import { Metadata } from 'next'
-
 export const metadata: Metadata = {
   title: {
     default: "Felix Dusengimana",

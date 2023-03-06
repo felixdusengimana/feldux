@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { useTheme } from 'next-themes'
 
 interface INavKeys {
     name: string;
@@ -84,6 +85,7 @@ function Logo() {
 }
 
 export default function Navbar() {
+  const { theme, setTheme } = useTheme()
   let pathname = usePathname() || '/';
   if (pathname.includes('/blog/')) {
     pathname = '/blog';

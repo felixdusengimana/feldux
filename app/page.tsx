@@ -32,11 +32,11 @@ export default async function HomePage() {
           <a
             rel="noopener noreferrer"
             target="_blank"
-            href="https://twitter.com/felix__dusenge"
+            href="#"
             className="flex items-center gap-2"
           >
             <LocationIcon />
-            {` tweets all time`}
+            {`Kigali, Rwanda`}
           </a>
           <a
             rel="noopener noreferrer"
@@ -45,11 +45,11 @@ export default async function HomePage() {
             className="flex items-center gap-2"
           >
             <CalenderIcon />
-            {` stars on this repo`}
+            {`started in 2019`}
           </a>
           <Link href="/blog" className="flex items-center gap-2">
             <BioIcon />
-            {`blog views all time`}
+            {`software developer`}
           </Link>
         </div>
       </div>
