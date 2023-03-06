@@ -3,9 +3,9 @@ import Image from 'next/image';
 
 import {
   ArrowIcon,
-  GitHubIcon,
-  TwitterIcon,
-  ViewsIcon,
+  BioIcon,
+  CalenderIcon,
+  LocationIcon,
 } from 'components/icons';
 import { name, about, bio, avatar } from 'lib/info';
 
@@ -35,7 +35,7 @@ export default async function HomePage() {
             href="https://twitter.com/felix__dusenge"
             className="flex items-center gap-2"
           >
-            <TwitterIcon />
+            <LocationIcon />
             {` tweets all time`}
           </a>
           <a
@@ -44,11 +44,11 @@ export default async function HomePage() {
             href="https://github.com/felixdusengimana"
             className="flex items-center gap-2"
           >
-            <GitHubIcon />
+            <CalenderIcon />
             {` stars on this repo`}
           </a>
-          <Link href="/blog" className="flex items-center">
-            <ViewsIcon />
+          <Link href="/blog" className="flex items-center gap-2">
+            <BioIcon />
             {`blog views all time`}
           </Link>
         </div>
