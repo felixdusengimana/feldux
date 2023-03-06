@@ -14,17 +14,16 @@ export const about = () => {
 export const bio = () => {
   return (
     <>
-        I'm a software developer with a passion for building products that solve
-        real-world problems. I'm currently working on{' '}
+        I am a software developer who is enthusiastic about creating solutions for practical issues. My present employment is at{' '}
         <a
             href="https://www.stylosconsults.com"
             target="_blank"
             rel="noopener noreferrer"
             className="text-neutral-700 dark:text-neutral-200 hover:underline"
         >
-            Stalosconsults
+            Stylosconsults
         </a>
-        , a company that helps companies build their apps.
+        , where we assist organizations in constructing their applications.
     </>
   );
 };
