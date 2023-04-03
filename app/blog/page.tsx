@@ -1,7 +1,10 @@
 import React from 'react'
 import {getAllblogs} from 'lib/mdx'
 import { Metadata } from 'next'
-import BlurImage from '@/components/BlurImage'
+const BlurImage = dynamic(()=>import('components/BlurImage'))
+import allBlogs from './generated'
+import Link from 'next/link'
+import dynamic from 'next/dynamic'
 
 const POSTS_PER_PAGE = 5
 
@@ -28,13 +31,6 @@ export const metadata: Metadata = {
 };
 
 export default function Blogs() {
-  const allBlogs:Array<Blog> = getAllblogs([
-    'title',
-    'date',
-    'slug',
-    'coverImage',
-    'excerpt',
-  ])
   return (
     <div>
       {/* 2 grid and one in mobile */}
@@ -48,9 +44,13 @@ export default function Blogs() {
                 width={300}
                 height={300}
               />
+              <Link href={`/blog/${blog.slug}`} suppressHydrationWarning>
               <h2 className='font-bold text-lg'>{blog.title}</h2>
               <p className='text-md mt-2'>{blog.excerpt}</p>
               <p className='mt-2 text-[12px] text-gray-400'>{new Date(blog.date).toLocaleDateString()}</p>
+              {/* read more button */}
+              
+              </Link>
             </div>
           ))
         }
