@@ -1,14 +1,10 @@
 /* eslint-disable react/no-unescaped-entities */
-import type { Metadata } from 'next';
-import {
-  GitHubIcon,
-  ArrowIcon,
-  TwitterIcon,
-} from '@/components/icons';
+import type { Metadata } from "next";
+import { GitHubIcon, ArrowIcon, TwitterIcon } from "@/components/icons";
 
 export const metadata: Metadata = {
-  title: 'About',
-  description: 'Lead SoftwareDeveloper at StylosConsults.',
+  title: "About",
+  description: "Senior SoftwareDeveloper at StylosConsults.",
 };
 
 export default function AboutPage() {
@@ -20,8 +16,15 @@ export default function AboutPage() {
       </p>
       <div className="prose prose-neutral dark:prose-invert text-neutral-800 dark:text-neutral-200">
         <p>
-        I'm the <b>Lead Software Developer at StylosConsults</b> <br />
-        where my team helps companies build their apps.
+          I'm the <b>Senior Software Developer at StylosConsults</b> <br />
+          where my team helps companies build their apps.
+        </p>
+
+        <p>
+          More than 4 years of software development, experience with a focus on
+          web and mobile app development. Launched a couple of dozen different
+          apps on multiple platforms. I like to work on challenging problems,
+          especially ones that touch people's lives.
         </p>
 
         <div className="flex flex-col gap-2 md:flex-row md:gap-2 mt-8">

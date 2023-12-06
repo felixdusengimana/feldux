@@ -1,18 +1,17 @@
-import Link from 'next/link';
-import Image from 'next/image';
+import Link from "next/link";
+import Image from "next/image";
 
 import {
   ArrowIcon,
   BioIcon,
   CalenderIcon,
   LocationIcon,
-} from 'components/icons';
-import { name, about, bio, avatar } from 'lib/info';
+} from "components/icons";
+import { name, about, bio, avatar } from "lib/info";
 
 export const revalidate = 60;
 
 export default async function HomePage() {
-
   return (
     <section>
       <h1 className="font-bold text-3xl font-serif">{name}</h1>
@@ -68,17 +67,28 @@ export default async function HomePage() {
             <p className="h-7">follow me on twitter</p>
           </a>
         </li>
-        {/* <li>
+        <li>
           <a
             className="flex items-center hover:text-neutral-700 dark:hover:text-neutral-200 transition-all"
             rel="noopener noreferrer"
             target="_blank"
-            href="https://leerob.substack.com"
+            href="https://twitter.com/felix__dusenge"
           >
             <ArrowIcon />
-            <p className="h-7">get email updates</p>
+            <p className="h-7">see my work on codepen</p>
           </a>
-        </li> */}
+        </li>
+        <li>
+          <a
+            className="flex items-center hover:text-neutral-700 dark:hover:text-neutral-200 transition-all"
+            rel="noopener noreferrer"
+            target="_blank"
+            href="https://drive.google.com/file/d/19Z-M7Z2bh-99TsNdUxItOiNqDW6HeEBF/view?usp=sharing"
+          >
+            <ArrowIcon />
+            <p className="h-7">read my resume</p>
+          </a>
+        </li>
       </ul>
     </section>
   );

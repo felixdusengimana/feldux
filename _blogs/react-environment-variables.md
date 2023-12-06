@@ -21,12 +21,12 @@ Create React App supports custom environment variables without installing other 
 
 _Two ways of adding environment variables_
 
-1. Using the `.env` file (This is the approach we are going to use).
+1. Using the **.env** file (This is the approach we are going to use).
 2. Through the shell (temporary, lasts as long as shell session last, and varies depending on the OS type).
 
-## Defining environment variable using `.env`
+## Defining environment variable using **.env**
 
-**Step 1:** In your application's root folder, create a text file called `.env`.  Your working directory will look like this:
+**Step 1:** In your application's root folder, create a text file called **.env**.  Your working directory will look like this:
 
 ```
 my-react-app/ 
@@ -39,13 +39,14 @@ my-react-app/
  |-package.lock.json.
  |-README.md
 ```
-**Step 2:** Create your custom variables. Create React App(CRA) enforces the prefix `REACT_APP` on every custom variable. 
-**Note that** variables without the prefix `REACT_APP` are ignored during bundling. If you want to know more about how does CRA do this, check documentation [here](https://create-react-app.dev/docs/adding-custom-environment-variables/).
+**Step 2:** Create your custom variables. Create React App(CRA) enforces the prefix **REACT_APP** on every custom variable. 
+**Note that** variables without the prefix **REACT_APP** are ignored during bundling. If you want to know more about how does CRA do this, check documentation [here](https://create-react-app.dev/docs/adding-custom-environment-variables/).
 Variables should look like this:
 ```
 REACT_APP_CLIENT_ID=12345
 REACT_APP_KEY=aaddddawrfffvvvvssaa
 ```
+
 **Step 3:** Access them in your react app. You can print them and also assign them to other variables, but they are ready only in your application (means their value can't be changed).
 
 ```
@@ -92,10 +93,10 @@ yarn-debug.log*
 yarn-error.log*
 ```
 
-###Why Isn’t It Working Even After Following These Processes🤔?
+### Why Isn’t It Working Even After Following These Processes🤔?
 
 * Make sure you used the prefix REACT_APP on every variable
-* Confirm that the variable names on the `.env` file match the ones on your js file. For example,REACT_APP_KEY in .env versus process.env.REACT_APP_KEY
+* Confirm that the variable names on the **.env** file match the ones on your js file. For example,REACT_APP_KEY in .env versus process.env.REACT_APP_KEY
 * If the development server was running, stop it then rerun using npm start it. I really struggled with this (variable is undefined error).
 * Every time you update the .env file, you need to stop the server and rerun it, as the environment variables are only updated during build (variable is undefined error).
 * Remove quotations from the values of the variables.

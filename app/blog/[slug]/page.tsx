@@ -1,13 +1,13 @@
-import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
-import allBlogs from '../generated';
-import MdxPage from '@/components/MDX';
-import { getBlogBySlug } from '@/lib/mdx';
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import allBlogs from "../generated";
+import MdxPage from "@/components/MDX";
+import { getBlogBySlug } from "@/lib/mdx";
 
-interface ParamProps{
+interface ParamProps {
   params: {
     slug: string;
-  }
+  };
 }
 export async function generateStaticParams() {
   return allBlogs.map((post) => ({
@@ -17,7 +17,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({
   params,
-}:ParamProps): Promise<Metadata | undefined> {
+}: ParamProps): Promise<Metadata | undefined> {
   const post = allBlogs.find((post) => post.slug === params.slug);
   if (!post) {
     return;
@@ -40,7 +40,7 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
-      type: 'article',
+      type: "article",
       publishedTime,
       url: `https://leerob.io/blog/${slug}`,
       images: [
@@ -50,7 +50,7 @@ export async function generateMetadata({
       ],
     },
     twitter: {
-      card: 'summary_large_image',
+      card: "summary_large_image",
       title,
       description,
       images: [ogImage],
@@ -58,24 +58,20 @@ export async function generateMetadata({
   };
 }
 
-export default async function Blog({ params }:ParamProps) {
-  const post = getBlogBySlug(
-    params.slug,
-    [
-      'title',
-      'slug',
-      'publishedAt',
-      'summary',
-      'image',
-      'content',
-      'structuredData',
-    ],
-  )
+export default async function Blog({ params }: ParamProps) {
+  const post = getBlogBySlug(params.slug, [
+    "title",
+    "slug",
+    "publishedAt",
+    "summary",
+    "image",
+    "content",
+    "structuredData",
+  ]);
 
   if (!post) {
     notFound();
   }
-
 
   return (
     <section>
@@ -91,10 +87,8 @@ export default async function Blog({ params }:ParamProps) {
         </div>
         <div className="h-[0.2em] bg-neutral-50 dark:bg-neutral-800 mx-2" />
       </div>
-      
-        <MdxPage
-          code={post.content}
-         />
+
+      <MdxPage code={post.content} />
     </section>
   );
 }

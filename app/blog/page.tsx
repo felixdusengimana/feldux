@@ -1,33 +1,34 @@
-import React from 'react'
-import {getAllblogs} from 'lib/mdx'
-import { Metadata } from 'next'
-const BlurImage = dynamic(()=>import('components/BlurImage'))
-import allBlogs from './generated'
-import Link from 'next/link'
-import dynamic from 'next/dynamic'
+import React from "react";
+import { getAllblogs } from "lib/mdx";
+import { Metadata } from "next";
+const BlurImage = dynamic(() => import("components/BlurImage"));
+import allBlogs from "./generated";
+import Link from "next/link";
+import dynamic from "next/dynamic";
+import { ArrowIcon } from "@/components/icons";
 
-const POSTS_PER_PAGE = 5
+const POSTS_PER_PAGE = 5;
 
-interface Blog{
-  title: string
-  date: string
-  slug: string
-  coverImage: string
-  excerpt: string
+interface Blog {
+  title: string;
+  date: string;
+  slug: string;
+  coverImage: string;
+  excerpt: string;
 }
 
 interface BlogsProps {
-  initialDisplayPosts: Array<Blog>
-  posts: Array<Blog>
+  initialDisplayPosts: Array<Blog>;
+  posts: Array<Blog>;
   pagination: {
-    currentPage: number
-    totalPages: number
-  }
+    currentPage: number;
+    totalPages: number;
+  };
 }
 
 export const metadata: Metadata = {
-  title: 'Blog',
-  description: 'Read my thoughts on software development, design, and more.',
+  title: "Blog",
+  description: "Read my thoughts on software development, design, and more.",
 };
 
 export default function Blogs() {
@@ -35,28 +36,43 @@ export default function Blogs() {
     <div>
       {/* 2 grid and one in mobile */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-        {
-          allBlogs.map((blog, index) => (
-            <div key={index} className='text-white max-w-[300px] overflow-hidden flex flex-col justify-between'>
-              <BlurImage
-                image={blog.coverImage}
-                alt={blog.title}
-                width={300}
-                height={300}
-              />
-              <Link href={`/blog/${blog.slug}`} suppressHydrationWarning>
-              <h2 className='font-bold text-lg'>{blog.title}</h2>
-              <p className='text-md mt-2'>{blog.excerpt}</p>
-              <p className='mt-2 text-[12px] text-gray-400'>{new Date(blog.date).toLocaleDateString()}</p>
+        {allBlogs.map((blog, index) => (
+          <div
+            key={index}
+            className="text-white max-w-[300px] overflow-hidden flex flex-col justify-between"
+          >
+            <BlurImage
+              image={blog.coverImage}
+              alt={blog.title}
+              width={300}
+              height={200}
+            />
+            <Link href={`/blog/${blog.slug}`} suppressHydrationWarning>
+              <h2 className="font-bold text-lg">{blog.title}</h2>
+              <p className="text-md mt-2">{blog.excerpt}</p>
+              <p className="mt-2 text-[12px] text-gray-400">
+                {new Date(blog.date).toLocaleDateString()}
+              </p>
               {/* read more button */}
-              
-              </Link>
-            </div>
-          ))
-        }
+            </Link>
+          </div>
+        ))}
       </div>
+      <ul className="flex flex-col md:flex-row mt-16 space-x-0 md:space-x-4 space-y-2 md:space-y-0 font-sm text-neutral-500 dark:text-neutral-400">
+        <li>
+          <a
+            className="flex items-center hover:text-neutral-700 dark:hover:text-neutral-200 transition-all"
+            rel="noopener noreferrer"
+            target="_blank"
+            href="https://dev.to/felixdusengimana"
+          >
+            <ArrowIcon />
+            <p className="h-7">i also publish blogs on Dev.to</p>
+          </a>
+        </li>
+      </ul>
     </div>
-  )
+  );
 }
 
 // export async function generateStaticParams() {
