@@ -6,8 +6,8 @@ export const avatar = me;
 export const about = () => {
   return (
     <>
-      Hey 👋, I'm Felix. I'm the <b>Software Developer</b>{" "}
-      You can reach me at <a href="mailto:info@feldux.com">info@feldux.com</a>
+      Hey 👋, I'm Felix. I'm the <b>Software Developer</b><br/>
+      You can reach me at <a href="mailto:info@feldux.com" className="text-blue-400 underline hover:text-blue-800">info@feldux.com</a>
     </>
   );
 };
