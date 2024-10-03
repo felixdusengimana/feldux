@@ -1,6 +1,11 @@
 /* eslint-disable react/no-unescaped-entities */
 import type { Metadata } from "next";
-import { GitHubIcon, ArrowIcon, TwitterIcon } from "@/components/icons";
+import {
+  GitHubIcon,
+  ArrowIcon,
+  TwitterIcon,
+  CodePenIcon,
+} from "@/components/icons";
 
 export const metadata: Metadata = {
   title: "About",
@@ -16,14 +21,15 @@ export default function AboutPage() {
       </p>
       <div className="prose prose-neutral dark:prose-invert text-neutral-800 dark:text-neutral-200">
         <p>
-          I'm the <b>Senior Software Developer</b> <br />
+          I'm the <b>Software Developer</b> <br />
         </p>
 
         <p>
-          More than 4 years of software development, experience with a focus on
-          web and mobile app development. Launched a couple of dozen different
-          apps on multiple platforms. I like to work on challenging problems,
-          especially ones that touch people's lives.
+          More than {new Date().getFullYear() - 2019}+ years of software
+          development, experience with a focus on web and mobile app
+          development. Launched a couple of dozen different apps on multiple
+          platforms. I like to work on challenging problems, especially ones
+          that touch people's lives.
         </p>
 
         <div className="flex flex-col gap-2 md:flex-row md:gap-2 mt-8">
@@ -51,18 +57,18 @@ export default function AboutPage() {
             </div>
             <ArrowIcon />
           </a>
-          {/* <a
+          <a
             rel="noopener noreferrer"
             target="_blank"
-            href="https://www.youtube.com/@felixdusengimana"
+            href="https://codepen.io/phelixdusengimana"
             className="flex w-full border border-neutral-200 dark:border-neutral-800 rounded-lg p-4 no-underline items-center text-neutral-800 dark:text-neutral-200 hover:dark:bg-neutral-900 hover:bg-neutral-100 transition-all justify-between"
           >
             <div className="flex items-center">
-              <YoutubeIcon />
-              <div className="ml-3">YouTube</div>
+              <CodePenIcon />
+              <div className="ml-3">Codepen</div>
             </div>
             <ArrowIcon />
-          </a> */}
+          </a>
         </div>
       </div>
     </section>
