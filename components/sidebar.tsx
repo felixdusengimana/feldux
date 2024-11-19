@@ -36,8 +36,8 @@ const navItems: INavItems = {
     y: 69,
     w: "56px",
   },
-  '/sidebar': {
-    name: 'sidebar',
+  '/packages': {
+    name: 'packages',
     x: 182,
     y: 104,
     w: '100px',
