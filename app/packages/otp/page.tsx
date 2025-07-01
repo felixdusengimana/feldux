@@ -127,7 +127,7 @@ export default function OTPInputDocsPage() {
           <h3 className="text-xl font-semibold mt-6 mb-2">{`<Root />`}</h3>
           <ul className="list-disc pl-5 text-sm text-gray-700 dark:text-gray-300">
             <li><code>onChange?: (otp: string) =&gt; void</code></li>
-            <li><code>type?: 'number' | 'text' | 'any'</code></li>
+            <li><code>type?: &apos;number&apos; | &apos;text&apos; | &apos;any&apos;</code></li>
             <li><code>password?: boolean</code></li>
             <li><code>joiner?: string</code></li>
             <li><code>pattern?: string</code></li>
