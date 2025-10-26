@@ -5,6 +5,7 @@ import { Root, Input, Label } from '@frjoy/otp';
 import { packages } from '@/lib/packages';
 import InstallTabs from '@/components/InstallTabs';
 import TableOfContents, { ITableOfContent } from '@/components/TableOfContents';
+import OTPPlayground from '@/components/OTPPlayground';
 import Head from 'next/head';
 
 export default function OTPInputDocsPage() {
@@ -25,6 +26,7 @@ export default function OTPInputDocsPage() {
     { id: 'live-demo-1', title: 'Live Demo 1: Basic OTP', active: false },
     { id: 'live-demo-2', title: 'Live Demo 2: Alphanumeric OTP with Joiner', active: false },
     { id: 'props-reference', title: 'Props Reference', active: false },
+    { id: 'interactive-playground', title: 'Interactive Playground', active: false },
   ];
 
   return (
@@ -102,7 +104,7 @@ export default function OTPInputDocsPage() {
                 <Input
                   key={i}
                   length={2}
-                  className="w-14 h-12 text-center border border-gray-300 dark:border-gray-700 rounded focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white uppercase"
+                  className="w-14 h-12 text-center border border-gray-300 dark:border-gray-700 rounded focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
                 />
               ))}
             </div>
@@ -145,6 +147,9 @@ export default function OTPInputDocsPage() {
             <li>Automatically focuses first incomplete field</li>
             <li>Accessible via <code>aria-live</code></li>
           </ul>
+
+          {/* Interactive Playground */}
+          <OTPPlayground />
 
           {/* Share Package */}
           <div id="share-package" className="mt-12 pt-6 border-t border-gray-200 dark:border-gray-800">
