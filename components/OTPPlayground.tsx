@@ -33,7 +33,7 @@ export default function OTPPlayground() {
     };
 
     return (
-        <div className="my-10 w-full min-w-0">
+        <div className="my-10 w-full max-w-[600px] min-w-0">
             <h2 id="interactive-playground" className="text-2xl font-semibold mb-4">Interactive Playground</h2>
             <p className="text-gray-600 dark:text-gray-400 mb-6">
                 Experiment with different props and see the changes in real-time.
@@ -101,9 +101,9 @@ export default function OTPPlayground() {
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10 w-full min-w-0">
+            <div className="flex sm:flex-row flex-col gap-8 mb-10 w-full min-w-0">
                 {/* Controls Panel */}
-                <div className="space-y-4 p-6 bg-gray-50 dark:bg-gray-900 rounded-lg min-w-0">
+                <div className="space-y-4 p-6 bg-gray-50 dark:bg-gray-900 rounded-lg min-w-[200px]">
                     <h3 className="text-lg font-semibold mb-4">Configuration</h3>
 
                     {/* Type */}
@@ -270,7 +270,7 @@ export default function OTPPlayground() {
             </div>
 
             {/* Generated Code */}
-            <div className="mb-10 w-full min-w-0">
+            <div className="mb-10 min-w-0">
                 <h3 className="text-lg font-semibold mb-3">Generated Code</h3>
                 <pre className="bg-gray-100 dark:bg-gray-900 text-sm p-4 rounded overflow-x-auto text-gray-800 dark:text-gray-100 max-w-full">
                     <code>
