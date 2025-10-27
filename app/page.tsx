@@ -64,7 +64,7 @@ export default async function HomePage() {
             href="https://twitter.com/felix__dusenge"
           >
             <ArrowIcon />
-            <p className="h-7">follow me on twitter</p>
+            <p className="h-7">X(Formerly Twitter)</p>
           </a>
         </li>
         <li>
@@ -72,10 +72,32 @@ export default async function HomePage() {
             className="flex items-center hover:text-neutral-700 dark:hover:text-neutral-200 transition-all"
             rel="noopener noreferrer"
             target="_blank"
-            href="https://codepen.io/phelixdusengimana"
+            href="https://github.com/felixdusengimana"
           >
             <ArrowIcon />
-            <p className="h-7">see my work on codepen</p>
+            <p className="h-7">Github</p>
+          </a>
+        </li>
+        <li>
+          <a
+            className="flex items-center hover:text-neutral-700 dark:hover:text-neutral-200 transition-all"
+            rel="noopener noreferrer"
+            target="_blank"
+            href="https://bsky.app/profile/felixdusengimana.bsky.social"
+          >
+            <ArrowIcon />
+            <p className="h-7">Bluesky</p>
+          </a>
+        </li>
+        <li>
+          <a
+            className="flex items-center hover:text-neutral-700 dark:hover:text-neutral-200 transition-all"
+            rel="noopener noreferrer"
+            target="_blank"
+            href="https://codepen.io/felixdusengimana"
+          >
+            <ArrowIcon />
+            <p className="h-7">Codepen</p>
           </a>
         </li>
         <li>
@@ -86,7 +108,18 @@ export default async function HomePage() {
             href="https://docs.google.com/document/d/1QIiMGRmwq9YADUY92TnQiLcr7vTMMiAaM_RI6tdgHGE/edit?usp=sharing"
           >
             <ArrowIcon />
-            <p className="h-7">read my resume</p>
+            <p className="h-7">Resume</p>
+          </a>
+        </li>
+        <li>
+          <a
+            className="flex items-center hover:text-neutral-700 dark:hover:text-neutral-200 transition-all"
+            rel="noopener noreferrer"
+            target="_blank"
+            href="https://www.linkedin.com/in/felix-dusengimana-7b41a5244/"
+          >
+            <ArrowIcon />
+            <p className="h-7">LinkedIn</p>
           </a>
         </li>
       </ul>
