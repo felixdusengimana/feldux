@@ -34,16 +34,16 @@ export default function AboutPage() {
           that touch people's lives.
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
           <a
             rel="noopener noreferrer"
             target="_blank"
             href="https://twitter.com/felix__dusenge"
-            className="flex w-full border border-neutral-200 dark:border-neutral-800 rounded-lg p-4 no-underline items-center text-neutral-800 dark:text-neutral-200 hover:dark:bg-neutral-900 hover:bg-neutral-100 transition-all justify-between"
+            className="flex col-span-2 w-full border border-neutral-200 dark:border-neutral-800 rounded-lg p-4 no-underline items-center text-neutral-800 dark:text-neutral-200 hover:dark:bg-neutral-900 hover:bg-neutral-100 transition-all justify-between"
           >
             <div className="flex items-center">
               <TwitterIcon />
-              <div className="ml-3">Twitter</div>
+              <div className="ml-3">X(Formerly Twitter)</div>
             </div>
             <ArrowIcon />
           </a>
