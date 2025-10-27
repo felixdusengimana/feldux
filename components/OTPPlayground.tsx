@@ -215,7 +215,7 @@ export default function OTPPlayground() {
                     <h3 className="text-lg font-semibold mb-4">Live Preview</h3>
 
                     <Root
-                        key={`${playgroundConfig.type}-${playgroundConfig.inputCount}-${playgroundConfig.inputLength}-${playgroundConfig.password}`}
+                        key={`${playgroundConfig.type}-${playgroundConfig.inputCount}-${playgroundConfig.inputLength}`}
                         onChange={setPlaygroundOtp}
                         type={playgroundConfig.type}
                         password={playgroundConfig.password}
