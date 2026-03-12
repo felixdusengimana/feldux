@@ -86,7 +86,7 @@ export default function AboutPage() {
           <a
             rel="noopener noreferrer"
             target="_blank"
-            href="https://docs.google.com/document/d/1QIiMGRmwq9YADUY92TnQiLcr7vTMMiAaM_RI6tdgHGE/edit?usp=sharing"
+            href="https://docs.google.com/document/d/1k6PDFC2B13BBEMnSerJuNwMqVJAVoKga9cFvGlG66Vk/edit?usp=sharing"
             className="flex w-full border border-neutral-200 dark:border-neutral-800 rounded-lg p-4 no-underline items-center text-neutral-800 dark:text-neutral-200 hover:dark:bg-neutral-900 hover:bg-neutral-100 transition-all justify-between"
           >
             <div className="flex items-center">
