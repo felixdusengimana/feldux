@@ -55,7 +55,7 @@ export const resume = {
       role: "Senior Software Engineer Consultant",
       company: "Irembo",
       start: "2026-03",
-      location: "Kigali, Rwanda",
+      location: "Kigali, Rwanda · On-site",
       intro:
         "Contributing to the design, development, and continuous improvement of digital platforms that simplify access to government and private sector services. Collaborating with cross-functional teams to deliver scalable, secure, and reliable solutions while contributing to technical discussions, system design, and architectural decisions.",
       stack: ["Spring Boot", "Angular", "CI/CD", "Docker", "Java", "TypeScript", "REST", "PostgreSQL", "JPA", "React", "Next.js", "Agile", "System Design"],
@@ -78,6 +78,8 @@ export const resume = {
       company: "PivotAccess",
       start: "2023-02",
       end: "2026-04",
+      type: "Full-time",
+      location: "Kigali, Rwanda · On-site",
       intro:
         "Contributed to the development of Tekana, a platform that streamlines operations for the Rwanda National Police. Collaborated with teams to ensure the system's architecture, security, and user interface met operational needs.",
       stack: ["Spring Boot", "Next.js", "CI/CD", "Docker", "PostgreSQL", "Java", "TypeScript", "REST", "Go", "JPA", "Grafana"],
