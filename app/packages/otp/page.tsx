@@ -52,8 +52,8 @@ export default function OTPInputDocsPage() {
   return (
     <>
     <div className="flex flex-col min-h-screen">
-      <div className="flex-grow max-w-7xl gap-14 flex">
-        <div className="flex-1 max-w-4xl">
+      <div className="flex-grow max-w-7xl md:gap-14 flex">
+        <div className="flex-1 min-w-0 max-w-4xl">
           {/* Introduction */}
           <h1 id="introduction" className="text-4xl font-bold mb-2">{pkg.name}</h1>
           <p className="text-neutral-600 dark:text-neutral-400 mb-6">{pkg.description}</p>
@@ -116,7 +116,7 @@ export default function OTPInputDocsPage() {
                   key={i}
                   length={1}
                   aria-label={`Digit ${i + 1} of 6`}
-                  className="w-12 h-12 text-center border border-neutral-300 dark:border-neutral-700 rounded focus:ring-2 focus:ring-blue-500 dark:bg-neutral-800 dark:text-white"
+                  className="w-10 h-10 sm:w-12 sm:h-12 text-center border border-neutral-300 dark:border-neutral-700 rounded focus:ring-2 focus:ring-blue-500 dark:bg-neutral-800 dark:text-white"
                 />
               ))}
             </div>

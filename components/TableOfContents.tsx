@@ -66,7 +66,7 @@ export default function TableOfContents({ sections }: ITableOfContentsProps) {
     };
 
     return (
-        <aside className="md:w-[150px] md:flex-shrink-0 -mx-4 md:mx-0 md:px-0 font-serif">
+        <aside className="hidden md:block md:w-[150px] md:flex-shrink-0 font-serif">
             <nav className="sticky top-20 hidden md:block w-64 pr-6 text-sm overflow-visible" aria-label="Table of contents">
                 <h2 className="text-lg font-semibold mb-4">On this page</h2>
                 {isClient && <ul className="space-y-2 border-l border-neutral-300 dark:border-neutral-700 relative">
