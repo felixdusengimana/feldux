@@ -37,7 +37,7 @@ export default async function HomePage() {
           </p>
           <p className="flex items-center gap-2">
             <BioIcon />
-            {`software developer`}
+            {`software engineer`}
           </p>
         </div>
       </div>

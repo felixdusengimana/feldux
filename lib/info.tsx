@@ -6,7 +6,7 @@ export const avatar = me;
 export const about = () => {
   return (
     <>
-      Hey 👋, I'm Felix. I'm the <b>Software Developer</b>
+      Hey 👋, I'm Felix. I'm the <b>Software Engineer</b>
       <br />
       You can reach me at{" "}
       <a
@@ -21,7 +21,7 @@ export const about = () => {
 export const bio = () => {
   return (
     <>
-      I am a software developer who is enthusiastic about creating solutions for
+      I am a software engineer who is enthusiastic about creating solutions for
       practical issues.
     </>
   );

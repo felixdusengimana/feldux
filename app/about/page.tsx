@@ -11,7 +11,7 @@ import {
 
 export const metadata: Metadata = {
   title: "About",
-  description: "Software Developer | Felix Dusengimana",
+  description: "Software Engineer | Felix Dusengimana",
 };
 
 export default function AboutPage() {
@@ -23,7 +23,7 @@ export default function AboutPage() {
       </p>
       <div className="prose prose-neutral dark:prose-invert text-neutral-800 dark:text-neutral-200">
         <p>
-          I'm the <b>Software Developer</b> <br />
+          I'm the <b>Software Engineer</b> <br />
         </p>
 
         <p>
