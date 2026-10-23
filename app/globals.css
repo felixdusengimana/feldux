@@ -16,3 +16,42 @@
 ::-webkit-scrollbar {
     display: none;
 }
+/* code block highlighting (sugar-high), see components/CodeBlock.tsx */
+:root {
+    --sh-class: #b45309;
+    --sh-identifier: #262626;
+    --sh-sign: #737373;
+    --sh-property: #0369a1;
+    --sh-entity: #15803d;
+    --sh-jsxliterals: #404040;
+    --sh-string: #a21caf;
+    --sh-keyword: #be123c;
+    --sh-comment: #8a8a8a;
+}
+
+.dark {
+    --sh-class: #e8b86d;
+    --sh-identifier: #e5e5e5;
+    --sh-sign: #a3a3a3;
+    --sh-property: #8ec5e6;
+    --sh-entity: #94d3a2;
+    --sh-jsxliterals: #d4d4d4;
+    --sh-string: #e0a6d9;
+    --sh-keyword: #f0a0a8;
+    --sh-comment: #8a8a8a;
+}
+
+.code-block pre {
+    counter-reset: line;
+}
+
+.code-block .sh__line::before {
+    counter-increment: line;
+    content: counter(line);
+    display: inline-block;
+    width: 1.5rem;
+    margin-right: 1rem;
+    text-align: right;
+    color: #a3a3a3;
+    user-select: none;
+}

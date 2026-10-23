@@ -6,7 +6,28 @@ import { packages } from '@/lib/packages';
 import InstallTabs from '@/components/InstallTabs';
 import TableOfContents, { ITableOfContent } from '@/components/TableOfContents';
 import OTPPlayground from '@/components/OTPPlayground';
+import CodeBlock from '@/components/CodeBlock';
+import PropsTable, { PropRow } from '@/components/PropsTable';
 import Head from 'next/head';
+
+const propsReference: Record<string, PropRow[]> = {
+  Root: [
+    { name: 'onChange', type: '(value: string) => void', description: 'Called with the full code, in input order, whenever it changes. Not called on first render.' },
+    { name: 'type', type: "'any' | 'number' | 'text'", defaultValue: "'any'", description: 'number: digits only. text: letters and digits. any: no restriction.' },
+    { name: 'password', type: 'boolean', defaultValue: 'false', description: 'Masks every input.' },
+    { name: 'joiner', type: 'string', defaultValue: "''", description: 'Placed between input values in onChange, e.g. "-".' },
+    { name: 'pattern', type: 'string', description: 'HTML pattern applied to every input. Best with type="any".' },
+    { name: 'children', type: 'ReactNode', description: 'Inputs, label and any other elements. Root renders no element of its own.' },
+  ],
+  Input: [
+    { name: 'length', type: 'number', defaultValue: '1', description: 'Number of characters this input holds.' },
+    { name: 'password', type: 'boolean', defaultValue: 'false', description: 'Masks this input only.' },
+    { name: '...props', type: 'InputHTMLAttributes', description: 'Native input props except type, value, autoComplete, maxLength and minLength. Your onChange, onKeyDown, onPaste and onClick still run.' },
+  ],
+  Label: [
+    { name: '...props', type: 'LabelHTMLAttributes', description: 'Native label props except htmlFor. Clicking the label focuses the first input that is not filled yet.' },
+  ],
+};
 
 export default function OTPInputDocsPage() {
   const pkg = packages.find((p) => p.slug === 'otp');
@@ -87,6 +108,23 @@ export default function OTPInputDocsPage() {
           </div>
           <p className="-mt-6 mb-10 text-sm text-neutral-600 dark:text-neutral-400">Requires React 18 or newer.</p>
 
+          {pkg.storybookUrl && (
+            <a
+              href={pkg.storybookUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group mb-10 flex items-center justify-between gap-4 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 p-4 hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors"
+            >
+              <span>
+                <span className="block font-semibold">Try it in the Storybook playground</span>
+                <span className="block text-sm text-neutral-600 dark:text-neutral-400">
+                  Live controls for every prop, ready-made examples (SMS code, PIN, license key, Arabic) and interaction tests.
+                </span>
+              </span>
+              <span aria-hidden="true" className="text-xl transition-transform group-hover:translate-x-1">→</span>
+            </a>
+          )}
+
           {/* Live Demo 1 */}
           <h2 id="live-demo-1" className="text-2xl font-semibold mb-4">Live Demo 1: Basic OTP</h2>
           <Root onChange={setOtpValue1} type="number" password>
@@ -105,16 +143,12 @@ export default function OTPInputDocsPage() {
           <p className="text-sm text-neutral-700 dark:text-neutral-300 mb-4">
             Entered OTP: <span className="font-mono">{otpValue1 || '-'}</span>
           </p>
-          <pre className="bg-neutral-100 dark:bg-neutral-900 text-sm p-4 rounded overflow-x-auto text-neutral-800 dark:text-neutral-100 mb-10">
-            <code>
-              {`<Root onChange={setOtp} type="number" password>
+          <CodeBlock code={`<Root onChange={setOtp} type="number" password>
   <Label>Enter OTP</Label>
   {[...Array(6)].map((_, i) => (
     <Input key={i} length={1} />
   ))}
-</Root>`}
-            </code>
-          </pre>
+</Root>`} />
 
           {/* Live Demo 2 */}
           <h2 id="live-demo-2" className="text-2xl font-semibold mb-4">Live Demo 2: Alphanumeric OTP with Joiner</h2>
@@ -137,16 +171,12 @@ export default function OTPInputDocsPage() {
           <p className="text-sm text-neutral-700 dark:text-neutral-300 mb-4">
             Joined Code: <span className="font-mono">{otpValue2 || '-'}</span>
           </p>
-          <pre className="bg-neutral-100 dark:bg-neutral-900 text-sm p-4 rounded overflow-x-auto text-neutral-800 dark:text-neutral-100 mb-10">
-            <code>
-              {`<Root onChange={setOtp} type="text" joiner="-">
+          <CodeBlock code={`<Root onChange={setOtp} type="text" joiner="-">
   <Label>Referral Code</Label>
   {[...Array(4)].map((_, i) => (
     <Input key={i} length={2} />
   ))}
-</Root>`}
-            </code>
-          </pre>
+</Root>`} />
 
           {/* Live Demo 3 */}
           <h2 id="live-demo-3" className="text-2xl font-semibold mb-4">Live Demo 3: Arabic (Right-to-Left)</h2>
@@ -171,52 +201,26 @@ export default function OTPInputDocsPage() {
           <p className="text-sm text-neutral-700 dark:text-neutral-300 mb-4">
             Entered OTP: <span className="font-mono">{otpValue3 || '-'}</span>
           </p>
-          <pre className="bg-neutral-100 dark:bg-neutral-900 text-sm p-4 rounded overflow-x-auto text-neutral-800 dark:text-neutral-100 mb-10">
-            <code>
-              {`<Root onChange={setOtp} type="number">
+          <CodeBlock code={`<Root onChange={setOtp} type="number">
   <Label>Verification code</Label>
   <div dir="ltr">
     {[...Array(4)].map((_, i) => (
       <Input key={i} />
     ))}
   </div>
-</Root>`}
-            </code>
-          </pre>
+</Root>`} />
 
           {/* Props Reference */}
           <h2 id="props-reference" className="text-2xl font-semibold mt-10 mb-4">Props Reference</h2>
 
-          <h3 className="text-xl font-semibold mt-6 mb-2">{`<Root />`}</h3>
-          <ul className="list-disc pl-5 text-sm text-neutral-700 dark:text-neutral-300">
-            <li><code>onChange?: (otp: string) =&gt; void</code>: full code in input order, not called on first render</li>
-            <li><code>type?: &apos;number&apos; | &apos;text&apos; | &apos;any&apos;</code></li>
-            <li><code>password?: boolean</code></li>
-            <li><code>joiner?: string</code></li>
-            <li><code>pattern?: string</code></li>
-          </ul>
-
-          <h3 className="text-xl font-semibold mt-6 mb-2">{`<Input />`}</h3>
-          <ul className="list-disc pl-5 text-sm text-neutral-700 dark:text-neutral-300">
-            <li><code>length?: number</code></li>
-            <li><code>password?: boolean</code></li>
-            <li>Supports native input props except <code>type</code>, <code>value</code>, <code>autoComplete</code>, <code>maxLength</code> and <code>minLength</code></li>
-          </ul>
-
-          <h3 className="text-xl font-semibold mt-6 mb-2">{`<Label />`}</h3>
-          <ul className="list-disc pl-5 text-sm text-neutral-700 dark:text-neutral-300">
-            <li>Clicking it focuses the first incomplete field</li>
-            <li>Accessible via <code>aria-live</code></li>
-          </ul>
+          <PropsTable components={propsReference} />
 
           {/* Accessibility */}
           <h2 id="accessibility" className="text-2xl font-semibold mt-10 mb-4">Accessibility</h2>
           <p className="text-sm text-neutral-700 dark:text-neutral-300 mb-3">
             The component adds no text of its own, so labels stay in your language. Give each input an <code>aria-label</code>:
           </p>
-          <pre className="bg-neutral-100 dark:bg-neutral-900 text-sm p-4 rounded overflow-x-auto text-neutral-800 dark:text-neutral-100 mb-10">
-            <code>{`<Input aria-label="Digit 1 of 6" />`}</code>
-          </pre>
+          <CodeBlock code={`<Input aria-label="Digit 1 of 6" />`} />
 
           {/* Interactive Playground */}
           <OTPPlayground />

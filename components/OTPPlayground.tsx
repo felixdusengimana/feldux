@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Root, Input, Label } from '@frjoy/otp';
+import CodeBlock from '@/components/CodeBlock';
 
 interface PlaygroundConfig {
     type: 'number' | 'text' | 'any';
@@ -37,6 +38,11 @@ export default function OTPPlayground() {
             <h2 id="interactive-playground" className="text-2xl font-semibold mb-4">Interactive Playground</h2>
             <p className="text-neutral-600 dark:text-neutral-400 mb-6">
                 Experiment with different props and see the changes in real-time.
+                For more examples, see the{' '}
+                <a href="https://frjoy.github.io/" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 underline">
+                    Storybook playground
+                </a>
+                .
             </p>
 
             {/* Preset Configurations */}
@@ -273,9 +279,7 @@ export default function OTPPlayground() {
             {/* Generated Code */}
             <div className="mb-10 min-w-0">
                 <h3 className="text-lg font-semibold mb-3">Generated Code</h3>
-                <pre className="bg-neutral-100 dark:bg-neutral-900 text-sm p-4 rounded overflow-x-auto text-neutral-800 dark:text-neutral-100 max-w-full">
-                    <code>
-                        {`<Root 
+                <CodeBlock code={`<Root 
   onChange={setOtp}${playgroundConfig.type !== 'number' ? `\n  type="${playgroundConfig.type}"` : ''}${playgroundConfig.password ? '\n  password' : ''}${playgroundConfig.joiner ? `\n  joiner="${playgroundConfig.joiner}"` : ''}${playgroundConfig.pattern ? `\n  pattern="${playgroundConfig.pattern}"` : ''}
 >
   <Label>Enter Code</Label>
@@ -284,13 +288,11 @@ export default function OTPPlayground() {
       <Input
         key={i}
         length={${playgroundConfig.inputLength}}
-        className={"${playgroundConfig.className}"
+        className="${playgroundConfig.className}"
       />
     ))}
   </div>
-</Root>`}
-                    </code>
-                </pre>
+</Root>`} filename="VerifyCode.tsx" />
             </div>
         </div>
     );
