@@ -69,7 +69,7 @@ export default function OTPInputDocsPage() {
       <link rel="icon" href="/favicon.ico" />
     </Head>
     <div className="flex flex-col min-h-screen">
-      <main className="flex-grow px-6 max-w-7xl mx-auto gap-14 flex">
+      <div className="flex-grow max-w-7xl gap-14 flex">
         <div className="flex-1 max-w-4xl">
           {/* Introduction */}
           <h1 id="introduction" className="text-4xl font-bold mb-2">{pkg.name}</h1>
@@ -237,7 +237,7 @@ export default function OTPInputDocsPage() {
         </div>
 
         <TableOfContents sections={initialTableOfContent} />
-      </main>
+      </div>
     </div>
     </>
   );

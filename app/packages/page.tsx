@@ -7,7 +7,7 @@ import React from 'react';
 export default function PackagesPage() {
 
   return (
-    <section className="p-6 max-w-4xl mx-auto text-neutral-800 dark:text-neutral-200">
+    <section className="text-neutral-800 dark:text-neutral-200">
       <h1 className="text-4xl font-bold mb-8 ">Available Packages</h1>
       <div className="grid gap-6 md:grid-cols-2">
         {packages.map(({ slug, name, description, repoUrl, packageName }) => (

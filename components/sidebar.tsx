@@ -111,7 +111,7 @@ export default function Navbar() {
   }
 
   return (
-    <aside className="md:w-[150px] md:flex-shrink-0 -mx-4 md:mx-0 md:px-0 font-serif">
+    <aside className="relative md:w-[150px] md:flex-shrink-0 -mx-4 md:mx-0 md:px-0 font-serif">
       <div className="lg:sticky lg:top-20">
         <div className="ml-2 md:ml-[12px] mb-2 px-4 md:px-0 md:mb-8 space-y-10 flex flex-col md:flex-row items-start ">
           <Logo />
@@ -183,7 +183,7 @@ export default function Navbar() {
             })}
           </div>
         </nav>
-        <div className="px-4 md:px-0 md:ml-[10px] mt-4 md:mt-8">
+        <div className="absolute top-1 right-4 md:static md:ml-[10px] md:mt-8">
           <label htmlFor="theme" className="sr-only">
             Theme
           </label>
