@@ -8,7 +8,7 @@ import TableOfContents, { ITableOfContent } from '@/components/TableOfContents';
 import OTPPlayground from '@/components/OTPPlayground';
 import CodeBlock from '@/components/CodeBlock';
 import PropsTable, { PropRow } from '@/components/PropsTable';
-import Head from 'next/head';
+import ShareLinks from '@/components/ShareLinks';
 
 const propsReference: Record<string, PropRow[]> = {
   Root: [
@@ -37,9 +37,6 @@ export default function OTPInputDocsPage() {
   if (!pkg) return <div className="p-6">Package not found.</div>;
 
   const url = `https://feldux.com/packages/${pkg.slug}`;
-  const title = pkg.name;
-  const description = pkg.description;
-  const image = 'https://feldux.com/og.jpg';
 
   const initialTableOfContent: ITableOfContent[] = [
     { id: 'introduction', title: 'Introduction', active: false },
@@ -54,20 +51,6 @@ export default function OTPInputDocsPage() {
 
   return (
     <>
-    <Head>
-      <title>{title} - Documentation</title>
-      <meta name="description" content={description} />
-      <meta property="og:title" content={title} />
-      <meta property="og:description" content={description} />
-      <meta property="og:image" content={image} />
-      <meta property="og:url" content={url} />
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content={title} />
-      <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={image} />
-      <link rel="canonical" href={url} />
-      <link rel="icon" href="/favicon.ico" />
-    </Head>
     <div className="flex flex-col min-h-screen">
       <div className="flex-grow max-w-7xl gap-14 flex">
         <div className="flex-1 max-w-4xl">
@@ -191,36 +174,12 @@ export default function OTPInputDocsPage() {
           {/* Interactive Playground */}
           <OTPPlayground />
 
-          {/* Share Package */}
-          <div id="share-package" className="mt-12 pt-6 border-t border-neutral-200 dark:border-neutral-800">
-            <h2 className="text-xl font-semibold mb-2">Share this package</h2>
-            <div className="flex space-x-4 text-blue-600 dark:text-blue-400">
-              <a
-                href={`https://twitter.com/intent/tweet?url=https://feldux.com/packages/otp&text=Check out this awesome React OTP input component from @frjoy!`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:underline"
-              >
-                Twitter
-              </a>
-              <a
-                href={`https://www.linkedin.com/sharing/share-offsite/?url=https://feldux.com/packages/otp`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:underline"
-              >
-                LinkedIn
-              </a>
-              <a
-                href={`https://www.facebook.com/sharer/sharer.php?u=https://feldux.com/packages/otp`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:underline"
-              >
-                Facebook
-              </a>
-            </div>
-          </div>
+          <ShareLinks
+            heading="Share this package"
+            url={url}
+            title="@frjoy/otp: headless OTP input for React"
+            text="@frjoy/otp: a headless OTP input for React with SMS autofill, paste and RTL support"
+          />
 
           {/* PR Link */}
           <div className="mt-10 text-sm text-neutral-600 dark:text-neutral-400">

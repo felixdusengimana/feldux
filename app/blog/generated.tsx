@@ -7,6 +7,7 @@ const allBlogs = getAllblogs([
     'slug',
     'coverImage',
     'excerpt',
+    'keywords',
 ])
 
 export default allBlogs;

@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import {
   GitHubIcon,
   ArrowIcon,
@@ -9,10 +10,12 @@ import {
   LinkedInIcon
 } from "@/components/icons";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "About",
-  description: "Software Engineer | Felix Dusengimana",
-};
+  description: "About Felix Dusengimana, a software engineer in Kigali, Rwanda: experience in web and mobile development, and where to find him online.",
+  path: "/about",
+  keywords: ["about", "experience", "web developer", "mobile developer"],
+});
 
 export default function AboutPage() {
   return (

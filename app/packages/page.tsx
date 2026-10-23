@@ -1,8 +1,16 @@
-"use client"
 import InstallTabs from "@/components/InstallTabs";
 import { packages } from "@/lib/packages";
 import Link from "next/link";
 import React from 'react';
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = pageMetadata({
+  title: "Packages",
+  description: "Open-source React packages by Felix Dusengimana, including @frjoy/otp, a headless OTP input with SMS autofill and paste support.",
+  path: "/packages",
+  keywords: ["React packages", "open source", "npm", "@frjoy/otp", "OTP input"],
+});
 
 export default function PackagesPage() {
 

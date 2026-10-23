@@ -4,26 +4,23 @@ import clsx from 'clsx'
 import Sidebar from '@/components/sidebar'
 import Providers from '@/components/providers'
 import { Metadata } from 'next'
+import { siteName, defaultDescription, defaultKeywords, defaultImage, twitterHandle } from '@/lib/seo'
 export const metadata: Metadata = {
   title: {
-    default: "Felix Dusengimana",
-    template: "%s | Felix Dusengimana"
+    default: `${siteName} | Software Engineer`,
+    template: `%s | ${siteName}`
   },
-  description: 'Developer, writer, Creator, and Animator.',
+  description: defaultDescription,
+  keywords: defaultKeywords,
+  authors: [{ name: siteName }],
+  creator: siteName,
   openGraph: {
-    title: "Felix Dusengimana",
-    description: 'Developer, writer, Creator, and Animator.',
+    title: `${siteName} | Software Engineer`,
+    description: defaultDescription,
     type: 'website',
-    siteName: 'Felix Dusengimana',
-    images: [
-      {
-        url: 'https://feldux.com/og.png',
-        width: 1920,
-        height: 1080,
-        alt: 'Felix Dusengimana',
-      },
-    ],
-    locale: 'en-US',
+    siteName,
+    images: [defaultImage],
+    locale: 'en_US',
   },
   robots:{
     follow: true,
@@ -37,8 +34,11 @@ export const metadata: Metadata = {
     },
   },
   twitter: {
-    title: "Felix Dusengimana",
+    title: `${siteName} | Software Engineer`,
+    description: defaultDescription,
     card: 'summary_large_image',
+    creator: twitterHandle,
+    images: [defaultImage.url],
   },
   icons:{
     shortcut: '/favicon.ico',

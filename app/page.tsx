@@ -7,12 +7,33 @@ import {
   LocationIcon,
 } from "components/icons";
 import { name, about, bio, avatar } from "lib/info";
+import type { Metadata } from "next";
+import { pageMetadata, JsonLd, person, siteName, siteUrl, defaultDescription } from "@/lib/seo";
+
+export const metadata: Metadata = {
+  ...pageMetadata({
+    title: `${siteName} | Software Engineer`,
+    description: defaultDescription,
+    path: "/",
+    keywords: ["portfolio", "frontend engineer", "React developer Rwanda"],
+  }),
+  title: { absolute: `${siteName} | Software Engineer` },
+};
 
 export const revalidate = 60;
 
 export default async function HomePage() {
   return (
     <section>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@graph": [
+            { ...person, "@id": `${siteUrl}/#person` },
+            { "@type": "WebSite", "@id": `${siteUrl}/#website`, url: siteUrl, name: siteName, publisher: { "@id": `${siteUrl}/#person` } },
+          ],
+        }}
+      />
       <h1 className="font-bold text-3xl font-serif">{name}</h1>
       <p className="my-5 max-w-[460px] text-neutral-800 dark:text-neutral-200">
         {about()}
