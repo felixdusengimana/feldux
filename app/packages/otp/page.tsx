@@ -54,11 +54,11 @@ export default function OTPInputDocsPage() {
         <div className="flex-1 max-w-4xl">
           {/* Introduction */}
           <h1 id="introduction" className="text-4xl font-bold mb-2">{pkg.name}</h1>
-          <p className="text-gray-600 dark:text-gray-400 mb-6">{pkg.description}</p>
+          <p className="text-neutral-600 dark:text-neutral-400 mb-6">{pkg.description}</p>
 
           {/* Features */}
           <h2 id="features" className="text-2xl font-semibold mb-4">Features</h2>
-          <ul className="list-disc pl-5 mb-10 space-y-1 text-gray-700 dark:text-gray-300">
+          <ul className="list-disc pl-5 mb-10 space-y-1 text-neutral-700 dark:text-neutral-300">
             <li><strong>Headless:</strong> no styles or wrapper element, style it however you like</li>
             <li><strong>SMS autofill:</strong> iOS and Android can offer the code from a text message</li>
             <li><strong>Paste anywhere:</strong> pasted codes spread across inputs, spaces are ignored</li>
@@ -85,7 +85,7 @@ export default function OTPInputDocsPage() {
               </a>
             )}
           </div>
-          <p className="-mt-6 mb-10 text-sm text-gray-600 dark:text-gray-400">Requires React 18 or newer.</p>
+          <p className="-mt-6 mb-10 text-sm text-neutral-600 dark:text-neutral-400">Requires React 18 or newer.</p>
 
           {/* Live Demo 1 */}
           <h2 id="live-demo-1" className="text-2xl font-semibold mb-4">Live Demo 1: Basic OTP</h2>
@@ -97,15 +97,15 @@ export default function OTPInputDocsPage() {
                   key={i}
                   length={1}
                   aria-label={`Digit ${i + 1} of 6`}
-                  className="w-12 h-12 text-center border border-gray-300 dark:border-gray-700 rounded focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
+                  className="w-12 h-12 text-center border border-neutral-300 dark:border-neutral-700 rounded focus:ring-2 focus:ring-blue-500 dark:bg-neutral-800 dark:text-white"
                 />
               ))}
             </div>
           </Root>
-          <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">
+          <p className="text-sm text-neutral-700 dark:text-neutral-300 mb-4">
             Entered OTP: <span className="font-mono">{otpValue1 || '-'}</span>
           </p>
-          <pre className="bg-gray-100 dark:bg-gray-900 text-sm p-4 rounded overflow-x-auto text-gray-800 dark:text-gray-100 mb-10">
+          <pre className="bg-neutral-100 dark:bg-neutral-900 text-sm p-4 rounded overflow-x-auto text-neutral-800 dark:text-neutral-100 mb-10">
             <code>
               {`<Root onChange={setOtp} type="number" password>
   <Label>Enter OTP</Label>
@@ -118,7 +118,7 @@ export default function OTPInputDocsPage() {
 
           {/* Live Demo 2 */}
           <h2 id="live-demo-2" className="text-2xl font-semibold mb-4">Live Demo 2: Alphanumeric OTP with Joiner</h2>
-          <p className="text-sm mb-3 text-gray-700 dark:text-gray-300">
+          <p className="text-sm mb-3 text-neutral-700 dark:text-neutral-300">
             This example shows a referral-style OTP code joined with <code>-</code>.
           </p>
           <Root onChange={setOtpValue2} type="text" joiner="-">
@@ -129,15 +129,15 @@ export default function OTPInputDocsPage() {
                   key={i}
                   length={2}
                   aria-label={`Part ${i + 1} of 4`}
-                  className="w-14 h-12 text-center border border-gray-300 dark:border-gray-700 rounded focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
+                  className="w-14 h-12 text-center border border-neutral-300 dark:border-neutral-700 rounded focus:ring-2 focus:ring-blue-500 dark:bg-neutral-800 dark:text-white"
                 />
               ))}
             </div>
           </Root>
-          <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">
+          <p className="text-sm text-neutral-700 dark:text-neutral-300 mb-4">
             Joined Code: <span className="font-mono">{otpValue2 || '-'}</span>
           </p>
-          <pre className="bg-gray-100 dark:bg-gray-900 text-sm p-4 rounded overflow-x-auto text-gray-800 dark:text-gray-100 mb-10">
+          <pre className="bg-neutral-100 dark:bg-neutral-900 text-sm p-4 rounded overflow-x-auto text-neutral-800 dark:text-neutral-100 mb-10">
             <code>
               {`<Root onChange={setOtp} type="text" joiner="-">
   <Label>Referral Code</Label>
@@ -150,7 +150,7 @@ export default function OTPInputDocsPage() {
 
           {/* Live Demo 3 */}
           <h2 id="live-demo-3" className="text-2xl font-semibold mb-4">Live Demo 3: Arabic (Right-to-Left)</h2>
-          <p className="text-sm mb-3 text-gray-700 dark:text-gray-300">
+          <p className="text-sm mb-3 text-neutral-700 dark:text-neutral-300">
             OTP codes are read left to right, even on Arabic or Hebrew pages. Wrap the inputs in <code>dir=&quot;ltr&quot;</code> so
             the code isn&apos;t reversed. Try typing or pasting Arabic-Indic digits like <span dir="rtl">١٢٣٤</span>.
           </p>
@@ -162,16 +162,16 @@ export default function OTPInputDocsPage() {
                   <Input
                     key={i}
                     aria-label={`Digit ${i + 1} of 4`}
-                    className="w-12 h-12 text-center border border-gray-300 dark:border-gray-700 rounded focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
+                    className="w-12 h-12 text-center border border-neutral-300 dark:border-neutral-700 rounded focus:ring-2 focus:ring-blue-500 dark:bg-neutral-800 dark:text-white"
                   />
                 ))}
               </div>
             </Root>
           </div>
-          <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">
+          <p className="text-sm text-neutral-700 dark:text-neutral-300 mb-4">
             Entered OTP: <span className="font-mono">{otpValue3 || '-'}</span>
           </p>
-          <pre className="bg-gray-100 dark:bg-gray-900 text-sm p-4 rounded overflow-x-auto text-gray-800 dark:text-gray-100 mb-10">
+          <pre className="bg-neutral-100 dark:bg-neutral-900 text-sm p-4 rounded overflow-x-auto text-neutral-800 dark:text-neutral-100 mb-10">
             <code>
               {`<Root onChange={setOtp} type="number">
   <Label>Verification code</Label>
@@ -188,7 +188,7 @@ export default function OTPInputDocsPage() {
           <h2 id="props-reference" className="text-2xl font-semibold mt-10 mb-4">Props Reference</h2>
 
           <h3 className="text-xl font-semibold mt-6 mb-2">{`<Root />`}</h3>
-          <ul className="list-disc pl-5 text-sm text-gray-700 dark:text-gray-300">
+          <ul className="list-disc pl-5 text-sm text-neutral-700 dark:text-neutral-300">
             <li><code>onChange?: (otp: string) =&gt; void</code>: full code in input order, not called on first render</li>
             <li><code>type?: &apos;number&apos; | &apos;text&apos; | &apos;any&apos;</code></li>
             <li><code>password?: boolean</code></li>
@@ -197,24 +197,24 @@ export default function OTPInputDocsPage() {
           </ul>
 
           <h3 className="text-xl font-semibold mt-6 mb-2">{`<Input />`}</h3>
-          <ul className="list-disc pl-5 text-sm text-gray-700 dark:text-gray-300">
+          <ul className="list-disc pl-5 text-sm text-neutral-700 dark:text-neutral-300">
             <li><code>length?: number</code></li>
             <li><code>password?: boolean</code></li>
             <li>Supports native input props except <code>type</code>, <code>value</code>, <code>autoComplete</code>, <code>maxLength</code> and <code>minLength</code></li>
           </ul>
 
           <h3 className="text-xl font-semibold mt-6 mb-2">{`<Label />`}</h3>
-          <ul className="list-disc pl-5 text-sm text-gray-700 dark:text-gray-300">
+          <ul className="list-disc pl-5 text-sm text-neutral-700 dark:text-neutral-300">
             <li>Clicking it focuses the first incomplete field</li>
             <li>Accessible via <code>aria-live</code></li>
           </ul>
 
           {/* Accessibility */}
           <h2 id="accessibility" className="text-2xl font-semibold mt-10 mb-4">Accessibility</h2>
-          <p className="text-sm text-gray-700 dark:text-gray-300 mb-3">
+          <p className="text-sm text-neutral-700 dark:text-neutral-300 mb-3">
             The component adds no text of its own, so labels stay in your language. Give each input an <code>aria-label</code>:
           </p>
-          <pre className="bg-gray-100 dark:bg-gray-900 text-sm p-4 rounded overflow-x-auto text-gray-800 dark:text-gray-100 mb-10">
+          <pre className="bg-neutral-100 dark:bg-neutral-900 text-sm p-4 rounded overflow-x-auto text-neutral-800 dark:text-neutral-100 mb-10">
             <code>{`<Input aria-label="Digit 1 of 6" />`}</code>
           </pre>
 
@@ -222,7 +222,7 @@ export default function OTPInputDocsPage() {
           <OTPPlayground />
 
           {/* Share Package */}
-          <div id="share-package" className="mt-12 pt-6 border-t border-gray-200 dark:border-gray-800">
+          <div id="share-package" className="mt-12 pt-6 border-t border-neutral-200 dark:border-neutral-800">
             <h2 className="text-xl font-semibold mb-2">Share this package</h2>
             <div className="flex space-x-4 text-blue-600 dark:text-blue-400">
               <a
@@ -253,7 +253,7 @@ export default function OTPInputDocsPage() {
           </div>
 
           {/* PR Link */}
-          <div className="mt-10 text-sm text-gray-600 dark:text-gray-400">
+          <div className="mt-10 text-sm text-neutral-600 dark:text-neutral-400">
             Want to improve this page?{' '}
             <a
               href={`${pkg.repoUrl}/tree/main/packages/${pkg.slug}`}

@@ -13,10 +13,10 @@ export default function PackagesPage() {
         {packages.map(({ slug, name, description, repoUrl, packageName }) => (
           <div
             key={slug}
-            className="border rounded-lg p-6 hover:shadow-lg transition-shadow bg-white dark:bg-gray-800"
+            className="border border-neutral-200 dark:border-neutral-800 rounded-lg p-6 hover:shadow-lg transition-shadow bg-neutral-50 dark:bg-neutral-900"
           >
             <h2 className="text-2xl font-semibold mb-2">{name}</h2>
-            <p className="mb-4 text-gray-700 dark:text-gray-300">{description}</p>
+            <p className="mb-4 text-neutral-700 dark:text-neutral-300">{description}</p>
 
             <InstallTabs  packageName={packageName}/>
 
@@ -28,7 +28,7 @@ export default function PackagesPage() {
             </Link>
 
             {repoUrl && (
-              <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+              <p className="mt-2 text-sm text-neutral-500 dark:text-neutral-400">
                 <a
                   href={repoUrl}
                   target="_blank"

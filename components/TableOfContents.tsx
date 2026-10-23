@@ -69,7 +69,7 @@ export default function TableOfContents({ sections }: ITableOfContentsProps) {
         <aside className="md:w-[150px] md:flex-shrink-0 -mx-4 md:mx-0 md:px-0 font-serif">
             <nav className="sticky top-20 hidden md:block w-64 pr-6 text-sm overflow-visible" aria-label="Table of contents">
                 <h2 className="text-lg font-semibold mb-4">On this page</h2>
-                {isClient && <ul className="space-y-2 border-l border-gray-300 dark:border-gray-700 relative">
+                {isClient && <ul className="space-y-2 border-l border-neutral-300 dark:border-neutral-700 relative">
                     {tableOfContentState.map(({ id, title, active }) => (
                         <li key={id} className="relative">
                             <a
@@ -83,7 +83,7 @@ export default function TableOfContents({ sections }: ITableOfContentsProps) {
                   cursor-pointer
                   ${active
                                         ? 'text-black dark:text-white font-semibold'
-                                        : 'text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white'
+                                        : 'text-neutral-600 hover:text-black dark:text-neutral-400 dark:hover:text-white'
                                     }
                 `}
                             >
