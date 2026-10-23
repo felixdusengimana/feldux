@@ -14,7 +14,6 @@ export const metadata: Metadata = {
     title: "Felix Dusengimana",
     description: 'Developer, writer, Creator, and Animator.',
     type: 'website',
-    url: 'https://feldux.com',
     siteName: 'Felix Dusengimana',
     images: [
       {

@@ -23,16 +23,10 @@ export async function generateMetadata({
     return;
   }
 
-  const {
-    title,
-    publishedAt: publishedTime,
-    summary: description,
-    image,
-    slug,
-  } = post;
-  const ogImage = image
-    ? `https://leerob.io${image}`
-    : `https://leerob.io/api/og?title=${title}`;
+  const { title, excerpt: description, date: publishedTime, coverImage, slug } = post;
+  const ogImage = coverImage
+    ? `https://feldux.com${coverImage}`
+    : "https://feldux.com/og.png";
 
   return {
     title,
@@ -42,12 +36,8 @@ export async function generateMetadata({
       description,
       type: "article",
       publishedTime,
-      url: `https://leerob.io/blog/${slug}`,
-      images: [
-        {
-          url: ogImage,
-        },
-      ],
+      url: `https://feldux.com/blog/${slug}`,
+      images: [{ url: ogImage }],
     },
     twitter: {
       card: "summary_large_image",
