@@ -12,6 +12,7 @@ export default function OTPInputDocsPage() {
   const pkg = packages.find((p) => p.slug === 'otp');
   const [otpValue1, setOtpValue1] = useState('');
   const [otpValue2, setOtpValue2] = useState('');
+  const [otpValue3, setOtpValue3] = useState('');
 
   if (!pkg) return <div className="p-6">Package not found.</div>;
 
@@ -22,10 +23,13 @@ export default function OTPInputDocsPage() {
 
   const initialTableOfContent: ITableOfContent[] = [
     { id: 'introduction', title: 'Introduction', active: false },
+    { id: 'features', title: 'Features', active: false },
     { id: 'usage', title: 'Usage', active: false },
     { id: 'live-demo-1', title: 'Live Demo 1: Basic OTP', active: false },
     { id: 'live-demo-2', title: 'Live Demo 2: Alphanumeric OTP with Joiner', active: false },
+    { id: 'live-demo-3', title: 'Live Demo 3: Arabic (Right-to-Left)', active: false },
     { id: 'props-reference', title: 'Props Reference', active: false },
+    { id: 'accessibility', title: 'Accessibility', active: false },
     { id: 'interactive-playground', title: 'Interactive Playground', active: false },
   ];
 
@@ -52,6 +56,19 @@ export default function OTPInputDocsPage() {
           <h1 id="introduction" className="text-4xl font-bold mb-2">{pkg.name}</h1>
           <p className="text-gray-600 dark:text-gray-400 mb-6">{pkg.description}</p>
 
+          {/* Features */}
+          <h2 id="features" className="text-2xl font-semibold mb-4">Features</h2>
+          <ul className="list-disc pl-5 mb-10 space-y-1 text-gray-700 dark:text-gray-300">
+            <li><strong>Headless:</strong> no styles or wrapper element, style it however you like</li>
+            <li><strong>SMS autofill:</strong> iOS and Android can offer the code from a text message</li>
+            <li><strong>Paste anywhere:</strong> pasted codes spread across inputs, spaces are ignored</li>
+            <li><strong>Keyboard friendly:</strong> auto-advance, Backspace steps back, arrow keys move between inputs</li>
+            <li><strong>Fills in order:</strong> clicking an empty input jumps to the first unfilled one</li>
+            <li><strong>Mobile keyboards:</strong> <code>type=&quot;number&quot;</code> opens the numeric keypad</li>
+            <li><strong>International:</strong> Arabic-Indic and Persian digits become 0-9, works on right-to-left pages</li>
+            <li><strong>Multi-character inputs</strong>, validation and password masking</li>
+          </ul>
+
           {/* Usage */}
           <h2 id="usage" className="text-2xl font-semibold mb-4">Usage</h2>
           <InstallTabs packageName={pkg.packageName} />
@@ -59,10 +76,16 @@ export default function OTPInputDocsPage() {
             <a href={pkg.repoUrl} target="_blank" rel="noopener noreferrer" className="hover:underline mr-6">
               GitHub Repository
             </a>
-            <a href={pkg.npmUrl} target="_blank" rel="noopener noreferrer" className="hover:underline">
+            <a href={pkg.npmUrl} target="_blank" rel="noopener noreferrer" className="hover:underline mr-6">
               View on NPM
             </a>
+            {pkg.storybookUrl && (
+              <a href={pkg.storybookUrl} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                Storybook Playground
+              </a>
+            )}
           </div>
+          <p className="-mt-6 mb-10 text-sm text-gray-600 dark:text-gray-400">Requires React 18 or newer.</p>
 
           {/* Live Demo 1 */}
           <h2 id="live-demo-1" className="text-2xl font-semibold mb-4">Live Demo 1: Basic OTP</h2>
@@ -73,6 +96,7 @@ export default function OTPInputDocsPage() {
                 <Input
                   key={i}
                   length={1}
+                  aria-label={`Digit ${i + 1} of 6`}
                   className="w-12 h-12 text-center border border-gray-300 dark:border-gray-700 rounded focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
                 />
               ))}
@@ -104,6 +128,7 @@ export default function OTPInputDocsPage() {
                 <Input
                   key={i}
                   length={2}
+                  aria-label={`Part ${i + 1} of 4`}
                   className="w-14 h-12 text-center border border-gray-300 dark:border-gray-700 rounded focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
                 />
               ))}
@@ -123,12 +148,48 @@ export default function OTPInputDocsPage() {
             </code>
           </pre>
 
+          {/* Live Demo 3 */}
+          <h2 id="live-demo-3" className="text-2xl font-semibold mb-4">Live Demo 3: Arabic (Right-to-Left)</h2>
+          <p className="text-sm mb-3 text-gray-700 dark:text-gray-300">
+            OTP codes are read left to right, even on Arabic or Hebrew pages. Wrap the inputs in <code>dir=&quot;ltr&quot;</code> so
+            the code isn&apos;t reversed. Try typing or pasting Arabic-Indic digits like <span dir="rtl">١٢٣٤</span>.
+          </p>
+          <div dir="rtl" lang="ar">
+            <Root onChange={setOtpValue3} type="number">
+              <Label className="block mb-2 font-medium">رمز التحقق</Label>
+              <div dir="ltr" className="flex space-x-2 mb-4">
+                {[...Array(4)].map((_, i) => (
+                  <Input
+                    key={i}
+                    aria-label={`Digit ${i + 1} of 4`}
+                    className="w-12 h-12 text-center border border-gray-300 dark:border-gray-700 rounded focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
+                  />
+                ))}
+              </div>
+            </Root>
+          </div>
+          <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">
+            Entered OTP: <span className="font-mono">{otpValue3 || '-'}</span>
+          </p>
+          <pre className="bg-gray-100 dark:bg-gray-900 text-sm p-4 rounded overflow-x-auto text-gray-800 dark:text-gray-100 mb-10">
+            <code>
+              {`<Root onChange={setOtp} type="number">
+  <Label>Verification code</Label>
+  <div dir="ltr">
+    {[...Array(4)].map((_, i) => (
+      <Input key={i} />
+    ))}
+  </div>
+</Root>`}
+            </code>
+          </pre>
+
           {/* Props Reference */}
           <h2 id="props-reference" className="text-2xl font-semibold mt-10 mb-4">Props Reference</h2>
 
           <h3 className="text-xl font-semibold mt-6 mb-2">{`<Root />`}</h3>
           <ul className="list-disc pl-5 text-sm text-gray-700 dark:text-gray-300">
-            <li><code>onChange?: (otp: string) =&gt; void</code></li>
+            <li><code>onChange?: (otp: string) =&gt; void</code>: full code in input order, not called on first render</li>
             <li><code>type?: &apos;number&apos; | &apos;text&apos; | &apos;any&apos;</code></li>
             <li><code>password?: boolean</code></li>
             <li><code>joiner?: string</code></li>
@@ -139,14 +200,23 @@ export default function OTPInputDocsPage() {
           <ul className="list-disc pl-5 text-sm text-gray-700 dark:text-gray-300">
             <li><code>length?: number</code></li>
             <li><code>password?: boolean</code></li>
-            <li>Supports all native input props</li>
+            <li>Supports native input props except <code>type</code>, <code>value</code>, <code>autoComplete</code>, <code>maxLength</code> and <code>minLength</code></li>
           </ul>
 
           <h3 className="text-xl font-semibold mt-6 mb-2">{`<Label />`}</h3>
           <ul className="list-disc pl-5 text-sm text-gray-700 dark:text-gray-300">
-            <li>Automatically focuses first incomplete field</li>
+            <li>Clicking it focuses the first incomplete field</li>
             <li>Accessible via <code>aria-live</code></li>
           </ul>
+
+          {/* Accessibility */}
+          <h2 id="accessibility" className="text-2xl font-semibold mt-10 mb-4">Accessibility</h2>
+          <p className="text-sm text-gray-700 dark:text-gray-300 mb-3">
+            The component adds no text of its own, so labels stay in your language. Give each input an <code>aria-label</code>:
+          </p>
+          <pre className="bg-gray-100 dark:bg-gray-900 text-sm p-4 rounded overflow-x-auto text-gray-800 dark:text-gray-100 mb-10">
+            <code>{`<Input aria-label="Digit 1 of 6" />`}</code>
+          </pre>
 
           {/* Interactive Playground */}
           <OTPPlayground />
@@ -156,7 +226,7 @@ export default function OTPInputDocsPage() {
             <h2 className="text-xl font-semibold mb-2">Share this package</h2>
             <div className="flex space-x-4 text-blue-600 dark:text-blue-400">
               <a
-                href={`https://twitter.com/intent/tweet?url=https://feldux.com/packages/otp-input&text=Check out this awesome React OTP input component from @frjoy!`}
+                href={`https://twitter.com/intent/tweet?url=https://feldux.com/packages/otp&text=Check out this awesome React OTP input component from @frjoy!`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:underline"
@@ -164,7 +234,7 @@ export default function OTPInputDocsPage() {
                 Twitter
               </a>
               <a
-                href={`https://www.linkedin.com/sharing/share-offsite/?url=https://feldux.com/packages/otp-input`}
+                href={`https://www.linkedin.com/sharing/share-offsite/?url=https://feldux.com/packages/otp`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:underline"
@@ -172,7 +242,7 @@ export default function OTPInputDocsPage() {
                 LinkedIn
               </a>
               <a
-                href={`https://www.facebook.com/sharer/sharer.php?u=https://feldux.com/packages/otp-input`}
+                href={`https://www.facebook.com/sharer/sharer.php?u=https://feldux.com/packages/otp`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:underline"

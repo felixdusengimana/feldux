@@ -89,7 +89,7 @@ export default function OTPPlayground() {
                                 ...inititalConfig,
                                 type: 'text',
                                 joiner: ' ',
-                                pattern: '[A-Z0-9]',
+                                pattern: '[A-Z0-9]{3}',
                                 inputCount: 3,
                                 inputLength: 3,
                             });
@@ -258,10 +258,11 @@ export default function OTPPlayground() {
                     <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-600">
                         <h4 className="font-medium mb-2">Try these features:</h4>
                         <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1">
-                            <li>• Paste complete codes - they'll auto-fill</li>
+                            <li>• Paste complete codes, even with spaces - they&apos;ll auto-fill</li>
                             <li>• Use arrow keys to navigate between inputs</li>
                             <li>• Backspace deletes and moves to previous input</li>
-                            <li>• Enter moves to next input field</li>
+                            <li>• Click an empty input - focus jumps to the first unfilled one</li>
+                            {playgroundConfig.type === 'number' && <li>• Arabic-Indic digits like ١٢٣٤ become 1234</li>}
                             {playgroundConfig.password && <li>• Content is masked for security</li>}
                             {playgroundConfig.joiner && <li>• Joiner automatically added in output</li>}
                         </ul>
