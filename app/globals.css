@@ -55,3 +55,29 @@
     color: #a3a3a3;
     user-select: none;
 }
+
+/* resume print layout: no sidebar, dark text on white even in dark mode */
+@media print {
+    aside {
+        display: none !important;
+    }
+    html, body {
+        background: #fff !important;
+        margin: 0 !important;
+    }
+    .resume, .resume * {
+        color: #171717 !important;
+        background: transparent !important;
+        border-color: #d4d4d4 !important;
+        opacity: 1 !important;
+    }
+    .resume a {
+        text-decoration: none;
+    }
+    .resume section {
+        break-inside: auto;
+    }
+    .resume h2, .resume h3 {
+        break-after: avoid;
+    }
+}

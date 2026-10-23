@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import type { Metadata } from "next";
+import Link from "next/link";
 import { pageMetadata } from "@/lib/seo";
 import {
   GitHubIcon,
@@ -35,6 +36,10 @@ export default function AboutPage() {
           development. Launched a couple of dozen different apps on multiple
           platforms. I like to work on challenging problems, especially ones
           that touch people's lives.
+        </p>
+
+        <p>
+          Read more about my experience in my <Link href="/resume">resume</Link>.
         </p>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
@@ -86,10 +91,8 @@ export default function AboutPage() {
             </div>
             <ArrowIcon />
           </a>
-          <a
-            rel="noopener noreferrer"
-            target="_blank"
-            href="https://docs.google.com/document/d/1k6PDFC2B13BBEMnSerJuNwMqVJAVoKga9cFvGlG66Vk/edit?usp=sharing"
+          <Link
+            href="/resume"
             className="flex w-full border border-neutral-200 dark:border-neutral-800 rounded-lg p-4 no-underline items-center text-neutral-800 dark:text-neutral-200 hover:dark:bg-neutral-900 hover:bg-neutral-100 transition-all justify-between"
           >
             <div className="flex items-center">
@@ -110,7 +113,7 @@ export default function AboutPage() {
               <div className="ml-3">Resume</div>
             </div>
             <ArrowIcon />
-          </a>
+          </Link>
           <a
             rel="noopener noreferrer"
             target="_blank"
