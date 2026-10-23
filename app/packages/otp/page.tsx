@@ -33,7 +33,6 @@ export default function OTPInputDocsPage() {
   const pkg = packages.find((p) => p.slug === 'otp');
   const [otpValue1, setOtpValue1] = useState('');
   const [otpValue2, setOtpValue2] = useState('');
-  const [otpValue3, setOtpValue3] = useState('');
 
   if (!pkg) return <div className="p-6">Package not found.</div>;
 
@@ -48,7 +47,6 @@ export default function OTPInputDocsPage() {
     { id: 'usage', title: 'Usage', active: false },
     { id: 'live-demo-1', title: 'Live Demo 1: Basic OTP', active: false },
     { id: 'live-demo-2', title: 'Live Demo 2: Alphanumeric OTP with Joiner', active: false },
-    { id: 'live-demo-3', title: 'Live Demo 3: Arabic (Right-to-Left)', active: false },
     { id: 'props-reference', title: 'Props Reference', active: false },
     { id: 'accessibility', title: 'Accessibility', active: false },
     { id: 'interactive-playground', title: 'Interactive Playground', active: false },
@@ -86,7 +84,7 @@ export default function OTPInputDocsPage() {
             <li><strong>Keyboard friendly:</strong> auto-advance, Backspace steps back, arrow keys move between inputs</li>
             <li><strong>Fills in order:</strong> clicking an empty input jumps to the first unfilled one</li>
             <li><strong>Mobile keyboards:</strong> <code>type=&quot;number&quot;</code> opens the numeric keypad</li>
-            <li><strong>International:</strong> Arabic-Indic and Persian digits become 0-9, works on right-to-left pages</li>
+            <li><strong>International:</strong> Arabic-Indic and Persian digits become 0-9, and it works on right-to-left pages (Arabic, Hebrew) because the code is still entered left to right</li>
             <li><strong>Multi-character inputs</strong>, validation and password masking</li>
           </ul>
 
@@ -176,38 +174,6 @@ export default function OTPInputDocsPage() {
   {[...Array(4)].map((_, i) => (
     <Input key={i} length={2} />
   ))}
-</Root>`} />
-
-          {/* Live Demo 3 */}
-          <h2 id="live-demo-3" className="text-2xl font-semibold mb-4">Live Demo 3: Arabic (Right-to-Left)</h2>
-          <p className="text-sm mb-3 text-neutral-700 dark:text-neutral-300">
-            OTP codes are read left to right, even on Arabic or Hebrew pages. Wrap the inputs in <code>dir=&quot;ltr&quot;</code> so
-            the code isn&apos;t reversed. Try typing or pasting Arabic-Indic digits like <span dir="rtl">١٢٣٤</span>.
-          </p>
-          <div dir="rtl" lang="ar">
-            <Root onChange={setOtpValue3} type="number">
-              <Label className="block mb-2 font-medium">رمز التحقق</Label>
-              <div dir="ltr" className="flex space-x-2 mb-4">
-                {[...Array(4)].map((_, i) => (
-                  <Input
-                    key={i}
-                    aria-label={`Digit ${i + 1} of 4`}
-                    className="w-12 h-12 text-center border border-neutral-300 dark:border-neutral-700 rounded focus:ring-2 focus:ring-blue-500 dark:bg-neutral-800 dark:text-white"
-                  />
-                ))}
-              </div>
-            </Root>
-          </div>
-          <p className="text-sm text-neutral-700 dark:text-neutral-300 mb-4">
-            Entered OTP: <span className="font-mono">{otpValue3 || '-'}</span>
-          </p>
-          <CodeBlock code={`<Root onChange={setOtp} type="number">
-  <Label>Verification code</Label>
-  <div dir="ltr">
-    {[...Array(4)].map((_, i) => (
-      <Input key={i} />
-    ))}
-  </div>
 </Root>`} />
 
           {/* Props Reference */}
