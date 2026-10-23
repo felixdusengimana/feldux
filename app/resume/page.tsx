@@ -23,6 +23,7 @@ export default function ResumePage() {
             ...person,
             jobTitle: resume.headline,
             email: `mailto:${resume.email}`,
+            telephone: resume.phone,
             worksFor: resume.experience.filter((e) => !e.end).map((e) => ({ "@type": "Organization", name: e.company })),
             alumniOf: resume.education.map((e) => ({ "@type": "EducationalOrganization", name: e.school })),
             knowsAbout: resume.expertise,

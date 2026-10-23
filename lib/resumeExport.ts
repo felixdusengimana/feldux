@@ -2,6 +2,7 @@ import { Resume, formatRange, roleMeta } from "@/lib/resume";
 
 const fileBase = (r: Resume) => `${r.name.replace(/\s+/g, "_")}_Resume`;
 const host = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "");
+const tel = (phone: string) => `tel:${phone.replace(/\s/g, "")}`;
 
 export function saveBlob(blob: Blob, filename: string) {
   const a = document.createElement("a");
@@ -18,7 +19,7 @@ export function toMarkdown(r: Resume) {
     `# ${r.name}`,
     `**${r.headline}** · ${r.location}`,
     "",
-    [r.email, host(r.website), ...r.profiles.map((p) => host(p.url))].join(" · "),
+    [r.email, r.phone, host(r.website), ...r.profiles.map((p) => host(p.url))].join(" · "),
   ];
   const section = (title: string, lines: string[]) => lines.length && out.push("", `## ${title}`, ...lines);
   section("Summary", r.summary ? [r.summary] : []);
@@ -47,6 +48,7 @@ export function toJsonResume(r: Resume) {
       name: r.name,
       label: r.headline,
       email: r.email,
+      phone: r.phone,
       url: r.website,
       summary: r.summary || undefined,
       location: { city: "Kigali", countryCode: "RW" },
@@ -108,7 +110,8 @@ export async function downloadPdf(r: Resume) {
   text(`${r.headline} · ${r.location}`, 11, { gray: 70, gap: 1 });
   doc.setFont("helvetica", "normal"); doc.setFontSize(9.5); ink(60);
   let x = M;
-  [[r.email, `mailto:${r.email}`], [host(r.website), r.website], ...r.profiles.map((p) => [host(p.url), p.url])].forEach(([label, url], i) => {
+  [[r.email, `mailto:${r.email}`], [r.phone, tel(r.phone)], [host(r.website), r.website], ...r.profiles.map((p) => [host(p.url), p.url])].forEach(([label, url], i) => {
+    if (i && x + doc.getTextWidth("   ·   " + label) > M + W) { x = M; y += 5; i = 0; }
     const s = (i ? "   ·   " : "") + label;
     const offset = i ? doc.getTextWidth("   ·   ") : 0;
     doc.text(s, x, y + 3.5);
@@ -179,7 +182,7 @@ export async function downloadDocx(r: Resume) {
   const bullet = (t: string) => new Paragraph({ bullet: { level: 0 }, spacing: { after: 40 }, children: [new TextRun({ text: t, size: 20 })] });
   const link = (label: string, url: string) => new ExternalHyperlink({ link: url, children: [new TextRun({ text: label, style: "Hyperlink", size: 20 })] });
 
-  const contacts = [[r.email, `mailto:${r.email}`], [host(r.website), r.website], ...r.profiles.map((x) => [host(x.url), x.url])];
+  const contacts = [[r.email, `mailto:${r.email}`], [r.phone, tel(r.phone)], [host(r.website), r.website], ...r.profiles.map((x) => [host(x.url), x.url])];
   const children = [
     new Paragraph({ heading: HeadingLevel.TITLE, children: [new TextRun({ text: r.name, bold: true, size: 40 })] }),
     p(`${r.headline} · ${r.location}`, { size: 22, color: "555555" }),
