@@ -26,7 +26,7 @@ const yearsOfExperience = new Date().getFullYear() - 2020;
 export const resume = {
   updated: "2026-10-24",
   name: "Felix Dusengimana",
-  headline: "Backend Engineer",
+  headline: "Software Engineer",
   location: "Kigali, Rwanda",
   email: "phelixdusengimana@gmail.com",
   website: "https://feldux.com",
@@ -35,7 +35,7 @@ export const resume = {
     { network: "GitHub", url: "https://github.com/felixdusengimana" },
   ],
   summary:
-    `Backend-focused Software Engineer with ${yearsOfExperience} years of experience designing and building scalable backend and full-stack systems using Java (Spring Boot), Kotlin, Node.js and Python. At PivotAccess, contributed to Tekana, a mission-critical platform used by Rwanda National Police, developing secure microservices, implementing RBAC authorization systems, and improving system reliability and performance. Experienced in building RESTful APIs, designing database-driven applications with PostgreSQL, and deploying production systems using Docker and CI/CD pipelines. Known for writing clean, maintainable code and collaborating effectively in Agile teams to deliver reliable, high-impact software solutions.`,
+    `Versatile Software Engineer with ${yearsOfExperience} years of experience designing and building scalable systems end to end, from APIs and databases to web and mobile apps, using Java (Spring Boot), Kotlin, Node.js, Python, React and Flutter. At PivotAccess, contributed to Tekana, a mission-critical platform used by Rwanda National Police, developing secure microservices, implementing RBAC authorization systems, and improving system reliability and performance. Experienced in building RESTful APIs, designing database-driven applications with PostgreSQL, and deploying production systems using Docker and CI/CD pipelines. Known for writing clean, maintainable code and collaborating effectively in Agile teams to deliver reliable, high-impact software solutions.`,
   expertise: [
     "Java (Spring Boot)",
     "Kotlin",

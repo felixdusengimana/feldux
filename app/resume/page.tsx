@@ -5,9 +5,9 @@ import { pageMetadata, JsonLd, person, siteUrl } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "Resume",
-  description: "Resume of Felix Dusengimana, backend engineer in Kigali, Rwanda: Spring Boot, Java, TypeScript, PostgreSQL and Docker. Download as PDF, Word, Markdown or JSON.",
+  description: "Resume of Felix Dusengimana, software engineer in Kigali, Rwanda: Spring Boot, Java, TypeScript, React, PostgreSQL and Docker. Download as PDF, Word, Markdown or JSON.",
   path: "/resume",
-  keywords: ["resume", "CV", "backend engineer", "Spring Boot", "Java", "PostgreSQL", "hire software engineer Rwanda"],
+  keywords: ["resume", "CV", "software engineer", "Spring Boot", "Java", "PostgreSQL", "hire software engineer Rwanda"],
 });
 
 export default function ResumePage() {
