@@ -17,7 +17,7 @@ export default function ShareLinks({ url, title, text, heading = 'Share' }: Shar
     const u = encodeURIComponent(url);
     const t = encodeURIComponent(text);
     const links = [
-        { name: 'X', href: `https://twitter.com/intent/tweet?url=${u}&text=${t}` },
+        { name: 'X', href: `https://x.com/intent/tweet?url=${u}&text=${t}` },
         { name: 'LinkedIn', href: `https://www.linkedin.com/sharing/share-offsite/?url=${u}` },
         { name: 'Facebook', href: `https://www.facebook.com/sharer/sharer.php?u=${u}` },
         { name: 'WhatsApp', href: `https://wa.me/?text=${encodeURIComponent(`${text} ${url}`)}` },

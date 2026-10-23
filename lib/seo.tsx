@@ -81,7 +81,7 @@ export const person = {
   sameAs: [
     "https://github.com/felixdusengimana",
     "https://www.linkedin.com/in/felixdusengimana",
-    "https://twitter.com/felix__dusenge",
+    "https://x.com/felix__dusenge",
     "https://bsky.app/profile/feldux.com",
     "https://codepen.io/felixdusengimana",
     "https://dev.to/felixdusengimana",

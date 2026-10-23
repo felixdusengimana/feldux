@@ -71,7 +71,7 @@ export default async function HomePage() {
             className="flex items-center hover:text-neutral-700 dark:hover:text-neutral-200 transition-all"
             rel="noopener noreferrer"
             target="_blank"
-            href="https://twitter.com/felix__dusenge"
+            href="https://x.com/felix__dusenge"
           >
             <ArrowIcon />
             <p className="h-7">X(Formerly Twitter)</p>
