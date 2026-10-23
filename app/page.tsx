@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Image from "next/image";
 
 import {
@@ -27,29 +26,19 @@ export default async function HomePage() {
           width={100}
           priority
         />
-        <div className="mt-8 md:mt-0 ml-0 md:ml-6 space-y-2 text-neutral-500 dark:text-neutral-400">
-          <a
-            rel="noopener noreferrer"
-            target="_blank"
-            href="#"
-            className="flex items-center gap-2"
-          >
+        <div className="mt-8 md:mt-0 ml-0 md:ml-6 space-y-2 text-neutral-600 dark:text-neutral-400">
+          <p className="flex items-center gap-2">
             <LocationIcon />
             {`Kigali, Rwanda`}
-          </a>
-          <a
-            rel="noopener noreferrer"
-            target="_blank"
-            href="https://github.com/felixdusengimana"
-            className="flex items-center gap-2"
-          >
+          </p>
+          <p className="flex items-center gap-2">
             <CalenderIcon />
             {`started in 2019`}
-          </a>
-          <Link href="/blog" className="flex items-center gap-2">
+          </p>
+          <p className="flex items-center gap-2">
             <BioIcon />
             {`software developer`}
-          </Link>
+          </p>
         </div>
       </div>
       <p className="my-5 max-w-[600px] text-neutral-800 dark:text-neutral-200">

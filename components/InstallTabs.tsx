@@ -27,7 +27,7 @@ export default function InstallTabs({ packageName, latest }: { packageName: stri
                         onClick={() => setSelected(tab)}
                         className={`px-3 py-1 rounded text-sm font-medium ${selected === tab
                             ? 'bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900'
-                            : 'bg-neutral-200 dark:bg-neutral-700 text-neutral-800 dark:text-neutral-200'
+                            : 'bg-neutral-100 hover:bg-neutral-200 text-neutral-700 dark:bg-neutral-700 dark:hover:bg-neutral-700 dark:text-neutral-200'
                             }`}
                     >
                         {tab}

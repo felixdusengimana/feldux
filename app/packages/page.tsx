@@ -13,16 +13,18 @@ export default function PackagesPage() {
         {packages.map(({ slug, name, description, repoUrl, packageName }) => (
           <div
             key={slug}
-            className="border border-neutral-200 dark:border-neutral-800 rounded-lg p-6 hover:shadow-lg transition-shadow bg-neutral-50 dark:bg-neutral-900"
+            className="relative cursor-pointer border border-neutral-300 dark:border-neutral-800 rounded-lg p-6 shadow-sm dark:shadow-none dark:hover:shadow-lg transition-shadow bg-white dark:bg-neutral-900"
           >
             <h2 className="text-2xl font-semibold mb-2">{name}</h2>
             <p className="mb-4 text-neutral-700 dark:text-neutral-300">{description}</p>
 
-            <InstallTabs  packageName={packageName}/>
+            <div className="relative z-10 cursor-auto">
+              <InstallTabs packageName={packageName} />
+            </div>
 
             <Link
               href={`/packages/${slug}`}
-              className="inline-block text-blue-600 mt-5 hover:underline"
+              className="inline-block text-blue-600 mt-5 hover:underline after:absolute after:inset-0 after:rounded-lg"
             >
               View Documentation →
             </Link>
@@ -33,7 +35,7 @@ export default function PackagesPage() {
                   href={repoUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:underline"
+                  className="relative z-10 hover:underline"
                 >
                   Contribute / Create a Pull Request
                 </a>

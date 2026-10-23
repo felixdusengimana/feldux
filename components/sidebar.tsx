@@ -192,7 +192,7 @@ export default function Navbar() {
             value={mounted ? theme : "system"}
             disabled={!mounted}
             onChange={(e) => changeTheme(e.target.value)}
-            className="text-sm rounded-md border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300 px-2 py-1 cursor-pointer focus:outline-none focus:ring-2 focus:ring-neutral-400"
+            className="text-sm rounded-md border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300 px-2 py-1 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400"
           >
             <option value="system">System</option>
             <option value="light">Light</option>
