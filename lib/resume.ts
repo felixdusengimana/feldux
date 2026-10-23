@@ -29,6 +29,7 @@ export const resume = {
   headline: "Software Engineer",
   location: "Kigali, Rwanda",
   email: "phelixdusengimana@gmail.com",
+  phone: "+250 784 483 142",
   website: "https://feldux.com",
   profiles: [
     { network: "LinkedIn", url: "https://linkedin.com/in/felixdusengimana" },

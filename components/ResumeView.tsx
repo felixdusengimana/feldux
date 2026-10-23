@@ -117,6 +117,7 @@ export default function ResumeView() {
                 </p>
                 <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm">
                     <li><a className="underline hover:no-underline" href={`mailto:${resume.email}`}>{resume.email}</a></li>
+                    <li><a className="underline hover:no-underline" href={`tel:${resume.phone.replace(/\s/g, '')}`}>{resume.phone}</a></li>
                     <li><a className="underline hover:no-underline" href={resume.website}>{host(resume.website)}</a></li>
                     {resume.profiles.map((p) => (
                         <li key={p.network}>
