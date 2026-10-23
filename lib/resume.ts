@@ -5,7 +5,9 @@ export interface Experience {
   company: string;
   start: string; // YYYY-MM
   end?: string; // YYYY-MM, missing = present
-  intro: string;
+  type?: string;
+  location?: string;
+  intro?: string;
   stack: string[];
   highlights: string[];
 }
@@ -14,10 +16,13 @@ export interface Project {
   name: string;
   description: string;
   stack: string[];
+  start?: string;
+  end?: string;
   url?: string;
 }
 
 export const resume = {
+  updated: "2026-10-24",
   name: "Felix Dusengimana",
   headline: "Backend Engineer",
   location: "Kigali, Rwanda",
@@ -48,6 +53,7 @@ export const resume = {
       role: "Senior Software Engineer Consultant",
       company: "Irembo",
       start: "2026-03",
+      location: "Kigali, Rwanda",
       intro:
         "Contributing to the design, development, and continuous improvement of digital platforms that simplify access to government and private sector services. Collaborating with cross-functional teams to deliver scalable, secure, and reliable solutions while contributing to technical discussions, system design, and architectural decisions.",
       stack: ["Spring Boot", "Angular", "CI/CD", "Docker", "Java", "TypeScript", "REST", "PostgreSQL", "JPA", "React", "Next.js", "Agile", "System Design"],
@@ -88,7 +94,9 @@ export const resume = {
       role: "Software Engineer",
       company: "Stylos Consult",
       start: "2022-09",
-      end: "2024-02",
+      end: "2023-02",
+      type: "Full-time",
+      location: "Kigali, Rwanda · On-site",
       intro:
         "Led a team of front-end developers in creating three successful web applications. Actively participated in project planning, task estimation, and sprint planning meetings, ensuring code quality, performance, and maintainability.",
       stack: ["React", "Next.js", "CI/CD", "Docker", "Tailwind CSS", "Node.js", "PostCSS", "TypeScript", "REST", "Express", "Redux", "PHP (Laravel)", "Spring Boot", "MongoDB", "DigitalOcean", "GitHub Actions"],
@@ -107,6 +115,68 @@ export const resume = {
         "Resolved technical issues arising in production",
         "Developed, tested, and deployed products using the MERN stack",
         "Designed new features, data-flow diagrams, and other UML diagrams",
+      ],
+    },
+    {
+      role: "Frontend Developer",
+      company: "Grade Arc",
+      start: "2022-01",
+      end: "2022-09",
+      type: "Contract",
+      location: "Minneapolis, US · Remote",
+      stack: ["React", "Node.js", "CSS-in-JS", "PayPal", "Authorize.Net", "Agile"],
+      highlights: [
+        "Implemented features using React and Node.js",
+        "Built responsive interfaces with CSS-in-JS",
+        "Tested and debugged rigorously across browsers and devices",
+        "Took part in agile sprint planning, code reviews, and continuous integration",
+        "Created e-learning sites integrated with PayPal and Authorize.Net",
+      ],
+    },
+    {
+      role: "Frontend Developer",
+      company: "PMG Rwanda",
+      start: "2020-01",
+      end: "2022-01",
+      type: "Part-time",
+      location: "Kigali, Rwanda · Hybrid",
+      stack: ["TypeScript", "JavaScript", "React Native", "Angular", "Node.js", "GraphQL", "MongoDB", "SQL", "Webpack", "Docker", "PHP"],
+      highlights: [
+        "Mentored developers through code reviews",
+        "Designed features and architecture with UML diagrams",
+        "Modernized a legacy PHP codebase to TypeScript",
+        "Built client-facing products with Webpack, TypeScript, SQL, React Native, Angular, Docker, GraphQL, MongoDB, and Node.js",
+        "Wrote test cases to keep releases reliable",
+      ],
+    },
+    {
+      role: "Full Stack Developer",
+      company: "Rwanda TVET Board",
+      start: "2019-10",
+      end: "2021-03",
+      type: "Part-time",
+      location: "Kigali, Rwanda · Hybrid",
+      stack: ["React", "Redux", "Spring Boot", "PostgreSQL", "Linux", "Jenkins", "Docker", "PM2", "DigitalOcean", "GitHub Actions"],
+      highlights: [
+        "Built a full-stack application with React, Redux, Spring Boot, and PostgreSQL",
+        "Deployed on DigitalOcean with GitHub Actions, Jenkins, Docker, and PM2",
+        "Ran code evaluations and reviews",
+        "Designed data flows with UML diagrams",
+        "Wrote test cases for new features",
+      ],
+    },
+    {
+      role: "Mobile Engineer",
+      company: "Mongasoft",
+      start: "2019-08",
+      end: "2020-02",
+      type: "Part-time",
+      location: "Kigali, Rwanda · Remote",
+      stack: ["React Native", "TypeScript", "REST"],
+      highlights: [
+        "Built mobile apps with React Native and TypeScript",
+        "Developed backend APIs for the apps",
+        "Worked with cross-functional teams across the full product lifecycle",
       ],
     },
   ] as Experience[],
@@ -140,14 +210,18 @@ export const resume = {
     {
       name: "Twika",
       description:
-        "An application for people from all communities to share text, images, videos, and games, including fun content and memes.",
+        "A social media web app for people from all communities to share text, images, videos, and games, including fun content and memes. React front end with a Node.js back end.",
       stack: ["React", "Node.js"],
+      start: "2020-11",
+      end: "2021-01",
     },
     {
       name: "LuckyScore",
       description:
-        "A side project to record match events between classes at school, built because it was hard to keep track of them.",
+        "A side project to record match events between classes at school and a neighboring school, built because it was hard to keep track of them.",
       stack: ["Vue", "Vite", "Supabase"],
+      start: "2019-04",
+      end: "2020-02",
     },
   ] as Project[],
   education: [
@@ -156,19 +230,20 @@ export const resume = {
       school: "African Leadership University",
       location: "Kigali, Rwanda",
       start: "2023-09",
-      end: "2027-09",
+      end: "2026-08",
     },
     {
       title: "Advanced Level High School Diploma (Software Programming and Embedded Systems)",
       school: "Rwanda Coding Academy",
       location: "Nyabihu, Rwanda",
-      start: "2019-08",
-      end: "2022-08",
+      start: "2019-02",
+      end: "2022-07",
     },
   ],
   awards: [
     { title: "Best Coder of the Year (2019)", issuer: "Rwanda Coding Academy" },
     { title: "Best Coder of the Term (3 times)", issuer: "Rwanda Coding Academy" },
+    { title: "Frontend Developer of the Year", issuer: "Rwanda TVET Board" },
     { title: "Responsive Web Design", issuer: "SoloLearn", url: "https://www.sololearn.com/Certificate/CT-SCQPKJ15/jpg" },
     { title: "Coursera courses: Kubernetes, Docker CI/CD, Python Programming", issuer: "Coursera" },
   ],
@@ -198,3 +273,62 @@ export function allSkills(r: Resume = resume) {
   [...r.experience, ...r.projects].forEach((item) => item.stack.forEach((s) => count.set(s, (count.get(s) ?? 0) + 1)));
   return Array.from(count.entries()).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).map(([s]) => s);
 }
+
+export const SECTIONS = {
+  summary: "Summary",
+  skills: "Skills filter",
+  experience: "Experience",
+  projects: "Projects",
+  expertise: "Areas of expertise",
+  education: "Education",
+  awards: "Certificates and awards",
+  languages: "Languages",
+  additionalSkills: "Additional skills",
+  hobbies: "Hobbies and interests",
+} as const;
+export type Section = keyof typeof SECTIONS;
+
+// what a visitor chose to show; limits at their max mean "all"
+export interface View { hidden: Section[]; roles: number; projects: number; points: number; }
+export const MAX = {
+  roles: resume.experience.length,
+  projects: resume.projects.length,
+  points: Math.max(...resume.experience.map((e) => e.highlights.length)),
+};
+export const fullView: View = { hidden: [], roles: MAX.roles, projects: MAX.projects, points: MAX.points };
+
+export function parseView(query: string): View {
+  const q = new URLSearchParams(query);
+  const num = (key: keyof typeof MAX) => {
+    const n = parseInt(q.get(key) ?? "", 10);
+    return n >= 1 ? Math.min(n, MAX[key]) : MAX[key];
+  };
+  const hidden = (q.get("hide") ?? "").split(",").filter((s): s is Section => s in SECTIONS);
+  return { hidden, roles: num("roles"), projects: num("projects"), points: num("points") };
+}
+
+export function stringifyView(v: View) {
+  const q = new URLSearchParams();
+  if (v.hidden.length) q.set("hide", v.hidden.join(","));
+  (Object.keys(MAX) as (keyof typeof MAX)[]).forEach((k) => v[k] < MAX[k] && q.set(k, String(v[k])));
+  return q.toString().replace(/%2C/g, ",");
+}
+
+// hidden sections come back empty so the page and every export can skip them
+export function applyView(r: Resume, v: View): Resume {
+  const off = (s: Section) => v.hidden.includes(s);
+  return {
+    ...r,
+    summary: off("summary") ? "" : r.summary,
+    experience: off("experience") ? [] : r.experience.slice(0, v.roles).map((e) => ({ ...e, highlights: e.highlights.slice(0, v.points) })),
+    projects: off("projects") ? [] : r.projects.slice(0, v.projects),
+    expertise: off("expertise") ? [] : r.expertise,
+    education: off("education") ? [] : r.education,
+    awards: off("awards") ? [] : r.awards,
+    languages: off("languages") ? [] : r.languages,
+    additionalSkills: off("additionalSkills") ? [] : r.additionalSkills,
+    hobbies: off("hobbies") ? [] : r.hobbies,
+  };
+}
+
+export const roleMeta = (e: Experience) => [formatRange(e.start, e.end), e.type, e.location].filter(Boolean).join(" · ");

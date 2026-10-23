@@ -18,6 +18,7 @@ export default function ResumePage() {
           "@context": "https://schema.org",
           "@type": "ProfilePage",
           url: `${siteUrl}/resume`,
+          dateModified: resume.updated,
           mainEntity: {
             ...person,
             jobTitle: resume.headline,
@@ -26,6 +27,7 @@ export default function ResumePage() {
             alumniOf: resume.education.map((e) => ({ "@type": "EducationalOrganization", name: e.school })),
             knowsAbout: resume.expertise,
             knowsLanguage: resume.languages.map((l) => l.name),
+            award: resume.awards.map((a) => `${a.title}, ${a.issuer}`),
           },
         }}
       />

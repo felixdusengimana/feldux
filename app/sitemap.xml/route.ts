@@ -1,6 +1,7 @@
 import { getAllblogs } from "@/lib/mdx";
 import { packages } from "@/lib/packages";
 import { siteUrl } from "@/lib/seo";
+import { resume } from "@/lib/resume";
 
 export function GET() {
   const pages = [
@@ -8,9 +9,11 @@ export function GET() {
     { path: "/about", priority: "0.8" },
     { path: "/blog", priority: "0.8" },
     { path: "/packages", priority: "0.8" },
-    { path: "/resume", priority: "0.9" },
+    { path: "/resume", priority: "0.9", lastmod: resume.updated },
     ...packages.map((p) => ({ path: `/packages/${p.slug}`, priority: "0.9" })),
-  ].map((p) => `<url><loc>${siteUrl}${p.path}</loc><priority>${p.priority}</priority></url>`);
+  ].map((p: { path: string; priority: string; lastmod?: string }) =>
+    `<url><loc>${siteUrl}${p.path}</loc>${p.lastmod ? `<lastmod>${p.lastmod}</lastmod>` : ""}<priority>${p.priority}</priority></url>`
+  );
 
   const posts = getAllblogs(["slug", "date"]).map(
     (post) =>

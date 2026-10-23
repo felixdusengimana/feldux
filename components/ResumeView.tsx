@@ -1,7 +1,8 @@
 'use client';
 
 import React from 'react';
-import { resume, formatRange, allSkills } from '@/lib/resume';
+import { resume, formatRange, allSkills, applyView, parseView, stringifyView, fullView, MAX, SECTIONS, Section, View } from '@/lib/resume';
+import type { Resume } from '@/lib/resume';
 
 const PREVIEW = 4;
 const host = (url: string) => url.replace(/^https?:\/\//, '').replace(/\/$/, '');
@@ -25,33 +26,87 @@ function Chip({ name, active, onClick }: { name: string; active: boolean; onClic
 }
 
 const exports = [
-    { label: 'PDF', run: async () => (await import('@/lib/resumeExport')).downloadPdf(resume) },
-    { label: 'Word', run: async () => (await import('@/lib/resumeExport')).downloadDocx(resume) },
-    { label: 'Markdown', run: async () => (await import('@/lib/resumeExport')).downloadMarkdown(resume) },
-    { label: 'JSON', run: async () => (await import('@/lib/resumeExport')).downloadJson(resume) },
+    { label: 'PDF', run: async (r: Resume) => (await import('@/lib/resumeExport')).downloadPdf(r) },
+    { label: 'Word', run: async (r: Resume) => (await import('@/lib/resumeExport')).downloadDocx(r) },
+    { label: 'Markdown', run: async (r: Resume) => (await import('@/lib/resumeExport')).downloadMarkdown(r) },
+    { label: 'JSON', run: async (r: Resume) => (await import('@/lib/resumeExport')).downloadJson(r) },
 ];
+
+const STORE = 'resume-view';
+const PARAMS = ['hide', ...Object.keys(MAX)];
+const btn = 'px-3 py-1.5 rounded-md border border-neutral-200 dark:border-neutral-800 text-sm hover:bg-neutral-100 dark:hover:bg-neutral-800 disabled:opacity-50 transition-colors';
+
+function Limit({ label, k, view, onChange }: { label: string; k: keyof typeof MAX; view: View; onChange: (v: View) => void }) {
+    return (
+        <label className="flex items-center justify-between gap-3 text-sm">
+            {label}
+            <select
+                value={view[k]}
+                onChange={(e) => onChange({ ...view, [k]: Number(e.target.value) })}
+                className="rounded-md border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 px-2 py-1"
+            >
+                {Array.from({ length: MAX[k] }, (_, i) => i + 1).map((n) => (
+                    <option key={n} value={n}>{n === MAX[k] ? `All (${n})` : n}</option>
+                ))}
+            </select>
+        </label>
+    );
+}
 
 export default function ResumeView() {
     const [skill, setSkill] = React.useState<string | null>(null);
     const [open, setOpen] = React.useState<Record<string, boolean>>({});
     const [busy, setBusy] = React.useState<string | null>(null);
-    const skills = React.useMemo(() => allSkills(), []);
+    const [view, setView] = React.useState<View>(fullView);
+    const [ready, setReady] = React.useState(false);
+    const [copied, setCopied] = React.useState(false);
+    const r = React.useMemo(() => applyView(resume, view), [view]);
+    const skills = React.useMemo(() => allSkills(r), [r]);
+    const tailored = stringifyView(view) !== '';
+    const show = (s: Section) => !view.hidden.includes(s);
+
+    // the server always renders the full resume; a shared link or this tab's choice applies after mount
+    React.useEffect(() => {
+        const url = new URLSearchParams(window.location.search);
+        let saved = '';
+        try { saved = sessionStorage.getItem(STORE) ?? ''; } catch { }
+        setView(parseView(PARAMS.some((k) => url.has(k)) ? window.location.search : saved));
+        setReady(true);
+    }, []);
+
+    React.useEffect(() => {
+        if (!ready) return;
+        const q = stringifyView(view);
+        try { sessionStorage.setItem(STORE, q); } catch { }
+        window.history.replaceState(null, '', `${window.location.pathname}${q ? `?${q}` : ''}${window.location.hash}`);
+    }, [view, ready]);
+
+    const toggleSection = (s: Section) =>
+        setView((v) => ({ ...v, hidden: v.hidden.includes(s) ? v.hidden.filter((x) => x !== s) : [...v.hidden, s] }));
+
+    const copyLink = async () => {
+        try {
+            await navigator.clipboard.writeText(window.location.href);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        } catch { }
+    };
 
     const toggleSkill = (s: string) => setSkill((cur) => (cur === s ? null : s));
     const matches = (stack: string[]) => !skill || stack.includes(skill);
     const dim = (stack: string[]) => (matches(stack) ? '' : 'opacity-40');
 
-    const runExport = async (label: string, run: () => Promise<void>) => {
+    const runExport = async (label: string, run: (r: Resume) => Promise<void>) => {
         setBusy(label);
         try {
-            await run();
+            await run(r);
         } finally {
             setBusy(null);
         }
     };
 
-    const roleCount = resume.experience.filter((e) => matches(e.stack)).length;
-    const projectCount = resume.projects.filter((p) => matches(p.stack)).length;
+    const roleCount = r.experience.filter((e) => matches(e.stack)).length;
+    const projectCount = r.projects.filter((p) => matches(p.stack)).length;
 
     return (
         <article className="resume max-w-[650px]">
@@ -74,31 +129,56 @@ export default function ResumeView() {
             <div className="mt-6 flex flex-wrap items-center gap-2 print:hidden" aria-label="Download resume">
                 <span className={`text-sm mr-1 ${muted}`}>Download:</span>
                 {exports.map(({ label, run }) => (
-                    <button
-                        key={label}
-                        type="button"
-                        onClick={() => runExport(label, run)}
-                        disabled={busy !== null}
-                        className="px-3 py-1.5 rounded-md border border-neutral-200 dark:border-neutral-800 text-sm hover:bg-neutral-100 dark:hover:bg-neutral-800 disabled:opacity-50 transition-colors"
-                    >
+                    <button key={label} type="button" onClick={() => runExport(label, run)} disabled={busy !== null} className={btn}>
                         {busy === label ? 'Preparing…' : label}
                     </button>
                 ))}
-                <button
-                    type="button"
-                    onClick={() => window.print()}
-                    className="px-3 py-1.5 rounded-md border border-neutral-200 dark:border-neutral-800 text-sm hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
-                >
-                    Print
-                </button>
             </div>
 
-            <section>
-                <h2 className={sectionTitle}>Summary</h2>
-                <p className="leading-relaxed text-neutral-800 dark:text-neutral-200">{resume.summary}</p>
-            </section>
+            <details className="mt-4 rounded-lg border border-neutral-200 dark:border-neutral-800 print:hidden">
+                <summary className="cursor-pointer select-none px-4 py-2.5 text-sm font-medium">
+                    Customize what to show{tailored && <span className={`font-normal ${muted}`}> · tailored</span>}
+                </summary>
+                <div className="px-4 pb-4 pt-1 space-y-4">
+                    <fieldset>
+                        <legend className={`text-xs uppercase tracking-wide mb-2 ${muted}`}>Sections</legend>
+                        <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
+                            {(Object.keys(SECTIONS) as Section[]).map((s) => (
+                                <label key={s} className="flex items-center gap-2 text-sm">
+                                    <input type="checkbox" checked={show(s)} onChange={() => toggleSection(s)} className="accent-neutral-900 dark:accent-neutral-100" />
+                                    {SECTIONS[s]}
+                                </label>
+                            ))}
+                        </div>
+                    </fieldset>
+                    <fieldset className="grid sm:grid-cols-3 gap-3">
+                        <legend className={`text-xs uppercase tracking-wide mb-2 ${muted}`}>Limits</legend>
+                        <Limit label="Recent roles" k="roles" view={view} onChange={setView} />
+                        <Limit label="Points per role" k="points" view={view} onChange={setView} />
+                        <Limit label="Projects shown" k="projects" view={view} onChange={setView} />
+                    </fieldset>
+                    <p className={`text-xs ${muted}`}>Downloads follow this view. Kept for this tab and in the link, so you can share it.</p>
+                    <div className="flex flex-wrap gap-2">
+                        <button type="button" onClick={copyLink} className={btn}>{copied ? 'Copied' : 'Copy link'}</button>
+                        <button type="button" onClick={() => setView(fullView)} disabled={!tailored} className={btn}>Reset</button>
+                    </div>
+                </div>
+            </details>
 
-            <section className="print:hidden">
+            {tailored && (
+                <p className={`mt-3 text-sm ${muted} print:hidden`} role="status">
+                    Showing a tailored view. <button type="button" onClick={() => setView(fullView)} className="underline hover:no-underline">Show full resume</button>
+                </p>
+            )}
+
+            {r.summary && (
+                <section>
+                    <h2 className={sectionTitle}>Summary</h2>
+                    <p className="leading-relaxed text-neutral-800 dark:text-neutral-200">{r.summary}</p>
+                </section>
+            )}
+
+            {show('skills') && skills.length > 0 && <section className="print:hidden">
                 <h2 className={sectionTitle}>Skills</h2>
                 <p className={`text-sm mb-3 ${muted}`}>Pick a skill to see where I used it.</p>
                 <div className="flex flex-wrap gap-1.5">
@@ -112,12 +192,12 @@ export default function ResumeView() {
                         </>
                     )}
                 </p>
-            </section>
+            </section>}
 
-            <section>
+            {r.experience.length > 0 && <section>
                 <h2 className={sectionTitle}>Experience</h2>
                 <ol className="relative border-l border-neutral-200 dark:border-neutral-800 ml-1.5 space-y-10">
-                    {resume.experience.map((e) => {
+                    {r.experience.map((e) => {
                         const id = `${e.company}-${e.start}`;
                         const expanded = !!open[id];
                         const hidden = e.highlights.length - PREVIEW;
@@ -128,7 +208,8 @@ export default function ResumeView() {
                                     <h3 className="font-semibold">{e.role}, {e.company}</h3>
                                     <span className={`text-sm ${muted}`}>{formatRange(e.start, e.end)}</span>
                                 </div>
-                                <p className="mt-2 text-sm leading-relaxed text-neutral-700 dark:text-neutral-300">{e.intro}</p>
+                                {(e.type || e.location) && <p className={`text-sm ${muted}`}>{[e.type, e.location].filter(Boolean).join(' · ')}</p>}
+                                {e.intro && <p className="mt-2 text-sm leading-relaxed text-neutral-700 dark:text-neutral-300">{e.intro}</p>}
                                 <div className="mt-3 flex flex-wrap gap-1.5">
                                     {e.stack.map((s) => <Chip key={s} name={s} active={skill === s} onClick={toggleSkill} />)}
                                 </div>
@@ -152,16 +233,17 @@ export default function ResumeView() {
                         );
                     })}
                 </ol>
-            </section>
+            </section>}
 
-            <section>
+            {r.projects.length > 0 && <section>
                 <h2 className={sectionTitle}>Projects</h2>
                 <div className="grid sm:grid-cols-2 gap-4">
-                    {resume.projects.map((p) => (
+                    {r.projects.map((p) => (
                         <div key={p.name} className={`rounded-lg border border-neutral-200 dark:border-neutral-800 p-4 transition-opacity break-inside-avoid ${dim(p.stack)}`}>
                             <h3 className="font-semibold">
                                 {p.url ? <a href={p.url} className="underline hover:no-underline">{p.name}</a> : p.name}
                             </h3>
+                            {p.start && <p className={`text-xs ${muted}`}>{formatRange(p.start, p.end)}</p>}
                             <p className="mt-1 text-sm text-neutral-700 dark:text-neutral-300">{p.description}</p>
                             <div className="mt-3 flex flex-wrap gap-1.5">
                                 {p.stack.map((s) => <Chip key={s} name={s} active={skill === s} onClick={toggleSkill} />)}
@@ -169,59 +251,59 @@ export default function ResumeView() {
                         </div>
                     ))}
                 </div>
-            </section>
+            </section>}
 
-            <section>
+            {r.expertise.length > 0 && <section>
                 <h2 className={sectionTitle}>Areas of expertise</h2>
                 <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-1 list-disc pl-5 text-sm text-neutral-700 dark:text-neutral-300">
-                    {resume.expertise.map((x) => <li key={x}>{x}</li>)}
+                    {r.expertise.map((x) => <li key={x}>{x}</li>)}
                 </ul>
-            </section>
+            </section>}
 
-            <section>
+            {r.education.length > 0 && <section>
                 <h2 className={sectionTitle}>Education</h2>
                 <ul className="space-y-4">
-                    {resume.education.map((e) => (
+                    {r.education.map((e) => (
                         <li key={e.school}>
                             <h3 className="font-semibold">{e.title}</h3>
                             <p className={`text-sm ${muted}`}>{e.school}, {e.location} · {formatRange(e.start, e.end)}</p>
                         </li>
                     ))}
                 </ul>
-            </section>
+            </section>}
 
-            <section>
+            {r.awards.length > 0 && <section>
                 <h2 className={sectionTitle}>Certificates and awards</h2>
                 <ul className="list-disc pl-5 space-y-1 text-sm text-neutral-700 dark:text-neutral-300">
-                    {resume.awards.map((a) => (
+                    {r.awards.map((a) => (
                         <li key={a.title}>
                             {a.url ? <a href={a.url} target="_blank" rel="noopener noreferrer" className="underline hover:no-underline">{a.title}</a> : a.title}
                             <span className={muted}> · {a.issuer}</span>
                         </li>
                     ))}
                 </ul>
-            </section>
+            </section>}
 
-            <section>
+            {r.languages.length > 0 && <section>
                 <h2 className={sectionTitle}>Languages</h2>
                 <ul className="flex flex-wrap gap-2 text-sm">
-                    {resume.languages.map((l) => (
+                    {r.languages.map((l) => (
                         <li key={l.name} className="px-3 py-1 rounded-md bg-neutral-100 dark:bg-neutral-800">
                             {l.name} <span className={muted}>· {l.level}</span>
                         </li>
                     ))}
                 </ul>
-            </section>
+            </section>}
 
-            <section>
+            {r.additionalSkills.length > 0 && <section>
                 <h2 className={sectionTitle}>Additional skills</h2>
-                <p className="text-sm text-neutral-700 dark:text-neutral-300">{resume.additionalSkills.join(', ')}</p>
-            </section>
+                <p className="text-sm text-neutral-700 dark:text-neutral-300">{r.additionalSkills.join(', ')}</p>
+            </section>}
 
-            <section>
+            {r.hobbies.length > 0 && <section>
                 <h2 className={sectionTitle}>Hobbies and interests</h2>
-                <p className="text-sm text-neutral-700 dark:text-neutral-300">{resume.hobbies.join(', ')}</p>
-            </section>
+                <p className="text-sm text-neutral-700 dark:text-neutral-300">{r.hobbies.join(', ')}</p>
+            </section>}
         </article>
     );
 }

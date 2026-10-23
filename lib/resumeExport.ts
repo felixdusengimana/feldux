@@ -1,4 +1,4 @@
-import { Resume, formatRange } from "@/lib/resume";
+import { Resume, formatRange, roleMeta } from "@/lib/resume";
 
 const fileBase = (r: Resume) => `${r.name.replace(/\s+/g, "_")}_Resume`;
 const host = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "");
@@ -19,28 +19,23 @@ export function toMarkdown(r: Resume) {
     `**${r.headline}** · ${r.location}`,
     "",
     [r.email, host(r.website), ...r.profiles.map((p) => host(p.url))].join(" · "),
-    "",
-    "## Summary",
-    r.summary,
-    "",
-    "## Areas of expertise",
-    ...r.expertise.map((e) => `- ${e}`),
-    "",
-    "## Experience",
   ];
-  r.experience.forEach((x) => {
-    out.push("", `### ${x.role}, ${x.company}`, `*${formatRange(x.start, x.end)}*`, "", x.intro, "", `**Stack:** ${x.stack.join(", ")}`, "", ...x.highlights.map((h) => `- ${h}`));
-  });
-  out.push("", "## Projects");
-  r.projects.forEach((p) => out.push("", `### ${p.url ? `[${p.name}](${p.url})` : p.name}`, p.description, `**Stack:** ${p.stack.join(", ")}`));
-  out.push("", "## Education");
-  r.education.forEach((e) => out.push(`- **${e.title}**, ${e.school} (${e.location}), ${formatRange(e.start, e.end)}`));
-  out.push("", "## Certificates and awards");
-  r.awards.forEach((a) => out.push(`- ${a.url ? `[${a.title}](${a.url})` : a.title}, ${a.issuer}`));
-  out.push("", "## Languages", r.languages.map((l) => `${l.name} (${l.level})`).join(" · "));
-  out.push("", "## Additional skills", r.additionalSkills.join(", "));
-  out.push("", "## Hobbies and interests", r.hobbies.join(", "), "");
-  return out.join("\n");
+  const section = (title: string, lines: string[]) => lines.length && out.push("", `## ${title}`, ...lines);
+  section("Summary", r.summary ? [r.summary] : []);
+  section("Areas of expertise", r.expertise.map((e) => `- ${e}`));
+  section("Experience", r.experience.flatMap((x) => [
+    "", `### ${x.role}, ${x.company}`, `*${roleMeta(x)}*`, ...(x.intro ? ["", x.intro] : []),
+    "", `**Stack:** ${x.stack.join(", ")}`, "", ...x.highlights.map((h) => `- ${h}`),
+  ]));
+  section("Projects", r.projects.flatMap((p) => [
+    "", `### ${p.url ? `[${p.name}](${p.url})` : p.name}`, ...(p.start ? [`*${formatRange(p.start, p.end)}*`] : []), p.description, `**Stack:** ${p.stack.join(", ")}`,
+  ]));
+  section("Education", r.education.map((e) => `- **${e.title}**, ${e.school} (${e.location}), ${formatRange(e.start, e.end)}`));
+  section("Certificates and awards", r.awards.map((a) => `- ${a.url ? `[${a.title}](${a.url})` : a.title}, ${a.issuer}`));
+  section("Languages", r.languages.length ? [r.languages.map((l) => `${l.name} (${l.level})`).join(" · ")] : []);
+  section("Additional skills", r.additionalSkills.length ? [r.additionalSkills.join(", ")] : []);
+  section("Hobbies and interests", r.hobbies.length ? [r.hobbies.join(", ")] : []);
+  return out.join("\n") + "\n";
 }
 
 // https://jsonresume.org/schema
@@ -53,16 +48,16 @@ export function toJsonResume(r: Resume) {
       label: r.headline,
       email: r.email,
       url: r.website,
-      summary: r.summary,
+      summary: r.summary || undefined,
       location: { city: "Kigali", countryCode: "RW" },
       profiles: r.profiles.map((p) => ({ network: p.network, url: p.url, username: host(p.url).split("/").pop() })),
     },
-    work: r.experience.map((x) => ({ name: x.company, position: x.role, startDate: date(x.start), endDate: date(x.end), summary: x.intro, highlights: x.highlights })),
-    projects: r.projects.map((p) => ({ name: p.name, description: p.description, keywords: p.stack, url: p.url })),
+    work: r.experience.map((x) => ({ name: x.company, position: x.role, startDate: date(x.start), endDate: date(x.end), location: x.location, summary: x.intro, highlights: x.highlights })),
+    projects: r.projects.map((p) => ({ name: p.name, description: p.description, keywords: p.stack, url: p.url, startDate: date(p.start), endDate: date(p.end) })),
     education: r.education.map((e) => ({ institution: e.school, studyType: e.title, startDate: date(e.start), endDate: date(e.end) })),
     awards: r.awards.map((a) => ({ title: a.title, awarder: a.issuer, url: a.url })),
     languages: r.languages.map((l) => ({ language: l.name, fluency: l.level })),
-    skills: [{ name: "Expertise", keywords: r.expertise }, { name: "Additional skills", keywords: r.additionalSkills }],
+    skills: [{ name: "Expertise", keywords: r.expertise }, { name: "Additional skills", keywords: r.additionalSkills }].filter((x) => x.keywords.length),
     interests: r.hobbies.map((h) => ({ name: h })),
   };
 }
@@ -122,19 +117,17 @@ export async function downloadPdf(r: Resume) {
   });
   y += 7;
 
-  heading("Summary");
-  text(r.summary, 9.5, { gray: 40, gap: 1 });
-  heading("Areas of expertise");
-  text(r.expertise.join("  ·  "), 9.5, { gray: 40, gap: 1 });
+  if (r.summary) { heading("Summary"); text(r.summary, 9.5, { gray: 40, gap: 1 }); }
+  if (r.expertise.length) { heading("Areas of expertise"); text(r.expertise.join("  ·  "), 9.5, { gray: 40, gap: 1 }); }
 
-  heading("Experience");
   // lines needed for a block of text at a given size, so a role's header, intro and stack stay together
   const height = (str: string, size: number, font = "normal") => {
     doc.setFont("helvetica", font); doc.setFontSize(size);
     return (doc.splitTextToSize(str, W) as string[]).length * size * 0.42;
   };
+  if (r.experience.length) heading("Experience");
   r.experience.forEach((e, i) => {
-    ensure(8 + height(e.intro, 9.5) + height(e.stack.join(" · "), 8.5, "italic") + 10);
+    ensure(8 + (e.intro ? height(e.intro, 9.5) : 0) + height(e.stack.join(" · "), 8.5, "italic") + 14);
     if (i) y += 2;
     doc.setFont("helvetica", "bold"); doc.setFontSize(10.5); ink(15);
     doc.text(`${e.role}, ${e.company}`, M, y + 4);
@@ -142,33 +135,31 @@ export async function downloadPdf(r: Resume) {
     const range = formatRange(e.start, e.end);
     doc.text(range, M + W - doc.getTextWidth(range), y + 4);
     y += 6;
-    text(e.intro, 9.5, { gray: 40, gap: 0.8 });
+    const where = [e.type, e.location].filter(Boolean).join(" · ");
+    if (where) text(where, 8.5, { gray: 100, gap: 0.6 });
+    if (e.intro) text(e.intro, 9.5, { gray: 40, gap: 0.8 });
     text(e.stack.join(" · "), 8.5, { italic: true, gray: 100, gap: 1 });
     bullets(e.highlights);
   });
 
-  heading("Projects");
+  if (r.projects.length) heading("Projects");
   r.projects.forEach((p) => {
     ensure(12);
-    text(p.name + (p.url ? `  (${host(p.url)})` : ""), 10, { bold: true, gray: 15 });
+    text(p.name + (p.url ? `  (${host(p.url)})` : "") + (p.start ? `  ·  ${formatRange(p.start, p.end)}` : ""), 10, { bold: true, gray: 15 });
     text(p.description, 9.5, { gray: 40 });
     text(p.stack.join(" · "), 8.5, { italic: true, gray: 100, gap: 1.5 });
   });
 
-  heading("Education");
+  if (r.education.length) heading("Education");
   r.education.forEach((e) => {
     text(e.title, 10, { bold: true, gray: 15 });
     text(`${e.school}, ${e.location}  ·  ${formatRange(e.start, e.end)}`, 9.5, { gray: 60, gap: 1.5 });
   });
 
-  heading("Certificates and awards");
-  bullets(r.awards.map((a) => `${a.title} (${a.issuer})`));
-  heading("Languages");
-  text(r.languages.map((l) => `${l.name} (${l.level})`).join("  ·  "), 9.5, { gray: 40 });
-  heading("Additional skills");
-  text(r.additionalSkills.join(", "), 9.5, { gray: 40 });
-  heading("Hobbies and interests");
-  text(r.hobbies.join(", "), 9.5, { gray: 40 });
+  if (r.awards.length) { heading("Certificates and awards"); bullets(r.awards.map((a) => `${a.title} (${a.issuer})`)); }
+  if (r.languages.length) { heading("Languages"); text(r.languages.map((l) => `${l.name} (${l.level})`).join("  ·  "), 9.5, { gray: 40 }); }
+  if (r.additionalSkills.length) { heading("Additional skills"); text(r.additionalSkills.join(", "), 9.5, { gray: 40 }); }
+  if (r.hobbies.length) { heading("Hobbies and interests"); text(r.hobbies.join(", "), 9.5, { gray: 40 }); }
 
   const pages = doc.getNumberOfPages();
   for (let i = 1; i <= pages; i++) {
@@ -193,32 +184,31 @@ export async function downloadDocx(r: Resume) {
     new Paragraph({ heading: HeadingLevel.TITLE, children: [new TextRun({ text: r.name, bold: true, size: 40 })] }),
     p(`${r.headline} · ${r.location}`, { size: 22, color: "555555" }),
     new Paragraph({ spacing: { after: 120 }, children: contacts.flatMap(([label, url], i) => [...(i ? [new TextRun({ text: "  ·  ", size: 20 })] : []), link(label, url)]) }),
-    h("Summary"), p(r.summary),
-    h("Areas of expertise"), ...r.expertise.map(bullet),
-    h("Experience"),
-    ...r.experience.flatMap((e) => [
-      new Paragraph({
-        spacing: { before: 160, after: 40 },
-        tabStops: [{ type: TabStopType.RIGHT, position: 9600 }],
-        children: [new TextRun({ text: `${e.role}, ${e.company}`, bold: true, size: 22 }), new TextRun({ text: `\t${formatRange(e.start, e.end)}`, size: 18, color: "666666" })],
-      }),
-      p(e.intro),
-      p(e.stack.join(" · "), { italics: true, size: 18, color: "666666" }),
-      ...e.highlights.map(bullet),
-    ]),
-    h("Projects"),
-    ...r.projects.flatMap((x) => [
-      new Paragraph({ spacing: { before: 120, after: 40 }, children: [new TextRun({ text: x.name, bold: true, size: 21 }), ...(x.url ? [new TextRun({ text: "  ", size: 20 }), link(host(x.url), x.url)] : [])] }),
-      p(x.description),
-      p(x.stack.join(" · "), { italics: true, size: 18, color: "666666" }),
-    ]),
-    h("Education"),
-    ...r.education.flatMap((e) => [p(e.title, { bold: true }), p(`${e.school}, ${e.location} · ${formatRange(e.start, e.end)}`, { color: "555555" })]),
-    h("Certificates and awards"), ...r.awards.map((a) => bullet(`${a.title} (${a.issuer})`)),
-    h("Languages"), p(r.languages.map((l) => `${l.name} (${l.level})`).join(" · ")),
-    h("Additional skills"), p(r.additionalSkills.join(", ")),
-    h("Hobbies and interests"), p(r.hobbies.join(", ")),
   ];
+  const add = (show: unknown, ...items: InstanceType<typeof Paragraph>[]) => show && children.push(...items);
+  add(r.summary, h("Summary"), p(r.summary));
+  add(r.expertise.length, h("Areas of expertise"), ...r.expertise.map(bullet));
+  add(r.experience.length, h("Experience"), ...r.experience.flatMap((e) => [
+    new Paragraph({
+      spacing: { before: 160, after: 40 },
+      tabStops: [{ type: TabStopType.RIGHT, position: 9600 }],
+      children: [new TextRun({ text: `${e.role}, ${e.company}`, bold: true, size: 22 }), new TextRun({ text: `\t${formatRange(e.start, e.end)}`, size: 18, color: "666666" })],
+    }),
+    ...(e.type || e.location ? [p([e.type, e.location].filter(Boolean).join(" · "), { size: 18, color: "666666" })] : []),
+    ...(e.intro ? [p(e.intro)] : []),
+    p(e.stack.join(" · "), { italics: true, size: 18, color: "666666" }),
+    ...e.highlights.map(bullet),
+  ]));
+  add(r.projects.length, h("Projects"), ...r.projects.flatMap((x) => [
+    new Paragraph({ spacing: { before: 120, after: 40 }, children: [new TextRun({ text: x.name, bold: true, size: 21 }), ...(x.url ? [new TextRun({ text: "  ", size: 20 }), link(host(x.url), x.url)] : []), ...(x.start ? [new TextRun({ text: `  ·  ${formatRange(x.start, x.end)}`, size: 18, color: "666666" })] : [])] }),
+    p(x.description),
+    p(x.stack.join(" · "), { italics: true, size: 18, color: "666666" }),
+  ]));
+  add(r.education.length, h("Education"), ...r.education.flatMap((e) => [p(e.title, { bold: true }), p(`${e.school}, ${e.location} · ${formatRange(e.start, e.end)}`, { color: "555555" })]));
+  add(r.awards.length, h("Certificates and awards"), ...r.awards.map((a) => bullet(`${a.title} (${a.issuer})`)));
+  add(r.languages.length, h("Languages"), p(r.languages.map((l) => `${l.name} (${l.level})`).join(" · ")));
+  add(r.additionalSkills.length, h("Additional skills"), p(r.additionalSkills.join(", ")));
+  add(r.hobbies.length, h("Hobbies and interests"), p(r.hobbies.join(", ")));
   const doc = new Document({
     creator: r.name,
     title: `${r.name} - ${r.headline}`,
