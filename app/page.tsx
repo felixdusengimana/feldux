@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 import {
   ArrowIcon,
@@ -111,13 +112,13 @@ export default async function HomePage() {
           </a>
         </li>
         <li>
-          <a
+          <Link
             className="flex items-center hover:text-neutral-700 dark:hover:text-neutral-200 transition-all"
             href="/resume"
           >
             <ArrowIcon />
             <p className="h-7">Resume</p>
-          </a>
+          </Link>
         </li>
         <li>
           <a

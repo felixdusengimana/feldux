@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import type { Metadata } from "next";
+import Link from "next/link";
 import { pageMetadata } from "@/lib/seo";
 import {
   GitHubIcon,
@@ -38,7 +39,7 @@ export default function AboutPage() {
         </p>
 
         <p>
-          Read more about my experience in my <a href="/resume">resume</a>.
+          Read more about my experience in my <Link href="/resume">resume</Link>.
         </p>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
@@ -90,7 +91,7 @@ export default function AboutPage() {
             </div>
             <ArrowIcon />
           </a>
-          <a
+          <Link
             href="/resume"
             className="flex w-full border border-neutral-200 dark:border-neutral-800 rounded-lg p-4 no-underline items-center text-neutral-800 dark:text-neutral-200 hover:dark:bg-neutral-900 hover:bg-neutral-100 transition-all justify-between"
           >
@@ -112,7 +113,7 @@ export default function AboutPage() {
               <div className="ml-3">Resume</div>
             </div>
             <ArrowIcon />
-          </a>
+          </Link>
           <a
             rel="noopener noreferrer"
             target="_blank"
