@@ -113,9 +113,7 @@ export default async function HomePage() {
         <li>
           <a
             className="flex items-center hover:text-neutral-700 dark:hover:text-neutral-200 transition-all"
-            rel="noopener noreferrer"
-            target="_blank"
-            href="https://docs.google.com/document/d/1k6PDFC2B13BBEMnSerJuNwMqVJAVoKga9cFvGlG66Vk/edit?usp=sharing"
+            href="/resume"
           >
             <ArrowIcon />
             <p className="h-7">Resume</p>
