@@ -12,7 +12,7 @@ interface MdxPageProps {
 export default function MdxPage({ code }: MdxPageProps) {
   return (
     <article
-      className="prose prose-pre:block prose-pre:h-full prose-pre:bg-neutral-50 prose-pre:dark:bg-neutral-800 prose-pre:pl-10 prose-blockquote:bg-slate-500 prose-neutral dark:prose-invert prose-a:text-blue-400 prose-strong:font-bold"
+      className="prose prose-pre:block prose-pre:h-full prose-pre:bg-neutral-50 prose-pre:text-neutral-800 prose-pre:dark:bg-neutral-800 dark:prose-pre:text-neutral-200 prose-pre:pl-10 prose-blockquote:bg-slate-500 prose-neutral dark:prose-invert prose-a:text-blue-600 dark:prose-a:text-blue-400 prose-strong:font-bold"
       dangerouslySetInnerHTML={{ __html: md().render(code) }}
     />
   );
