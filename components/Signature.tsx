@@ -1,6 +1,5 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import { useEffect, useLayoutEffect, useRef } from "react";
 
 // centerlines traced from the handwritten "felix", drawn in this order
@@ -14,7 +13,6 @@ const DURATION = 1.8; // seconds for the whole signature
 const useIsoLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
 
 export default function Signature({ className }: { className?: string }) {
-  const pathname = usePathname();
   const paths = useRef<(SVGPathElement | null)[]>([]);
   const nib = useRef<SVGGElement>(null);
 
@@ -51,7 +49,7 @@ export default function Signature({ className }: { className?: string }) {
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [pathname]);
+  }, []);
 
   return (
     <svg viewBox="0 0 232 160" fill="none" aria-hidden="true" className={className}>
