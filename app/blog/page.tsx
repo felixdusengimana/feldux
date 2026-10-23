@@ -1,6 +1,7 @@
 import React from "react";
 import { getAllblogs } from "lib/mdx";
 import { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 const BlurImage = dynamic(() => import("components/BlurImage"));
 import allBlogs from "./generated";
 import Link from "next/link";
@@ -26,14 +27,17 @@ interface BlogsProps {
   };
 }
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Blog",
-  description: "Read my thoughts on software development, design, and more.",
-};
+  description: "Articles by Felix Dusengimana on React, JavaScript, web development and software engineering.",
+  path: "/blog",
+  keywords: ["blog", "articles", "tutorials", "JavaScript", "ReactJS"],
+});
 
 export default function Blogs() {
   return (
     <div>
+      <h1 className="font-bold text-3xl font-serif mb-8">Blog</h1>
       {/* 2 grid and one in mobile */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         {allBlogs.map((blog, index) => (

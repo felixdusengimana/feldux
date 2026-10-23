@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import allBlogs from "../generated";
 import MdxPage from "@/components/MDX";
 import { getBlogBySlug } from "@/lib/mdx";
+import { pageMetadata, JsonLd, person, siteUrl, defaultImage } from "@/lib/seo";
+import ShareLinks from "@/components/ShareLinks";
 
 interface ParamProps {
   params: {
@@ -15,6 +17,10 @@ export async function generateStaticParams() {
   }));
 }
 
+// front matter keywords can be a list or a comma-separated string
+const toList = (v: unknown): string[] =>
+  Array.isArray(v) ? v.map(String) : typeof v === "string" ? v.split(",").map((k) => k.trim()).filter(Boolean) : [];
+
 export async function generateMetadata({
   params,
 }: ParamProps): Promise<Metadata | undefined> {
@@ -23,29 +29,16 @@ export async function generateMetadata({
     return;
   }
 
-  const { title, excerpt: description, date: publishedTime, coverImage, slug } = post;
-  const ogImage = coverImage
-    ? `https://feldux.com${coverImage}`
-    : "https://feldux.com/og.png";
-
-  return {
+  const { title, excerpt: description, date: publishedTime, coverImage, slug, keywords } = post;
+  return pageMetadata({
     title,
     description,
-    openGraph: {
-      title,
-      description,
-      type: "article",
-      publishedTime,
-      url: `https://feldux.com/blog/${slug}`,
-      images: [{ url: ogImage }],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      images: [ogImage],
-    },
-  };
+    path: `/blog/${slug}`,
+    type: "article",
+    publishedTime,
+    keywords: [...toList(keywords), "tutorial", "article"],
+    image: coverImage ? { url: `${siteUrl}${coverImage}`, alt: title } : defaultImage,
+  });
 }
 
 export default async function Blog({ params }: ParamProps) {
@@ -53,10 +46,9 @@ export default async function Blog({ params }: ParamProps) {
     "title",
     "slug",
     "date",
-    "summary",
-    "image",
+    "excerpt",
+    "coverImage",
     "content",
-    "structuredData",
   ]);
 
   if (!post) {
@@ -65,9 +57,19 @@ export default async function Blog({ params }: ParamProps) {
 
   return (
     <section>
-      <script type="application/ld+json">
-        {JSON.stringify(post.structuredData)}
-      </script>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          headline: post.title,
+          description: post.excerpt,
+          datePublished: post.date,
+          image: post.coverImage ? `${siteUrl}${post.coverImage}` : defaultImage.url,
+          url: `${siteUrl}/blog/${params.slug}`,
+          mainEntityOfPage: `${siteUrl}/blog/${params.slug}`,
+          author: person,
+        }}
+      />
       <h1 className="font-bold text-3xl font-serif max-w-[650px]">
         {post.title}
       </h1>
@@ -79,6 +81,12 @@ export default async function Blog({ params }: ParamProps) {
       </div>
 
       <MdxPage code={post.content} />
+      <ShareLinks
+        heading="Share this article"
+        url={`${siteUrl}/blog/${params.slug}`}
+        title={post.title}
+        text={`${post.title} by Felix Dusengimana`}
+      />
     </section>
   );
 }

@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import {
   GitHubIcon,
   ArrowIcon,
@@ -9,10 +10,12 @@ import {
   LinkedInIcon
 } from "@/components/icons";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "About",
-  description: "Software Engineer | Felix Dusengimana",
-};
+  description: "About Felix Dusengimana, a software engineer in Kigali, Rwanda: experience in web and mobile development, and where to find him online.",
+  path: "/about",
+  keywords: ["about", "experience", "web developer", "mobile developer"],
+});
 
 export default function AboutPage() {
   return (
@@ -38,7 +41,7 @@ export default function AboutPage() {
           <a
             rel="noopener noreferrer"
             target="_blank"
-            href="https://twitter.com/felix__dusenge"
+            href="https://x.com/felix__dusenge"
             className="flex col-span-2 w-full border border-neutral-200 dark:border-neutral-800 rounded-lg p-4 no-underline items-center text-neutral-800 dark:text-neutral-200 hover:dark:bg-neutral-900 hover:bg-neutral-100 transition-all justify-between"
           >
             <div className="flex items-center">
