@@ -5,7 +5,7 @@ export const siteName = "Felix Dusengimana";
 export const twitterHandle = "@felix__dusenge";
 export const defaultDescription =
   "Felix Dusengimana is a software engineer in Kigali, Rwanda, building React and TypeScript apps, open-source packages and writing about web development.";
-export const defaultImage = { url: `${siteUrl}/og.jpg`, width: 982, height: 594, alt: siteName };
+export const defaultImage = { url: `${siteUrl}/og/default.png`, width: 1200, height: 630, alt: `${siteName}, Software Engineer` };
 export const defaultKeywords = [
   "Felix Dusengimana",
   "software engineer",
