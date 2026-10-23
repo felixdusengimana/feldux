@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 interface INavKeys {
   name: string;
@@ -91,6 +92,15 @@ function Logo() {
 
 export default function Navbar() {
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  const changeTheme = (value: string) => {
+    const root = document.documentElement;
+    root.classList.add("theme-transition");
+    setTheme(value);
+    window.setTimeout(() => root.classList.remove("theme-transition"), 300);
+  };
   let pathname = usePathname() || "/";
   if (pathname.includes("/blog/")) {
     pathname = "/blog";
@@ -101,7 +111,7 @@ export default function Navbar() {
   }
 
   return (
-    <aside className="md:w-[150px] md:flex-shrink-0 -mx-4 md:mx-0 md:px-0 font-serif">
+    <aside className="relative md:w-[150px] md:flex-shrink-0 -mx-4 md:mx-0 md:px-0 font-serif">
       <div className="lg:sticky lg:top-20">
         <div className="ml-2 md:ml-[12px] mb-2 px-4 md:px-0 md:mb-8 space-y-10 flex flex-col md:flex-row items-start ">
           <Logo />
@@ -116,7 +126,7 @@ export default function Navbar() {
                 {/* Desktop version, hidden on mobile, animates y axis */}
                 <div className="hidden md:block">
                   <motion.div
-                    className="absolute bg-neutral-100 dark:bg-neutral-800 h-[34px] rounded-md z-[-1]"
+                    className="absolute bg-neutral-200 dark:bg-neutral-800 h-[34px] rounded-md z-[-1]"
                     layoutId="test2"
                     initial={{ opacity: 0, y: navItems[pathname].y }}
                     animate={{
@@ -134,7 +144,7 @@ export default function Navbar() {
                 {/* Mobile version, hidden on desktop, animates x axis */}
                 <div className="block md:hidden">
                   <motion.div
-                    className="absolute bg-neutral-100 dark:bg-neutral-800 h-[34px] rounded-md z-[-1]"
+                    className="absolute bg-neutral-200 dark:bg-neutral-800 h-[34px] rounded-md z-[-1]"
                     layoutId="test"
                     initial={{ opacity: 0, x: navItems[pathname].x }}
                     animate={{
@@ -162,7 +172,7 @@ export default function Navbar() {
                   className={clsx(
                     "transition-all hover:text-neutral-800 dark:hover:text-neutral-200 py-[5px] px-[10px]",
                     {
-                      "text-neutral-500": !isActive,
+                      "text-neutral-500 dark:text-neutral-400": !isActive,
                       "font-bold": isActive,
                     }
                   )}
@@ -173,6 +183,22 @@ export default function Navbar() {
             })}
           </div>
         </nav>
+        <div className="absolute top-1 right-4 md:static md:ml-[10px] md:mt-8">
+          <label htmlFor="theme" className="sr-only">
+            Theme
+          </label>
+          <select
+            id="theme"
+            value={mounted ? theme : "system"}
+            disabled={!mounted}
+            onChange={(e) => changeTheme(e.target.value)}
+            className="text-sm rounded-md border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-700 dark:text-neutral-300 px-2 py-1 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400"
+          >
+            <option value="system">System</option>
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+          </select>
+        </div>
       </div>
     </aside>
   );

@@ -1,4 +1,5 @@
 import React from 'react'
+import CopyButton from '@/components/CopyButton';
 
 const installTabs = ['npm', 'pnpm', 'yarn'] as const;
 type InstallTab = typeof installTabs[number];
@@ -25,8 +26,8 @@ export default function InstallTabs({ packageName, latest }: { packageName: stri
                         key={tab}
                         onClick={() => setSelected(tab)}
                         className={`px-3 py-1 rounded text-sm font-medium ${selected === tab
-                            ? 'bg-blue-600 text-white'
-                            : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200'
+                            ? 'bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900'
+                            : 'bg-neutral-100 hover:bg-neutral-200 text-neutral-700 dark:bg-neutral-700 dark:hover:bg-neutral-700 dark:text-neutral-200'
                             }`}
                     >
                         {tab}
@@ -35,11 +36,14 @@ export default function InstallTabs({ packageName, latest }: { packageName: stri
             </div>
 
 
-            <pre className="bg-gray-100 dark:bg-gray-900 p-3 rounded text-sm font-mono overflow-x-auto">
-                <code className="block text-blue-600">
-                    {getCommand(selected)}
-                </code>
-            </pre>
+            <div className="relative">
+                <pre className="bg-neutral-100 dark:bg-neutral-950 p-3 pr-12 rounded text-sm font-mono overflow-x-auto">
+                    <code className="block text-neutral-800 dark:text-neutral-200">
+                        {getCommand(selected)}
+                    </code>
+                </pre>
+                <CopyButton text={getCommand(selected)} className="absolute top-1/2 -translate-y-1/2 right-2" />
+            </div>
         </>
     )
 }

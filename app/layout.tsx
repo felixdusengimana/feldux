@@ -2,6 +2,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import clsx from 'clsx'
 import Sidebar from '@/components/sidebar'
+import Providers from '@/components/providers'
 import { Metadata } from 'next'
 export const metadata: Metadata = {
   title: {
@@ -13,7 +14,6 @@ export const metadata: Metadata = {
     title: "Felix Dusengimana",
     description: 'Developer, writer, Creator, and Animator.',
     type: 'website',
-    url: 'https://feldux.com',
     siteName: 'Felix Dusengimana',
     images: [
       {
@@ -59,12 +59,15 @@ export default function RootLayout({
   return (
     <html 
     lang="en"
-    className={clsx('font-sans text-black bg-white dark:bg-black dark:text-white')}>
+    suppressHydrationWarning
+    className={clsx('font-sans text-neutral-900 bg-white dark:bg-[#111214] dark:text-neutral-200')}>
       <body className="antialiased max-w-4xl mb-40 flex flex-col md:flex-row mx-4 mt-8 md:mt-20 lg:mt-32 lg:mx-auto">
-        <Sidebar/>
-        <main>
-          {children}
-        </main>
+        <Providers>
+          <Sidebar/>
+          <main>
+            {children}
+          </main>
+        </Providers>
       </body>
     </html>
   )

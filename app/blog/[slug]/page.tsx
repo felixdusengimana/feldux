@@ -23,16 +23,10 @@ export async function generateMetadata({
     return;
   }
 
-  const {
-    title,
-    publishedAt: publishedTime,
-    summary: description,
-    image,
-    slug,
-  } = post;
-  const ogImage = image
-    ? `https://leerob.io${image}`
-    : `https://leerob.io/api/og?title=${title}`;
+  const { title, excerpt: description, date: publishedTime, coverImage, slug } = post;
+  const ogImage = coverImage
+    ? `https://feldux.com${coverImage}`
+    : "https://feldux.com/og.png";
 
   return {
     title,
@@ -42,12 +36,8 @@ export async function generateMetadata({
       description,
       type: "article",
       publishedTime,
-      url: `https://leerob.io/blog/${slug}`,
-      images: [
-        {
-          url: ogImage,
-        },
-      ],
+      url: `https://feldux.com/blog/${slug}`,
+      images: [{ url: ogImage }],
     },
     twitter: {
       card: "summary_large_image",
@@ -62,7 +52,7 @@ export default async function Blog({ params }: ParamProps) {
   const post = getBlogBySlug(params.slug, [
     "title",
     "slug",
-    "publishedAt",
+    "date",
     "summary",
     "image",
     "content",
@@ -82,10 +72,10 @@ export default async function Blog({ params }: ParamProps) {
         {post.title}
       </h1>
       <div className="grid grid-cols-[auto_1fr_auto] items-center mt-4 mb-8 font-mono text-sm max-w-[650px]">
-        <div className="bg-neutral-100 dark:bg-neutral-800 rounded-md px-2 py-1 tracking-tighter">
-          {post.publishedAt}
+        <div className="bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 rounded-md px-2 py-1 tracking-tighter">
+          {new Date(post.date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" })}
         </div>
-        <div className="h-[0.2em] bg-neutral-50 dark:bg-neutral-800 mx-2" />
+        <div className="h-[0.2em] bg-neutral-200 dark:bg-neutral-800 mx-2" />
       </div>
 
       <MdxPage code={post.content} />

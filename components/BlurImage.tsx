@@ -15,7 +15,7 @@ export default function BlurImage({ image, width, height, alt }: BlurImageProps)
 
   return (
     <a href={image} target="_blank" className="group">
-      <div className="aspect-w-1 aspect-h-1 w-fit overflow-hidden rounded-lg bg-gray-200 xl:aspect-w-7 xl:aspect-h-8">
+      <div className="aspect-w-1 aspect-h-1 w-fit overflow-hidden rounded-lg bg-neutral-200 xl:aspect-w-7 xl:aspect-h-8">
         <Image
           alt={alt}
           src={image}

@@ -39,7 +39,7 @@ export default function Blogs() {
         {allBlogs.map((blog, index) => (
           <div
             key={index}
-            className="text-white max-w-[300px] overflow-hidden flex flex-col justify-between"
+            className="max-w-[300px] overflow-hidden flex flex-col justify-between"
           >
             <BlurImage
               image={blog.coverImage}
@@ -50,7 +50,7 @@ export default function Blogs() {
             <Link href={`/blog/${blog.slug}`} suppressHydrationWarning>
               <h2 className="font-bold text-lg">{blog.title}</h2>
               <p className="text-md mt-2">{blog.excerpt}</p>
-              <p className="mt-2 text-[12px] text-gray-400">
+              <p className="mt-2 text-[12px] text-neutral-500 dark:text-neutral-400">
                 {new Date(blog.date).toLocaleDateString()}
               </p>
               {/* read more button */}

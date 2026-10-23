@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Root, Input, Label } from '@frjoy/otp';
+import CodeBlock from '@/components/CodeBlock';
 
 interface PlaygroundConfig {
     type: 'number' | 'text' | 'any';
@@ -20,7 +21,7 @@ const inititalConfig: PlaygroundConfig = {
     pattern: '',
     inputCount: 6,
     inputLength: 1,
-    className: "min-w-12 px-3 py-2 border border-gray-300 dark:border-gray-700 rounded focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
+    className: "min-w-12 px-3 py-2 border border-neutral-300 dark:border-neutral-700 rounded focus:ring-2 focus:ring-blue-500 dark:bg-neutral-800 dark:text-white"
 };
 
 export default function OTPPlayground() {
@@ -35,8 +36,13 @@ export default function OTPPlayground() {
     return (
         <div className="my-10 w-full max-w-[600px] min-w-0">
             <h2 id="interactive-playground" className="text-2xl font-semibold mb-4">Interactive Playground</h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-6">
+            <p className="text-neutral-600 dark:text-neutral-400 mb-6">
                 Experiment with different props and see the changes in real-time.
+                For more examples, see the{' '}
+                <a href="https://frjoy.github.io/frjoy" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 underline">
+                    Storybook playground
+                </a>
+                .
             </p>
 
             {/* Preset Configurations */}
@@ -89,7 +95,7 @@ export default function OTPPlayground() {
                                 ...inititalConfig,
                                 type: 'text',
                                 joiner: ' ',
-                                pattern: '[A-Z0-9]',
+                                pattern: '[A-Z0-9]{3}',
                                 inputCount: 3,
                                 inputLength: 3,
                             });
@@ -103,7 +109,7 @@ export default function OTPPlayground() {
 
             <div className="flex sm:flex-row flex-col gap-8 mb-10 w-full min-w-0">
                 {/* Controls Panel */}
-                <div className="space-y-4 p-6 bg-gray-50 dark:bg-gray-900 rounded-lg min-w-[200px]">
+                <div className="space-y-4 p-6 bg-neutral-50 dark:bg-neutral-900 rounded-lg min-w-[200px]">
                     <h3 className="text-lg font-semibold mb-4">Configuration</h3>
 
                     {/* Type */}
@@ -115,7 +121,7 @@ export default function OTPPlayground() {
                                 setPlaygroundOtp('');
                                 setPlaygroundConfig(prev => ({ ...prev, type: e.target.value as 'number' | 'text' | 'any' }))
                             }}
-                            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
+                            className="w-full px-3 py-2 border border-neutral-300 dark:border-neutral-700 rounded focus:ring-2 focus:ring-blue-500 dark:bg-neutral-800 dark:text-white"
                         >
                             <option value="number">number</option>
                             <option value="text">text</option>
@@ -133,7 +139,7 @@ export default function OTPPlayground() {
                                     setPlaygroundOtp('');
                                     setPlaygroundConfig(prev => ({ ...prev, password: e.target.checked }));
                                 }}
-                                className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                                className="rounded border-neutral-300 text-blue-600 focus:ring-blue-500"
                             />
                             <span className="text-sm font-medium">Password mode</span>
                         </label>
@@ -150,7 +156,7 @@ export default function OTPPlayground() {
                                 setPlaygroundConfig(prev => ({ ...prev, joiner: e.target.value }));
                             }}
                             placeholder="e.g., -, space, etc."
-                            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
+                            className="w-full px-3 py-2 border border-neutral-300 dark:border-neutral-700 rounded focus:ring-2 focus:ring-blue-500 dark:bg-neutral-800 dark:text-white"
                         />
                     </div>
 
@@ -165,7 +171,7 @@ export default function OTPPlayground() {
                                 setPlaygroundConfig(prev => ({ ...prev, pattern: e.target.value }));
                             }}
                             placeholder="e.g., [0-9], [A-Z0-9]"
-                            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
+                            className="w-full px-3 py-2 border border-neutral-300 dark:border-neutral-700 rounded focus:ring-2 focus:ring-blue-500 dark:bg-neutral-800 dark:text-white"
                         />
                     </div>
 
@@ -181,7 +187,7 @@ export default function OTPPlayground() {
                                 setPlaygroundOtp('');
                                 setPlaygroundConfig(prev => ({ ...prev, inputCount: parseInt(e.target.value) || 2 }));
                             }}
-                            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
+                            className="w-full px-3 py-2 border border-neutral-300 dark:border-neutral-700 rounded focus:ring-2 focus:ring-blue-500 dark:bg-neutral-800 dark:text-white"
                         />
                     </div>
 
@@ -197,7 +203,7 @@ export default function OTPPlayground() {
                                 setPlaygroundOtp('');
                                 setPlaygroundConfig(prev => ({ ...prev, inputLength: parseInt(e.target.value) || 1 }));
                             }}
-                            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-white"
+                            className="w-full px-3 py-2 border border-neutral-300 dark:border-neutral-700 rounded focus:ring-2 focus:ring-blue-500 dark:bg-neutral-800 dark:text-white"
                         />
                     </div>
 
@@ -211,7 +217,7 @@ export default function OTPPlayground() {
                 </div>
 
                 {/* Live Preview */}
-                <div className="p-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg min-w-0 overflow-hidden">
+                <div className="p-6 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg min-w-0 overflow-hidden">
                     <h3 className="text-lg font-semibold mb-4">Live Preview</h3>
 
                     <Root
@@ -235,33 +241,34 @@ export default function OTPPlayground() {
                     </Root>
 
                     <div className="my-2 text-sm">
-                        <div className="text-gray-700 dark:text-gray-300">
+                        <div className="text-neutral-700 dark:text-neutral-300">
                             <strong>Output:</strong>
-                            <div className="font-mono bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded mt-1 break-all overflow-hidden">
+                            <div className="font-mono bg-neutral-100 dark:bg-neutral-900 px-2 py-1 rounded mt-1 break-all overflow-hidden">
                                 {playgroundOtp || 'No input yet'}
                             </div>
                         </div>
-                        <p className="text-gray-700 dark:text-gray-300">
+                        <p className="text-neutral-700 dark:text-neutral-300">
                             <strong>Length:</strong> {playgroundOtp.length} characters
                         </p>
-                        <p className="text-gray-700 dark:text-gray-300">
+                        <p className="text-neutral-700 dark:text-neutral-300">
                             <strong>Expected total:</strong> {playgroundConfig.inputCount * playgroundConfig.inputLength + (playgroundConfig.joiner ? (playgroundConfig.inputCount - 1) * playgroundConfig.joiner.length : 0)} characters
                         </p>
                         {playgroundConfig.pattern && (
-                            <p className="text-gray-700 dark:text-gray-300">
+                            <p className="text-neutral-700 dark:text-neutral-300">
                                 <strong>Pattern:</strong> <span className="font-mono break-all">{playgroundConfig.pattern}</span>
                             </p>
                         )}
                     </div>
 
                     {/* Features showcase */}
-                    <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-600">
+                    <div className="mt-4 pt-4 border-t border-neutral-200 dark:border-neutral-600">
                         <h4 className="font-medium mb-2">Try these features:</h4>
-                        <ul className="text-xs text-gray-600 dark:text-gray-400 space-y-1">
-                            <li>• Paste complete codes - they'll auto-fill</li>
+                        <ul className="text-xs text-neutral-600 dark:text-neutral-400 space-y-1">
+                            <li>• Paste complete codes, even with spaces - they&apos;ll auto-fill</li>
                             <li>• Use arrow keys to navigate between inputs</li>
                             <li>• Backspace deletes and moves to previous input</li>
-                            <li>• Enter moves to next input field</li>
+                            <li>• Click an empty input - focus jumps to the first unfilled one</li>
+                            {playgroundConfig.type === 'number' && <li>• Arabic-Indic digits like ١٢٣٤ become 1234</li>}
                             {playgroundConfig.password && <li>• Content is masked for security</li>}
                             {playgroundConfig.joiner && <li>• Joiner automatically added in output</li>}
                         </ul>
@@ -272,9 +279,7 @@ export default function OTPPlayground() {
             {/* Generated Code */}
             <div className="mb-10 min-w-0">
                 <h3 className="text-lg font-semibold mb-3">Generated Code</h3>
-                <pre className="bg-gray-100 dark:bg-gray-900 text-sm p-4 rounded overflow-x-auto text-gray-800 dark:text-gray-100 max-w-full">
-                    <code>
-                        {`<Root 
+                <CodeBlock code={`<Root 
   onChange={setOtp}${playgroundConfig.type !== 'number' ? `\n  type="${playgroundConfig.type}"` : ''}${playgroundConfig.password ? '\n  password' : ''}${playgroundConfig.joiner ? `\n  joiner="${playgroundConfig.joiner}"` : ''}${playgroundConfig.pattern ? `\n  pattern="${playgroundConfig.pattern}"` : ''}
 >
   <Label>Enter Code</Label>
@@ -283,13 +288,11 @@ export default function OTPPlayground() {
       <Input
         key={i}
         length={${playgroundConfig.inputLength}}
-        className={"${playgroundConfig.className}"
+        className="${playgroundConfig.className}"
       />
     ))}
   </div>
-</Root>`}
-                    </code>
-                </pre>
+</Root>`} filename="VerifyCode.tsx" />
             </div>
         </div>
     );
