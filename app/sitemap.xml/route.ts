@@ -8,6 +8,7 @@ export function GET() {
     { path: "/about", priority: "0.8" },
     { path: "/blog", priority: "0.8" },
     { path: "/packages", priority: "0.8" },
+    { path: "/resume", priority: "0.9" },
     ...packages.map((p) => ({ path: `/packages/${p.slug}`, priority: "0.9" })),
   ].map((p) => `<url><loc>${siteUrl}${p.path}</loc><priority>${p.priority}</priority></url>`);
 

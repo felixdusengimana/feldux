@@ -1,0 +1,200 @@
+// single source of truth for the resume page and every export (PDF, Word, Markdown, JSON)
+
+export interface Experience {
+  role: string;
+  company: string;
+  start: string; // YYYY-MM
+  end?: string; // YYYY-MM, missing = present
+  intro: string;
+  stack: string[];
+  highlights: string[];
+}
+
+export interface Project {
+  name: string;
+  description: string;
+  stack: string[];
+  url?: string;
+}
+
+export const resume = {
+  name: "Felix Dusengimana",
+  headline: "Backend Engineer",
+  location: "Kigali, Rwanda",
+  email: "phelixdusengimana@gmail.com",
+  website: "https://feldux.com",
+  profiles: [
+    { network: "LinkedIn", url: "https://linkedin.com/in/felixdusengimana" },
+    { network: "GitHub", url: "https://github.com/felixdusengimana" },
+  ],
+  summary:
+    "Backend-focused Software Engineer with 5 years of experience designing and building scalable backend and full-stack systems using Java (Spring Boot), Kotlin, Node.js and Python. Currently contributing to Tekana, a mission-critical platform used by Rwanda National Police, developing secure microservices, implementing RBAC authorization systems, and improving system reliability and performance. Experienced in building RESTful APIs, designing database-driven applications with PostgreSQL, and deploying production systems using Docker and CI/CD pipelines. Known for writing clean, maintainable code and collaborating effectively in Agile teams to deliver reliable, high-impact software solutions.",
+  expertise: [
+    "Java (Spring Boot)",
+    "Kotlin",
+    "Node.js (JavaScript and TypeScript)",
+    "Python (Flask and Django)",
+    "Flutter & React Native",
+    "React (Next.js) and Angular",
+    "Databases (PostgreSQL, MongoDB, Redis, SQLite)",
+    "CI/CD and Docker",
+    "Infrastructure as Code (Terraform and Ansible)",
+    "Microservices and Micro Frontends",
+    "Optimizing and scaling applications",
+    "Configuring and managing servers",
+  ],
+  experience: [
+    {
+      role: "Senior Software Engineer Consultant",
+      company: "Irembo",
+      start: "2026-03",
+      intro:
+        "Contributing to the design, development, and continuous improvement of digital platforms that simplify access to government and private sector services. Collaborating with cross-functional teams to deliver scalable, secure, and reliable solutions while contributing to technical discussions, system design, and architectural decisions.",
+      stack: ["Spring Boot", "Angular", "CI/CD", "Docker", "Java", "TypeScript", "REST", "PostgreSQL", "JPA", "React", "Next.js", "Agile", "System Design"],
+      highlights: [
+        "Collaborating with stakeholders to analyze business requirements and translate them into technical solutions",
+        "Contributing to technical decision-making, system design discussions, and architecture reviews",
+        "Creating and maintaining C4 diagrams to document system context, containers, components, and system interactions",
+        "Developing and maintaining backend services using Spring Boot, Java, and PostgreSQL",
+        "Building responsive and maintainable frontend applications with React/Next.js and TypeScript",
+        "Designing, implementing, and integrating RESTful APIs across internal and external systems",
+        "Implementing secure authentication, authorization, and data protection mechanisms",
+        "Monitoring, troubleshooting, and optimizing application performance, scalability, and maintainability",
+        "Reviewing code and promoting engineering best practices to maintain high code quality standards",
+        "Collaborating with product, design, and engineering teams to deliver user-centered digital services",
+        "Supporting continuous improvement initiatives through knowledge sharing, technical feedback, and process enhancements",
+      ],
+    },
+    {
+      role: "Software Engineer",
+      company: "PivotAccess",
+      start: "2024-05",
+      intro:
+        "Contributing to the development of Tekana, a platform that streamlines operations for the Rwanda National Police. Collaborating with teams to ensure the system's architecture, security, and user interface meet operational needs.",
+      stack: ["Spring Boot", "Next.js", "CI/CD", "Docker", "PostgreSQL", "Java", "TypeScript", "REST", "Go", "JPA", "Grafana"],
+      highlights: [
+        "Collaborating with cross-functional teams to develop Tekana, a platform for Rwanda National Police operations",
+        "Creating and maintaining the Tekana UI Kit with TypeScript to streamline frontend development",
+        "Implementing Atomic Design principles for a scalable and consistent UI",
+        "Developing and maintaining a Spring Boot microservice with RBAC for secure user management",
+        "Using Grafana to monitor and optimize system performance, ensuring reliability and scalability",
+        "Troubleshooting and resolving bugs to ensure smooth platform operation",
+        "Setting up automated tests for frontend and backend to maintain code quality",
+        "Reviewing code and promoting best practices within the development team",
+        "Developed a desktop utility in Go that collects and exposes system information (device name, IP address, OS details, and hardware metadata) to the platform, enabling administrators to monitor candidate workstations, improve system diagnostics and prevent cheating",
+      ],
+    },
+    {
+      role: "Software Engineer",
+      company: "Stylos Consult",
+      start: "2022-09",
+      end: "2024-02",
+      intro:
+        "Led a team of front-end developers in creating three successful web applications. Actively participated in project planning, task estimation, and sprint planning meetings, ensuring code quality, performance, and maintainability.",
+      stack: ["React", "Next.js", "CI/CD", "Docker", "Tailwind CSS", "Node.js", "PostCSS", "TypeScript", "REST", "Express", "Redux", "PHP (Laravel)", "Spring Boot", "MongoDB", "DigitalOcean", "GitHub Actions"],
+      highlights: [
+        "Collaborated closely with UI/UX designers and back-end developers, ensuring seamless integration, which resulted in a 20% increase in project delivery speed",
+        "Optimized front-end code for speed and performance, achieving a 30% improvement in page load times",
+        "Transformed design concepts into responsive and dynamic user interfaces",
+        "Conducted comprehensive code reviews, providing constructive feedback",
+        "Developed reusable components and libraries",
+        "Used modern front-end frameworks such as React.js, Next.js, and Tailwind",
+        "Mentored junior developers, offering guidance and sharing best practices",
+        "Organized knowledge-sharing sessions to foster professional growth within the team",
+        "Collaborated with QA testers to identify and resolve front-end bugs",
+        "Deployed applications on DigitalOcean using GitHub Actions and Docker",
+        "Managed the creation of employee emails via cPanel",
+        "Resolved technical issues arising in production",
+        "Developed, tested, and deployed products using the MERN stack",
+        "Designed new features, data-flow diagrams, and other UML diagrams",
+      ],
+    },
+  ] as Experience[],
+  projects: [
+    {
+      name: "Rapide Taxi App",
+      description:
+        "Actively maintaining the Python backend and Angular frontend of a fast, reliable taxi platform in Kigali, handling ride booking, dispatch logic, secure payments, and real-time updates for thousands of drivers and riders.",
+      stack: ["Python", "Angular"],
+    },
+    {
+      name: "RateLimiter",
+      description:
+        "A backend service that implements API rate limiting to prevent abuse and ensure fair usage of system resources. Tracks request frequency per client and enforces configurable limits to protect backend services from excessive traffic.",
+      stack: ["Spring Boot", "Java"],
+    },
+    {
+      name: "@frjoy/otp",
+      description:
+        "Open-source, headless OTP input for React published on npm, with SMS autofill, paste handling, keyboard navigation and right-to-left support. Includes docs, a Storybook playground and automated tests.",
+      stack: ["React", "TypeScript", "Storybook"],
+      url: "https://feldux.com/packages/otp",
+    },
+    {
+      name: "feldux.com",
+      description:
+        "Personal website with a blog and package documentation: light, dark and system themes, structured data and share metadata for SEO, and this interactive resume with PDF, Word, Markdown and JSON exports.",
+      stack: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
+      url: "https://feldux.com",
+    },
+    {
+      name: "Twika",
+      description:
+        "An application for people from all communities to share text, images, videos, and games, including fun content and memes.",
+      stack: ["React", "Node.js"],
+    },
+    {
+      name: "LuckyScore",
+      description:
+        "A side project to record match events between classes at school, built because it was hard to keep track of them.",
+      stack: ["Vue", "Vite", "Supabase"],
+    },
+  ] as Project[],
+  education: [
+    {
+      title: "BSc. (Hons) Software Engineering",
+      school: "African Leadership University",
+      location: "Kigali, Rwanda",
+      start: "2023-09",
+      end: "2027-09",
+    },
+    {
+      title: "Advanced Level High School Diploma (Software Programming and Embedded Systems)",
+      school: "Rwanda Coding Academy",
+      location: "Nyabihu, Rwanda",
+      start: "2019-08",
+      end: "2022-08",
+    },
+  ],
+  awards: [
+    { title: "Best Coder of the Year (2019)", issuer: "Rwanda Coding Academy" },
+    { title: "Best Coder of the Term (3 times)", issuer: "Rwanda Coding Academy" },
+    { title: "Responsive Web Design", issuer: "SoloLearn", url: "https://www.sololearn.com/Certificate/CT-SCQPKJ15/jpg" },
+    { title: "Coursera courses: Kubernetes, Docker CI/CD, Python Programming", issuer: "Coursera" },
+  ],
+  languages: [
+    { name: "Kinyarwanda", level: "Native" },
+    { name: "English", level: "Professional" },
+    { name: "Kiswahili", level: "Proficient" },
+    { name: "French", level: "Beginner" },
+  ],
+  additionalSkills: ["Docker", "AWS", "Google Cloud", "GitHub", "GitLab CI/CD", "Java", "Python", "Spring Boot", "Angular", "Svelte", "Vue", "MongoDB", "Redis", "Sass", "Jest", "JUnit", "GraphQL", "Linux", "SQL", "Jira", "Slack", "Discord", "Microsoft 365"],
+  hobbies: ["Board games", "Reading", "Athletics (basketball and football)", "Arts & design", "Psychology", "Sociology", "Philosophy", "Cooking and recipes", "Traveling and sky-diving", "Dramatic cinema and theatre", "Awareness meditation", "Storytelling"],
+};
+
+export type Resume = typeof resume;
+
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+export const formatMonth = (ym?: string) => {
+  if (!ym) return "Present";
+  const [y, m] = ym.split("-").map(Number);
+  return `${MONTHS[m - 1]} ${y}`;
+};
+export const formatRange = (start: string, end?: string) => `${formatMonth(start)} – ${formatMonth(end)}`;
+
+// every technology mentioned in experience or projects, most used first
+export function allSkills(r: Resume = resume) {
+  const count = new Map<string, number>();
+  [...r.experience, ...r.projects].forEach((item) => item.stack.forEach((s) => count.set(s, (count.get(s) ?? 0) + 1)));
+  return Array.from(count.entries()).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).map(([s]) => s);
+}
