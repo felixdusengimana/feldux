@@ -35,7 +35,7 @@ export const resume = {
     { network: "GitHub", url: "https://github.com/felixdusengimana" },
   ],
   summary:
-    `Versatile Software Engineer with ${yearsOfExperience} years of experience designing and building scalable systems end to end, from APIs and databases to web and mobile apps, using Java (Spring Boot), Kotlin, Node.js, Python, React and Flutter. At PivotAccess, contributed to Tekana, a mission-critical platform used by Rwanda National Police, developing secure microservices, implementing RBAC authorization systems, and improving system reliability and performance. Experienced in building RESTful APIs, designing database-driven applications with PostgreSQL, and deploying production systems using Docker and CI/CD pipelines. Known for writing clean, maintainable code and collaborating effectively in Agile teams to deliver reliable, high-impact software solutions.`,
+    `Felix is a Software Engineer with ${yearsOfExperience} years of engineering expertise, building scalable software across backend, web and mobile. Spearheading development initiatives, he has successfully led teams and executed many user-centric applications in fast-paced environments. Adept in architectural and aesthetic aspects, he thoroughly understands modern software technologies and Agile frameworks. Skilled in fostering a collaborative team dynamic, Felix thrives in mentorship and project management roles, ensuring the seamless delivery of high-performance software and visually compelling user interfaces.`,
   expertise: [
     "Java (Spring Boot)",
     "Kotlin",
