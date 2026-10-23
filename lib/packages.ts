@@ -17,6 +17,6 @@ export const packages: PackageInfo[] = [
     repoUrl: "https://github.com/frjoy/frjoy",
     npmUrl: "https://www.npmjs.com/package/@frjoy/otp",
     packageName: "@frjoy/otp",
-    storybookUrl: "https://frjoy.github.io/",
+    storybookUrl: "https://frjoy.github.io/frjoy",
   },
 ];

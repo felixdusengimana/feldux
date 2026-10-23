@@ -39,7 +39,7 @@ export default function OTPPlayground() {
             <p className="text-neutral-600 dark:text-neutral-400 mb-6">
                 Experiment with different props and see the changes in real-time.
                 For more examples, see the{' '}
-                <a href="https://frjoy.github.io/" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 underline">
+                <a href="https://frjoy.github.io/frjoy" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 underline">
                     Storybook playground
                 </a>
                 .
