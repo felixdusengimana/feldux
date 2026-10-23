@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+/* smooth colour fade while switching themes, see components/sidebar.tsx */
+@media (prefers-reduced-motion: no-preference) {
+    html.theme-transition,
+    html.theme-transition *,
+    html.theme-transition *::before,
+    html.theme-transition *::after {
+        transition: background-color 300ms ease, color 300ms ease, border-color 300ms ease, fill 300ms ease !important;
+        transition-delay: 0ms !important;
+    }
+}
+
 ::-webkit-scrollbar {
     display: none;
 }
