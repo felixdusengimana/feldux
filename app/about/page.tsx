@@ -37,6 +37,10 @@ export default function AboutPage() {
           that touch people's lives.
         </p>
 
+        <p>
+          Read more about my experience in my <a href="/resume">resume</a>.
+        </p>
+
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
           <a
             rel="noopener noreferrer"
