@@ -49,7 +49,7 @@ const navItems: INavItems = {
 function Logo() {
   return (
     <Link aria-label="Felix Dusengimana" href="/">
-      <Signature className="h-14 w-auto -ml-1" />
+      <Signature className="h-20 w-auto -ml-1.5" />
     </Link>
   );
 }
