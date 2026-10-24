@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { Holiday, holidayOn } from "@/lib/holidays";
 
 // centerlines traced from the handwritten "felix", drawn in this order
 const STROKES = [
@@ -13,10 +14,12 @@ const DURATION = 1.8; // seconds for the whole signature
 const useIsoLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
 
 export default function Signature({ className }: { className?: string }) {
+  const [holiday, setHoliday] = useState<Holiday>();
   const paths = useRef<(SVGPathElement | null)[]>([]);
   const nib = useRef<SVGGElement>(null);
 
   useIsoLayoutEffect(() => {
+    setHoliday(holidayOn(new Date()));
     const els = paths.current.filter((p): p is SVGPathElement => !!p);
     const show = (p: SVGPathElement, f: number) => {
       p.style.strokeDashoffset = String(1 - f);
@@ -53,13 +56,26 @@ export default function Signature({ className }: { className?: string }) {
 
   return (
     <svg viewBox="0 0 232 160" fill="none" aria-hidden="true" className={className}>
+      {holiday && (
+        <>
+          <title>{holiday.name}</title>
+          <defs>
+            <linearGradient id="signature-ink" gradientUnits="userSpaceOnUse" x1="8" y1="0" x2="225" y2="0">
+              {holiday.ink.flatMap((c, i, all) => [
+                <stop key={`${i}a`} offset={i / all.length} stopColor={c} />,
+                <stop key={`${i}b`} offset={(i + 1) / all.length} stopColor={c} />,
+              ])}
+            </linearGradient>
+          </defs>
+        </>
+      )}
       {STROKES.map((d, i) => (
         <path
           key={i}
           ref={(el) => (paths.current[i] = el)}
           d={d}
           pathLength={1}
-          stroke="currentColor"
+          stroke={!holiday ? "currentColor" : i === STROKES.length - 1 ? holiday.underline ?? holiday.ink[holiday.ink.length - 1] : "url(#signature-ink)"}
           strokeWidth={i === STROKES.length - 1 ? 4 : 5.5}
           strokeLinecap="round"
           strokeLinejoin="round"
