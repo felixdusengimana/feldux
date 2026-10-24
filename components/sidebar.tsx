@@ -6,6 +6,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import Signature from "./Signature";
 
 interface INavKeys {
   name: string;
@@ -48,44 +49,7 @@ const navItems: INavItems = {
 function Logo() {
   return (
     <Link aria-label="Felix Dusengimana" href="/">
-      <motion.svg
-        width="40"
-        height="39"
-        viewBox="0 0 40 39"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <motion.path
-          initial={{
-            opacity: 0,
-            pathLength: 0,
-          }}
-          animate={{
-            opacity: 1,
-            pathLength: 1,
-          }}
-          transition={{
-            duration: 1,
-            type: "spring",
-            stiffness: 50,
-          }}
-          strokeWidth={78}
-          fill="currentColor"
-          d="M0.304016 38V36.656C2.60802 36.656 3.95202 36.2293 4.33602 35.376V3.184C3.95202 2.33067 2.60802 1.904 0.304016 1.904V0.559998H16.496V1.904C14.192 1.904 12.848 2.33067 12.464 3.184V35.376C12.848 36.2293 14.192 36.656 16.496 36.656V38H0.304016Z"
-        />
-        <motion.path
-          initial={{ x: -200, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{
-            duration: 0.5,
-            stiffness: 50,
-          }}
-          fillRule="evenodd"
-          clipRule="evenodd"
-          d="M18 38.1315H20.4546C25.8733 38.1315 30.396 36.3822 34.0226 32.8835C37.692 29.3422 39.5266 24.8195 39.5266 19.3155C39.5266 13.8542 37.6493 9.39553 33.8946 5.93953C30.1826 2.44086 25.4466 0.691528 19.6866 0.691528H18V2.54753H19.6866C22.8866 2.54753 25.5533 3.95553 27.6866 6.77153C29.82 9.54486 30.8866 13.7475 30.8866 19.3795C30.8866 24.9689 29.8626 29.1289 27.8146 31.8595C25.8093 34.5902 23.356 35.9555 20.4546 35.9555H18V38.1315Z"
-          fill="currentColor"
-        />
-      </motion.svg>
+      <Signature className="h-16 w-auto -ml-1" />
     </Link>
   );
 }
