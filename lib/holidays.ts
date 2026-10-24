@@ -13,6 +13,7 @@ const FIXED: [string, string, Holiday][] = [
   ["02-14", "02-14", { name: "Happy Valentine's Day", ink: ["#E91E63"] }],
   ["07-01", "07-01", { name: "Independence Day", ink: RWANDA }],
   ["07-04", "07-04", { name: "Liberation Day", ink: RWANDA }],
+  ["11-05", "11-05", { name: "It's Felix's birthday", ink: ["#0EA5E9"], underline: "#7DD3FC" }],
   ["12-24", "12-26", { name: "Merry Christmas", ink: ["#C62828"], underline: "#2E7D32" }],
   ["12-31", "12-31", { name: "Happy New Year", ink: ["#D4A017"] }],
 ];
