@@ -6,6 +6,7 @@ import { packages } from '@/lib/packages';
 import InstallTabs from '@/components/InstallTabs';
 import TableOfContents, { ITableOfContent } from '@/components/TableOfContents';
 import OTPPlayground from '@/components/OTPPlayground';
+import OTPAnimationExamples from '@/components/OTPAnimationExamples';
 import CodeBlock from '@/components/CodeBlock';
 import PropsTable, { PropRow } from '@/components/PropsTable';
 import ShareLinks from '@/components/ShareLinks';
@@ -44,6 +45,7 @@ export default function OTPInputDocsPage() {
     { id: 'usage', title: 'Usage', active: false },
     { id: 'live-demo-1', title: 'Live Demo 1: Basic OTP', active: false },
     { id: 'live-demo-2', title: 'Live Demo 2: Alphanumeric OTP with Joiner', active: false },
+    { id: 'animations', title: 'Typing Animations', active: false },
     { id: 'props-reference', title: 'Props Reference', active: false },
     { id: 'accessibility', title: 'Accessibility', active: false },
     { id: 'interactive-playground', title: 'Interactive Playground', active: false },
@@ -158,6 +160,8 @@ export default function OTPInputDocsPage() {
     <Input key={i} length={2} />
   ))}
 </Root>`} />
+
+          <OTPAnimationExamples />
 
           {/* Props Reference */}
           <h2 id="props-reference" className="text-2xl font-semibold mt-10 mb-4">Props Reference</h2>

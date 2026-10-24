@@ -81,3 +81,41 @@
         break-after: avoid;
     }
 }
+
+/* OTP typing animation examples on /packages/otp */
+.otp-pop:not(:placeholder-shown) {
+  animation: otp-pop 160ms ease-out;
+}
+@keyframes otp-pop {
+  0% { transform: scale(0.8); }
+  60% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+.otp-line {
+  --otp-track: #d4d4d4;
+  border: 0;
+  outline: none;
+  background-image: linear-gradient(#3b82f6, #3b82f6),
+    linear-gradient(var(--otp-track), var(--otp-track));
+  background-size: 0% 2px, 100% 2px;
+  background-position: bottom;
+  background-repeat: no-repeat;
+  transition: background-size 200ms;
+}
+.dark .otp-line { --otp-track: #404040; }
+.otp-line:focus,
+.otp-line:not(:placeholder-shown) {
+  background-size: 100% 2px, 100% 2px;
+}
+.otp-wrong input {
+  border-color: #dc2626;
+  animation: otp-shake 300ms;
+}
+.otp-right input { border-color: #16a34a; }
+@keyframes otp-shake {
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .otp-pop:not(:placeholder-shown), .otp-wrong input { animation: none; }
+}
