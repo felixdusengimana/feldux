@@ -24,7 +24,7 @@ export interface Project {
 const yearsOfExperience = new Date().getFullYear() - 2020;
 
 export const resume = {
-  updated: "2026-10-24",
+  updated: "2026-10-26",
   name: "Felix Dusengimana",
   headline: "Software Engineer",
   location: "Kigali, Rwanda",
@@ -239,7 +239,7 @@ export const resume = {
       end: "2026-08",
     },
     {
-      title: "Advanced Level High School Diploma (Software Programming and Embedded Systems)",
+      title: "Advanced Level Diploma in Software Programming and Embedded Systems",
       school: "Rwanda Coding Academy",
       location: "Nyabihu, Rwanda",
       start: "2019-02",
