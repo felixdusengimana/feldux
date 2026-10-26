@@ -55,7 +55,7 @@ export const resume = {
     {
       role: "Senior Software Engineer Consultant",
       company: "Irembo",
-      start: "2026-03",
+      start: "2026-04",
       location: "Kigali, Rwanda · On-site",
       intro:
         "Contributing to the design, development, and continuous improvement of digital platforms that simplify access to government and private sector services. Collaborating with cross-functional teams to deliver scalable, secure, and reliable solutions while contributing to technical discussions, system design, and architectural decisions.",
