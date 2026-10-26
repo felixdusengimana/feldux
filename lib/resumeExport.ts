@@ -3,6 +3,7 @@ import { Resume, formatRange, roleMeta } from "@/lib/resume";
 const fileBase = (r: Resume) => `${r.name.replace(/\s+/g, "_")}_Resume`;
 const host = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "");
 const tel = (phone: string) => `tel:${phone.replace(/\s/g, "")}`;
+const LINK = "0563C1"; // standard link blue in Word
 
 export function saveBlob(blob: Blob, filename: string) {
   const a = document.createElement("a");
@@ -78,6 +79,7 @@ export async function downloadPdf(r: Resume) {
   const M = 16, W = 210 - M * 2, BOTTOM = 297 - 16;
   let y = M;
   const ink = (g: number) => doc.setTextColor(g, g, g);
+  const blue = () => doc.setTextColor(`#${LINK}`);
   const ensure = (h: number) => {
     if (y + h > BOTTOM) { doc.addPage(); y = M; }
   };
@@ -99,14 +101,16 @@ export async function downloadPdf(r: Resume) {
     y += 2.5;
   };
   // bullet and first line are one text item, so parsers keep them together
-  const bullets = (items: string[]) => items.forEach((b) => {
+  const bullets = (items: (string | { text: string; url?: string })[]) => items.forEach((item) => {
+    const { text: b, url } = typeof item === "string" ? { text: item, url: undefined } : item;
     doc.setFont("helvetica", "normal"); doc.setFontSize(9.5);
     const indent = doc.getTextWidth("•  ");
     const lines: string[] = doc.splitTextToSize(b, W - 1 - indent);
     ensure(lines.length * 4);
-    ink(40);
+    if (url) blue(); else ink(40);
     lines.forEach((line, i) => {
       doc.text(i ? line : `•  ${line}`, M + 1 + (i ? indent : 0), y + 3.2);
+      if (url) doc.link(M + 1 + indent, y, doc.getTextWidth(line), 4, { url });
       y += 4;
     });
     y += 0.6;
@@ -126,11 +130,10 @@ export async function downloadPdf(r: Resume) {
   let x = M;
   [[r.email, `mailto:${r.email}`], [r.phone, tel(r.phone)], [host(r.website), r.website], ...r.profiles.map((p) => [host(p.url), p.url])].forEach(([label, url], i) => {
     if (i && x + doc.getTextWidth("   ·   " + label) > M + W) { x = M; y += 5; i = 0; }
-    const s = (i ? "   ·   " : "") + label;
-    const offset = i ? doc.getTextWidth("   ·   ") : 0;
-    doc.text(s, x, y + 3.5);
-    doc.link(x + offset, y, doc.getTextWidth(label), 4.5, { url });
-    x += doc.getTextWidth(s);
+    if (i) { ink(60); doc.text("   ·   ", x, y + 3.5); x += doc.getTextWidth("   ·   "); }
+    blue(); doc.text(label, x, y + 3.5);
+    doc.link(x, y, doc.getTextWidth(label), 4.5, { url });
+    x += doc.getTextWidth(label);
   });
   y += 7;
 
@@ -156,7 +159,17 @@ export async function downloadPdf(r: Resume) {
   if (r.projects.length) heading("Projects");
   r.projects.forEach((p) => {
     ensure(12);
-    text(p.name + (p.url ? `  (${host(p.url)})` : "") + (p.start ? `  ·  ${formatRange(p.start, p.end)}` : ""), 10, { bold: true, gray: 15 });
+    doc.setFont("helvetica", "bold"); doc.setFontSize(10); ink(15);
+    doc.text(p.name, M, y + 4);
+    let px = M + doc.getTextWidth(p.name);
+    doc.setFont("helvetica", "normal"); doc.setFontSize(9);
+    if (p.url) {
+      px += 3; blue(); doc.text(host(p.url), px, y + 4);
+      doc.link(px, y, doc.getTextWidth(host(p.url)), 5, { url: p.url });
+      px += doc.getTextWidth(host(p.url));
+    }
+    if (p.start) { ink(90); doc.text(`  ·  ${formatRange(p.start, p.end)}`, px, y + 4); }
+    y += 5.8;
     text(p.description, 9.5, { gray: 40 });
     text(p.stack.join(" · "), 8.5, { italic: true, gray: 100, gap: 1.5 });
   });
@@ -169,7 +182,7 @@ export async function downloadPdf(r: Resume) {
     y += 1.5;
   });
 
-  if (r.awards.length) { heading("Certificates and awards"); bullets(r.awards.map((a) => `${a.title} (${a.issuer})`)); }
+  if (r.awards.length) { heading("Certificates and awards"); bullets(r.awards.map((a) => ({ text: `${a.title} (${a.issuer})`, url: a.url }))); }
   if (r.languages.length) { heading("Languages"); text(r.languages.map((l) => `${l.name} (${l.level})`).join("  ·  "), 9.5, { gray: 40 }); }
   if (r.additionalSkills.length) { heading("Additional skills"); text(r.additionalSkills.join(", "), 9.5, { gray: 40 }); }
   if (r.hobbies.length) { heading("Hobbies and interests"); text(r.hobbies.join(", "), 9.5, { gray: 40 }); }
@@ -184,7 +197,8 @@ export async function downloadDocx(r: Resume) {
     new Paragraph({ spacing: { after: 80 }, children: [new TextRun({ text: t, bold: opts.bold, italics: opts.italics, size: opts.size ?? 20, color: opts.color })] });
   const h = (t: string) => new Paragraph({ heading: HeadingLevel.HEADING_2, spacing: { before: 240, after: 80 }, children: [new TextRun({ text: t.toUpperCase(), size: 20, bold: true, color: "222222" })] });
   const bullet = (t: string) => new Paragraph({ bullet: { level: 0 }, spacing: { after: 40 }, children: [new TextRun({ text: t, size: 20 })] });
-  const link = (label: string, url: string) => new ExternalHyperlink({ link: url, children: [new TextRun({ text: label, style: "Hyperlink", size: 20 })] });
+  const link = (label: string, url: string, size = 20) =>
+    new ExternalHyperlink({ link: url, children: [new TextRun({ text: label, style: "Hyperlink", color: LINK, underline: {}, size })] });
 
   const contacts = [[r.email, `mailto:${r.email}`], [r.phone, tel(r.phone)], [host(r.website), r.website], ...r.profiles.map((x) => [host(x.url), x.url])];
   const children = [
@@ -223,7 +237,11 @@ export async function downloadDocx(r: Resume) {
       children: [new TextRun({ text: `${e.school}, ${e.location}`, size: 20, color: "555555" }), new TextRun({ text: `\t${formatRange(e.start, e.end)}`, size: 18, color: "666666" })],
     }),
   ]));
-  add(r.awards.length, h("Certificates and awards"), ...r.awards.map((a) => bullet(`${a.title} (${a.issuer})`)));
+  add(r.awards.length, h("Certificates and awards"), ...r.awards.map((a) =>
+    a.url
+      ? new Paragraph({ bullet: { level: 0 }, spacing: { after: 40 }, children: [link(a.title, a.url), new TextRun({ text: ` (${a.issuer})`, size: 20 })] })
+      : bullet(`${a.title} (${a.issuer})`)
+  ));
   add(r.languages.length, h("Languages"), p(r.languages.map((l) => `${l.name} (${l.level})`).join(" · ")));
   add(r.additionalSkills.length, h("Additional skills"), p(r.additionalSkills.join(", ")));
   add(r.hobbies.length, h("Hobbies and interests"), p(r.hobbies.join(", ")));
