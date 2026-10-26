@@ -23,9 +23,9 @@ export function toMarkdown(r: Resume) {
   ];
   const section = (title: string, lines: string[]) => lines.length && out.push("", `## ${title}`, ...lines);
   section("Summary", r.summary ? [r.summary] : []);
-  section("Areas of expertise", r.expertise.map((e) => `- ${e}`));
+  section("Skills", r.expertise.map((e) => `- ${e}`));
   section("Experience", r.experience.flatMap((x) => [
-    "", `### ${x.role}, ${x.company}`, `*${roleMeta(x)}*`, ...(x.intro ? ["", x.intro] : []),
+    "", `### ${x.role}`, `**${x.company}** · *${roleMeta(x)}*`, ...(x.intro ? ["", x.intro] : []),
     "", `**Stack:** ${x.stack.join(", ")}`, "", ...x.highlights.map((h) => `- ${h}`),
   ]));
   section("Projects", r.projects.flatMap((p) => [
@@ -90,21 +90,35 @@ export async function downloadPdf(r: Resume) {
     lines.forEach((line) => { ensure(lh); doc.text(line, M + (opts.indent ?? 0), y + lh * 0.8); y += lh; });
     y += opts.gap ?? 0;
   };
+  // keep a heading with the start of its section
   const heading = (s: string) => {
-    ensure(14);
+    ensure(30);
     y += 3;
     text(s.toUpperCase(), 9.5, { bold: true, gray: 30 });
     doc.setDrawColor(200); doc.line(M, y, M + W, y);
     y += 2.5;
   };
+  // bullet and first line are one text item, so parsers keep them together
   const bullets = (items: string[]) => items.forEach((b) => {
     doc.setFont("helvetica", "normal"); doc.setFontSize(9.5);
-    const lines: string[] = doc.splitTextToSize(b, W - 5);
+    const indent = doc.getTextWidth("•  ");
+    const lines: string[] = doc.splitTextToSize(b, W - 1 - indent);
     ensure(lines.length * 4);
-    ink(40); doc.text("•", M + 1, y + 3.2);
-    lines.forEach((line) => { doc.text(line, M + 5, y + 3.2); y += 4; });
+    ink(40);
+    lines.forEach((line, i) => {
+      doc.text(i ? line : `•  ${line}`, M + 1 + (i ? indent : 0), y + 3.2);
+      y += 4;
+    });
     y += 0.6;
   });
+  // left and right text drawn as separate items, so parsers read them as separate fields
+  const sides = (left: string, right: string, size: number, opts: { bold?: boolean; gray: number }) => {
+    doc.setFont("helvetica", opts.bold ? "bold" : "normal"); doc.setFontSize(size); ink(opts.gray);
+    doc.text(left, M, y + 4);
+    doc.setFont("helvetica", "normal"); doc.setFontSize(9); ink(90);
+    if (right) doc.text(right, M + W - doc.getTextWidth(right), y + 4);
+    y += size * 0.42 + 1.6;
+  };
 
   text(r.name, 20, { bold: true, gray: 10 });
   text(`${r.headline} · ${r.location}`, 11, { gray: 70, gap: 1 });
@@ -121,7 +135,7 @@ export async function downloadPdf(r: Resume) {
   y += 7;
 
   if (r.summary) { heading("Summary"); text(r.summary, 9.5, { gray: 40, gap: 1 }); }
-  if (r.expertise.length) { heading("Areas of expertise"); text(r.expertise.join("  ·  "), 9.5, { gray: 40, gap: 1 }); }
+  if (r.expertise.length) { heading("Skills"); text(r.expertise.join("  ·  "), 9.5, { gray: 40, gap: 1 }); }
 
   // lines needed for a block of text at a given size, so a role's header, intro and stack stay together
   const height = (str: string, size: number, font = "normal") => {
@@ -132,14 +146,8 @@ export async function downloadPdf(r: Resume) {
   r.experience.forEach((e, i) => {
     ensure(8 + (e.intro ? height(e.intro, 9.5) : 0) + height(e.stack.join(" · "), 8.5, "italic") + 14);
     if (i) y += 2;
-    doc.setFont("helvetica", "bold"); doc.setFontSize(10.5); ink(15);
-    doc.text(`${e.role}, ${e.company}`, M, y + 4);
-    doc.setFont("helvetica", "normal"); doc.setFontSize(9); ink(90);
-    const range = formatRange(e.start, e.end);
-    doc.text(range, M + W - doc.getTextWidth(range), y + 4);
-    y += 6;
-    const where = [e.type, e.location].filter(Boolean).join(" · ");
-    if (where) text(where, 8.5, { gray: 100, gap: 0.6 });
+    sides(e.role, formatRange(e.start, e.end), 10.5, { bold: true, gray: 15 });
+    sides(e.company, [e.type, e.location].filter(Boolean).join(" · "), 9.5, { gray: 60 });
     if (e.intro) text(e.intro, 9.5, { gray: 40, gap: 0.8 });
     text(e.stack.join(" · "), 8.5, { italic: true, gray: 100, gap: 1 });
     bullets(e.highlights);
@@ -155,8 +163,10 @@ export async function downloadPdf(r: Resume) {
 
   if (r.education.length) heading("Education");
   r.education.forEach((e) => {
+    ensure(12);
     text(e.title, 10, { bold: true, gray: 15 });
-    text(`${e.school}, ${e.location}  ·  ${formatRange(e.start, e.end)}`, 9.5, { gray: 60, gap: 1.5 });
+    sides(`${e.school}, ${e.location}`, formatRange(e.start, e.end), 9.5, { gray: 60 });
+    y += 1.5;
   });
 
   if (r.awards.length) { heading("Certificates and awards"); bullets(r.awards.map((a) => `${a.title} (${a.issuer})`)); }
@@ -164,12 +174,6 @@ export async function downloadPdf(r: Resume) {
   if (r.additionalSkills.length) { heading("Additional skills"); text(r.additionalSkills.join(", "), 9.5, { gray: 40 }); }
   if (r.hobbies.length) { heading("Hobbies and interests"); text(r.hobbies.join(", "), 9.5, { gray: 40 }); }
 
-  const pages = doc.getNumberOfPages();
-  for (let i = 1; i <= pages; i++) {
-    doc.setPage(i); doc.setFont("helvetica", "normal"); doc.setFontSize(8); ink(140);
-    doc.text(`${r.name}  ·  ${host(r.website)}`, M, 297 - 8);
-    doc.text(`${i} / ${pages}`, 210 - M, 297 - 8, { align: "right" });
-  }
   doc.setProperties({ title: `${r.name} - ${r.headline}`, author: r.name, subject: "Resume", keywords: r.expertise.join(", ") });
   doc.save(`${fileBase(r)}.pdf`);
 }
@@ -190,14 +194,18 @@ export async function downloadDocx(r: Resume) {
   ];
   const add = (show: unknown, ...items: InstanceType<typeof Paragraph>[]) => show && children.push(...items);
   add(r.summary, h("Summary"), p(r.summary));
-  add(r.expertise.length, h("Areas of expertise"), ...r.expertise.map(bullet));
+  add(r.expertise.length, h("Skills"), ...r.expertise.map(bullet));
   add(r.experience.length, h("Experience"), ...r.experience.flatMap((e) => [
     new Paragraph({
       spacing: { before: 160, after: 40 },
       tabStops: [{ type: TabStopType.RIGHT, position: 9600 }],
-      children: [new TextRun({ text: `${e.role}, ${e.company}`, bold: true, size: 22 }), new TextRun({ text: `\t${formatRange(e.start, e.end)}`, size: 18, color: "666666" })],
+      children: [new TextRun({ text: e.role, bold: true, size: 22 }), new TextRun({ text: `\t${formatRange(e.start, e.end)}`, size: 18, color: "666666" })],
     }),
-    ...(e.type || e.location ? [p([e.type, e.location].filter(Boolean).join(" · "), { size: 18, color: "666666" })] : []),
+    new Paragraph({
+      spacing: { after: 80 },
+      tabStops: [{ type: TabStopType.RIGHT, position: 9600 }],
+      children: [new TextRun({ text: e.company, size: 20, color: "444444" }), new TextRun({ text: `\t${[e.type, e.location].filter(Boolean).join(" · ")}`, size: 18, color: "666666" })],
+    }),
     ...(e.intro ? [p(e.intro)] : []),
     p(e.stack.join(" · "), { italics: true, size: 18, color: "666666" }),
     ...e.highlights.map(bullet),
@@ -207,7 +215,14 @@ export async function downloadDocx(r: Resume) {
     p(x.description),
     p(x.stack.join(" · "), { italics: true, size: 18, color: "666666" }),
   ]));
-  add(r.education.length, h("Education"), ...r.education.flatMap((e) => [p(e.title, { bold: true }), p(`${e.school}, ${e.location} · ${formatRange(e.start, e.end)}`, { color: "555555" })]));
+  add(r.education.length, h("Education"), ...r.education.flatMap((e) => [
+    p(e.title, { bold: true }),
+    new Paragraph({
+      spacing: { after: 80 },
+      tabStops: [{ type: TabStopType.RIGHT, position: 9600 }],
+      children: [new TextRun({ text: `${e.school}, ${e.location}`, size: 20, color: "555555" }), new TextRun({ text: `\t${formatRange(e.start, e.end)}`, size: 18, color: "666666" })],
+    }),
+  ]));
   add(r.awards.length, h("Certificates and awards"), ...r.awards.map((a) => bullet(`${a.title} (${a.issuer})`)));
   add(r.languages.length, h("Languages"), p(r.languages.map((l) => `${l.name} (${l.level})`).join(" · ")));
   add(r.additionalSkills.length, h("Additional skills"), p(r.additionalSkills.join(", ")));
