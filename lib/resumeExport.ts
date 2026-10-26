@@ -1,6 +1,7 @@
 import { Resume, formatRange, roleMeta } from "@/lib/resume";
 
-const fileBase = (r: Resume) => `${r.name.replace(/\s+/g, "_")}_Resume`;
+const fileBase = (r: Resume) =>
+  `${r.name} ${r.headline} ${new Date().getFullYear()}`.replace(/[^\w]+/g, "-");
 const host = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "");
 const tel = (phone: string) => `tel:${phone.replace(/\s/g, "")}`;
 const LINK = "0563C1"; // standard link blue in Word
@@ -29,11 +30,11 @@ export function toMarkdown(r: Resume) {
     "", `### ${x.role}`, `**${x.company}** · *${roleMeta(x)}*`, ...(x.intro ? ["", x.intro] : []),
     "", `**Stack:** ${x.stack.join(", ")}`, "", ...x.highlights.map((h) => `- ${h}`),
   ]));
+  section("Education", r.education.map((e) => `- **${e.title}**, ${e.school} (${e.location}), ${formatRange(e.start, e.end)}`));
   section("Projects", r.projects.flatMap((p) => [
     "", `### ${p.url ? `[${p.name}](${p.url})` : p.name}`, ...(p.start ? [`*${formatRange(p.start, p.end)}*`] : []), p.description, `**Stack:** ${p.stack.join(", ")}`,
   ]));
-  section("Education", r.education.map((e) => `- **${e.title}**, ${e.school} (${e.location}), ${formatRange(e.start, e.end)}`));
-  section("Certificates and awards", r.awards.map((a) => `- ${a.url ? `[${a.title}](${a.url})` : a.title}, ${a.issuer}`));
+  section("Certifications and awards", r.awards.map((a) => `- ${a.url ? `[${a.title}](${a.url})` : a.title}, ${a.issuer}`));
   section("Languages", r.languages.length ? [r.languages.map((l) => `${l.name} (${l.level})`).join(" · ")] : []);
   section("Additional skills", r.additionalSkills.length ? [r.additionalSkills.join(", ")] : []);
   section("Hobbies and interests", r.hobbies.length ? [r.hobbies.join(", ")] : []);
@@ -96,22 +97,22 @@ export async function downloadPdf(r: Resume) {
   const heading = (s: string) => {
     ensure(30);
     y += 3;
-    text(s.toUpperCase(), 9.5, { bold: true, gray: 30 });
+    text(s.toUpperCase(), 12, { bold: true, gray: 30 });
     doc.setDrawColor(200); doc.line(M, y, M + W, y);
     y += 2.5;
   };
   // bullet and first line are one text item, so parsers keep them together
   const bullets = (items: (string | { text: string; url?: string })[]) => items.forEach((item) => {
     const { text: b, url } = typeof item === "string" ? { text: item, url: undefined } : item;
-    doc.setFont("helvetica", "normal"); doc.setFontSize(9.5);
+    doc.setFont("helvetica", "normal"); doc.setFontSize(10);
     const indent = doc.getTextWidth("•  ");
     const lines: string[] = doc.splitTextToSize(b, W - 1 - indent);
-    ensure(lines.length * 4);
+    ensure(lines.length * 4.3);
     if (url) blue(); else ink(40);
     lines.forEach((line, i) => {
       doc.text(i ? line : `•  ${line}`, M + 1 + (i ? indent : 0), y + 3.2);
-      if (url) doc.link(M + 1 + indent, y, doc.getTextWidth(line), 4, { url });
-      y += 4;
+      if (url) doc.link(M + 1 + indent, y, doc.getTextWidth(line), 4.3, { url });
+      y += 4.3;
     });
     y += 0.6;
   });
@@ -119,14 +120,14 @@ export async function downloadPdf(r: Resume) {
   const sides = (left: string, right: string, size: number, opts: { bold?: boolean; gray: number }) => {
     doc.setFont("helvetica", opts.bold ? "bold" : "normal"); doc.setFontSize(size); ink(opts.gray);
     doc.text(left, M, y + 4);
-    doc.setFont("helvetica", "normal"); doc.setFontSize(9); ink(90);
+    doc.setFont("helvetica", "normal"); doc.setFontSize(10); ink(90);
     if (right) doc.text(right, M + W - doc.getTextWidth(right), y + 4);
     y += size * 0.42 + 1.6;
   };
 
   text(r.name, 20, { bold: true, gray: 10 });
-  text(`${r.headline} · ${r.location}`, 11, { gray: 70, gap: 1 });
-  doc.setFont("helvetica", "normal"); doc.setFontSize(9.5); ink(60);
+  text(`${r.headline} · ${r.location}`, 12, { gray: 70, gap: 1 });
+  doc.setFont("helvetica", "normal"); doc.setFontSize(10); ink(60);
   let x = M;
   [[r.email, `mailto:${r.email}`], [r.phone, tel(r.phone)], [host(r.website), r.website], ...r.profiles.map((p) => [host(p.url), p.url])].forEach(([label, url], i) => {
     if (i && x + doc.getTextWidth("   ·   " + label) > M + W) { x = M; y += 5; i = 0; }
@@ -137,8 +138,8 @@ export async function downloadPdf(r: Resume) {
   });
   y += 7;
 
-  if (r.summary) { heading("Summary"); text(r.summary, 9.5, { gray: 40, gap: 1 }); }
-  if (r.expertise.length) { heading("Skills"); text(r.expertise.join("  ·  "), 9.5, { gray: 40, gap: 1 }); }
+  if (r.summary) { heading("Summary"); text(r.summary, 10, { gray: 40, gap: 1 }); }
+  if (r.expertise.length) { heading("Skills"); text(r.expertise.join("  ·  "), 10, { gray: 40, gap: 1 }); }
 
   // lines needed for a block of text at a given size, so a role's header, intro and stack stay together
   const height = (str: string, size: number, font = "normal") => {
@@ -147,22 +148,30 @@ export async function downloadPdf(r: Resume) {
   };
   if (r.experience.length) heading("Experience");
   r.experience.forEach((e, i) => {
-    ensure(8 + (e.intro ? height(e.intro, 9.5) : 0) + height(e.stack.join(" · "), 8.5, "italic") + 14);
+    ensure(9 + (e.intro ? height(e.intro, 10) : 0) + height(e.stack.join(" · "), 10, "italic") + 15);
     if (i) y += 2;
-    sides(e.role, formatRange(e.start, e.end), 10.5, { bold: true, gray: 15 });
-    sides(e.company, [e.type, e.location].filter(Boolean).join(" · "), 9.5, { gray: 60 });
-    if (e.intro) text(e.intro, 9.5, { gray: 40, gap: 0.8 });
-    text(e.stack.join(" · "), 8.5, { italic: true, gray: 100, gap: 1 });
+    sides(e.role, formatRange(e.start, e.end), 11, { bold: true, gray: 15 });
+    sides(e.company, [e.type, e.location].filter(Boolean).join(" · "), 10, { gray: 60 });
+    if (e.intro) text(e.intro, 10, { gray: 40, gap: 0.8 });
+    text(e.stack.join(" · "), 10, { italic: true, gray: 100, gap: 1 });
     bullets(e.highlights);
+  });
+
+  if (r.education.length) heading("Education");
+  r.education.forEach((e) => {
+    ensure(12);
+    text(e.title, 11, { bold: true, gray: 15 });
+    sides(`${e.school}, ${e.location}`, formatRange(e.start, e.end), 10, { gray: 60 });
+    y += 1.5;
   });
 
   if (r.projects.length) heading("Projects");
   r.projects.forEach((p) => {
     ensure(12);
-    doc.setFont("helvetica", "bold"); doc.setFontSize(10); ink(15);
+    doc.setFont("helvetica", "bold"); doc.setFontSize(11); ink(15);
     doc.text(p.name, M, y + 4);
     let px = M + doc.getTextWidth(p.name);
-    doc.setFont("helvetica", "normal"); doc.setFontSize(9);
+    doc.setFont("helvetica", "normal"); doc.setFontSize(10);
     if (p.url) {
       px += 3; blue(); doc.text(host(p.url), px, y + 4);
       doc.link(px, y, doc.getTextWidth(host(p.url)), 5, { url: p.url });
@@ -170,22 +179,14 @@ export async function downloadPdf(r: Resume) {
     }
     if (p.start) { ink(90); doc.text(`  ·  ${formatRange(p.start, p.end)}`, px, y + 4); }
     y += 5.8;
-    text(p.description, 9.5, { gray: 40 });
-    text(p.stack.join(" · "), 8.5, { italic: true, gray: 100, gap: 1.5 });
+    text(p.description, 10, { gray: 40 });
+    text(p.stack.join(" · "), 10, { italic: true, gray: 100, gap: 1.5 });
   });
 
-  if (r.education.length) heading("Education");
-  r.education.forEach((e) => {
-    ensure(12);
-    text(e.title, 10, { bold: true, gray: 15 });
-    sides(`${e.school}, ${e.location}`, formatRange(e.start, e.end), 9.5, { gray: 60 });
-    y += 1.5;
-  });
-
-  if (r.awards.length) { heading("Certificates and awards"); bullets(r.awards.map((a) => ({ text: `${a.title} (${a.issuer})`, url: a.url }))); }
-  if (r.languages.length) { heading("Languages"); text(r.languages.map((l) => `${l.name} (${l.level})`).join("  ·  "), 9.5, { gray: 40 }); }
-  if (r.additionalSkills.length) { heading("Additional skills"); text(r.additionalSkills.join(", "), 9.5, { gray: 40 }); }
-  if (r.hobbies.length) { heading("Hobbies and interests"); text(r.hobbies.join(", "), 9.5, { gray: 40 }); }
+  if (r.awards.length) { heading("Certifications and awards"); bullets(r.awards.map((a) => ({ text: `${a.title} (${a.issuer})`, url: a.url }))); }
+  if (r.languages.length) { heading("Languages"); text(r.languages.map((l) => `${l.name} (${l.level})`).join("  ·  "), 10, { gray: 40 }); }
+  if (r.additionalSkills.length) { heading("Additional skills"); text(r.additionalSkills.join(", "), 10, { gray: 40 }); }
+  if (r.hobbies.length) { heading("Hobbies and interests"); text(r.hobbies.join(", "), 10, { gray: 40 }); }
 
   doc.setProperties({ title: `${r.name} - ${r.headline}`, author: r.name, subject: "Resume", keywords: r.expertise.join(", ") });
   doc.save(`${fileBase(r)}.pdf`);
@@ -195,7 +196,7 @@ export async function downloadDocx(r: Resume) {
   const { Document, Packer, Paragraph, TextRun, HeadingLevel, ExternalHyperlink, TabStopType } = await import("docx");
   const p = (t: string, opts: { bold?: boolean; italics?: boolean; size?: number; color?: string } = {}) =>
     new Paragraph({ spacing: { after: 80 }, children: [new TextRun({ text: t, bold: opts.bold, italics: opts.italics, size: opts.size ?? 20, color: opts.color })] });
-  const h = (t: string) => new Paragraph({ heading: HeadingLevel.HEADING_2, spacing: { before: 240, after: 80 }, children: [new TextRun({ text: t.toUpperCase(), size: 20, bold: true, color: "222222" })] });
+  const h = (t: string) => new Paragraph({ heading: HeadingLevel.HEADING_2, spacing: { before: 240, after: 80 }, children: [new TextRun({ text: t.toUpperCase(), size: 24, bold: true, color: "222222" })] });
   const bullet = (t: string) => new Paragraph({ bullet: { level: 0 }, spacing: { after: 40 }, children: [new TextRun({ text: t, size: 20 })] });
   const link = (label: string, url: string, size = 20) =>
     new ExternalHyperlink({ link: url, children: [new TextRun({ text: label, style: "Hyperlink", color: LINK, underline: {}, size })] });
@@ -213,31 +214,31 @@ export async function downloadDocx(r: Resume) {
     new Paragraph({
       spacing: { before: 160, after: 40 },
       tabStops: [{ type: TabStopType.RIGHT, position: 9600 }],
-      children: [new TextRun({ text: e.role, bold: true, size: 22 }), new TextRun({ text: `\t${formatRange(e.start, e.end)}`, size: 18, color: "666666" })],
+      children: [new TextRun({ text: e.role, bold: true, size: 22 }), new TextRun({ text: `\t${formatRange(e.start, e.end)}`, size: 20, color: "666666" })],
     }),
     new Paragraph({
       spacing: { after: 80 },
       tabStops: [{ type: TabStopType.RIGHT, position: 9600 }],
-      children: [new TextRun({ text: e.company, size: 20, color: "444444" }), new TextRun({ text: `\t${[e.type, e.location].filter(Boolean).join(" · ")}`, size: 18, color: "666666" })],
+      children: [new TextRun({ text: e.company, size: 20, color: "444444" }), new TextRun({ text: `\t${[e.type, e.location].filter(Boolean).join(" · ")}`, size: 20, color: "666666" })],
     }),
     ...(e.intro ? [p(e.intro)] : []),
-    p(e.stack.join(" · "), { italics: true, size: 18, color: "666666" }),
+    p(e.stack.join(" · "), { italics: true, size: 20, color: "666666" }),
     ...e.highlights.map(bullet),
-  ]));
-  add(r.projects.length, h("Projects"), ...r.projects.flatMap((x) => [
-    new Paragraph({ spacing: { before: 120, after: 40 }, children: [new TextRun({ text: x.name, bold: true, size: 21 }), ...(x.url ? [new TextRun({ text: "  ", size: 20 }), link(host(x.url), x.url)] : []), ...(x.start ? [new TextRun({ text: `  ·  ${formatRange(x.start, x.end)}`, size: 18, color: "666666" })] : [])] }),
-    p(x.description),
-    p(x.stack.join(" · "), { italics: true, size: 18, color: "666666" }),
   ]));
   add(r.education.length, h("Education"), ...r.education.flatMap((e) => [
     p(e.title, { bold: true }),
     new Paragraph({
       spacing: { after: 80 },
       tabStops: [{ type: TabStopType.RIGHT, position: 9600 }],
-      children: [new TextRun({ text: `${e.school}, ${e.location}`, size: 20, color: "555555" }), new TextRun({ text: `\t${formatRange(e.start, e.end)}`, size: 18, color: "666666" })],
+      children: [new TextRun({ text: `${e.school}, ${e.location}`, size: 20, color: "555555" }), new TextRun({ text: `\t${formatRange(e.start, e.end)}`, size: 20, color: "666666" })],
     }),
   ]));
-  add(r.awards.length, h("Certificates and awards"), ...r.awards.map((a) =>
+  add(r.projects.length, h("Projects"), ...r.projects.flatMap((x) => [
+    new Paragraph({ spacing: { before: 120, after: 40 }, children: [new TextRun({ text: x.name, bold: true, size: 22 }), ...(x.url ? [new TextRun({ text: "  ", size: 20 }), link(host(x.url), x.url)] : []), ...(x.start ? [new TextRun({ text: `  ·  ${formatRange(x.start, x.end)}`, size: 20, color: "666666" })] : [])] }),
+    p(x.description),
+    p(x.stack.join(" · "), { italics: true, size: 20, color: "666666" }),
+  ]));
+  add(r.awards.length, h("Certifications and awards"), ...r.awards.map((a) =>
     a.url
       ? new Paragraph({ bullet: { level: 0 }, spacing: { after: 40 }, children: [link(a.title, a.url), new TextRun({ text: ` (${a.issuer})`, size: 20 })] })
       : bullet(`${a.title} (${a.issuer})`)
