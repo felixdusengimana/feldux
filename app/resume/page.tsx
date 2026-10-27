@@ -18,7 +18,8 @@ export default function ResumePage() {
           "@context": "https://schema.org",
           "@type": "ProfilePage",
           url: `${siteUrl}/resume`,
-          dateModified: resume.updated,
+          // Google expects a full date-time with timezone (Kigali is UTC+2)
+          dateModified: `${resume.updated}T00:00:00+02:00`,
           mainEntity: {
             ...person,
             jobTitle: resume.headline,
